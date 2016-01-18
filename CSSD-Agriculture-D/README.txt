@@ -1,0 +1,1 @@
+Note that Windows Image viewer cannot view archived images. Please make sure to extract before viewing.
