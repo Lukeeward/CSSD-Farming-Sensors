@@ -6,19 +6,19 @@ public class UserAccount {
     private String username;
     private String password;
     
-    public boolean CheckCredentials(String username, String password){
+    public boolean checkCredentials(String username, String password){
         return null;
     }
     
-    public void AddStation(FieldStation fieldStation){
+    public void addStation(FieldStation fieldStation){
         
     }
     
-    public void RemoveStation(FieldStation fieldStation){
+    public void removeStation(FieldStation fieldStation){
         
     }
     
-    public FieldStation GetStation(String id){
+    public FieldStation getStation(String id){
         return null;
     }
     
