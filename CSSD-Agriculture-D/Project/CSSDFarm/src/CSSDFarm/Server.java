@@ -34,7 +34,7 @@ public class Server {
         return null;
     }
     
-    public boolean addData(Vector<SensorData){
+    public boolean addData(Vector<SensorData>){
         return null;
     }
     
