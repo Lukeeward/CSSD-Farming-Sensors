@@ -9,6 +9,7 @@ public class Server {
     private Vector<UserAccount> users;
     private Vector<FieldStation> stations;
     
+    //why does authenticate return that
     public Vector<FieldStation> authenticateUser(String, String){
         return null;
     }
