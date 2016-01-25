@@ -28,7 +28,7 @@ public class FieldStation {
     }
     
     public boolean uploadData(){
-        return null;
+        return false;
     }
     
     public void addToBuffer(String string1, SensorData sensorData){

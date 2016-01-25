@@ -5,19 +5,20 @@ public class Report {
     
     private Map<String, HistoricalData> data;
     
-    public Vector<SensorData> getDataByDate(Date){
-        return null;
-    }
-    public Vector<HistoricalData> getDataByType(String){
+    public Vector<SensorData> getDataByDate(Date date){
         return null;
     }
     
-    public Vector<SensorData> getDataByTypeAndDate(String, Date){
+    public Vector<HistoricalData> getDataByType(String s1){
         return null;
     }
     
-    public void addData(SensorData){
+    public Vector<SensorData> getDataByTypeAndDate(String s1, Date date){
         return null;
+    }
+    
+    public void addData(SensorData sensorData){
+        
     } 
     
 }

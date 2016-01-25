@@ -6,14 +6,14 @@ public class GPSData {
     private float altitude;
     
     public float getLatitude(){
-        return null;
+        return 0;
     }
     
     public float getLongitude(){
-        return null;
+        return 0;
     }
     
     public float getAltitude(){
-        return null;
+        return 0;
     }
 }
