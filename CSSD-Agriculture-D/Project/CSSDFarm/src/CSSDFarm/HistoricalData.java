@@ -1,8 +1,5 @@
-
 package CSSDFarm;
-
 import java.util.Date;
-
 
 class HistoricalData {
     private String dataType;
