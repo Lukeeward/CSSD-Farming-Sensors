@@ -10,31 +10,31 @@ public class Server {
     private Vector<FieldStation> stations;
     
     //why does authenticate return that
-    public Vector<FieldStation> authenticateUser(String, String){
+    public Vector<FieldStation> authenticateUser(String username, String password){
         return null;
     }
     
-    public Report compileReport(String){
+    public Report compileReport(String string1){
         return null;
     }
     
-    public void createUserAccount(String, String){
+    public void createUserAccount(String username, String password){
+        
+    }
+    
+    public void createFieldStation(String name){
+       
+    }
+    
+    public void addFieldStation(String name, String id){
+        
+    }
+    
+    public SensorData getMostRecentData(String string1, String string2){
         return null;
     }
     
-    public void createFieldStation(String){
-        return null;
-    }
-    
-    public void addFieldStation(String, String){
-        return null;
-    }
-    
-    public SensorData getMostRecentData(String, String){
-        return null;
-    }
-    
-    public boolean addData(Vector<SensorData>){
+    public boolean addData(Vector<SensorData> sensorData){
         return null;
     }
     
@@ -42,19 +42,20 @@ public class Server {
         return null;
     }
     
-    public boolean verifyFieldStation(String){
+    public boolean verifyFieldStation(String id){
         return null;
     }
     
-    public void addFieldStation(String, String){
+    //repeated call "addFieldStation"
+//    public void addFieldStation(String, String){
+//        return null;
+//    }
+    
+    public FieldStation getFieldStation(String id){
         return null;
     }
     
-    public FieldStation getFieldStation(String){
-        return null;
-    }
-    
-    public void addSensor(String, String, String, String){
-        return null;
+    public void addSensor(String string1, String string2, String string3, String string4){
+        
     }
 }
