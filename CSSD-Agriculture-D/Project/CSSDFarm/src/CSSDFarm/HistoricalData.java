@@ -6,7 +6,7 @@ class HistoricalData {
     private String fieldStationID;
     private String sensorID;
     
-    public SensorData getData(Date){
+    public SensorData getData(Date date){
         return null;
     }
     
