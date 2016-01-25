@@ -1,5 +1,6 @@
 package CSSDFarm;
 import java.util.Date;
+import java.util.Vector;
 
 public class Interface {
     private Server server;
