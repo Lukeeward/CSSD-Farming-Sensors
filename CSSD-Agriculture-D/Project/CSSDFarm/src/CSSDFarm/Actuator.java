@@ -4,14 +4,14 @@ public class Actuator {
     private boolean isActive;
     
     public void activate(){
-        return null;
+        
     }
     
-    public boolean isActive(){
-        return null;
+    public boolean isActive(){        
+        return false;
     }
     
     public void deactivate(){
-        return null;
+        
     }
 }
