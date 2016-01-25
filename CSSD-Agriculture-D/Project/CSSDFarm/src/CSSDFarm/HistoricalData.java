@@ -15,7 +15,9 @@ class HistoricalData {
     }
     
     //GET MOST RECENT TWICE!? Maybe getAllData?
+    /*
     public SensorData getMostRecent(){
         return null;
     }
+    */
 }
