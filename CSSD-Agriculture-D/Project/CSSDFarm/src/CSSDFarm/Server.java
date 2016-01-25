@@ -1,6 +1,6 @@
 package CSSDFarm;
 import java.util.Map;
-
+import java.util.Vector;
 
 public class Server {
     private Map<String, HistoricalData> data;
@@ -9,6 +9,7 @@ public class Server {
     private Vector<UserAccount> users;
     private Vector<FieldStation> stations;
     
+    //why does authenticate return that
     public Vector<FieldStation> authenticateUser(String, String){
         return null;
     }
