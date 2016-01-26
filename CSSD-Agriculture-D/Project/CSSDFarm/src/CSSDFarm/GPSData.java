@@ -5,10 +5,10 @@ public class GPSData {
     private float longitude;
     private float altitude;
     
-    public GPSData(float lat, float lon, float alt){
-        latitude = lat;
-        longitude = lon;
-        altitude = alt;
+    public GPSData(float latitude, float longitude, float altitude){
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.altitude = altitude;
     }
     
     public float getLatitude(){
