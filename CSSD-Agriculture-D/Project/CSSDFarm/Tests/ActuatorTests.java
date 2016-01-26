@@ -10,17 +10,18 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import CSSDFarm.GPSData;
+import CSSDFarm.Actuator;
 
 /**
  *
- * @author Luke
+ * @author lnseg
  */
-public class GPSDataTest {
+public class ActuatorTests {
+    boolean isActive = false;
+    Actuator actuator = new Actuator(isActive);
     
-    public GPSDataTest() {
+    public ActuatorTests() {
     }
-    GPSData gps = new GPSData(123445.23433f, 213123.323f, 231232.2323f); 
     
     @BeforeClass
     public static void setUpClass() {
@@ -31,31 +32,30 @@ public class GPSDataTest {
     }
     
     @Before
-    public void setUp() {   
+    public void setUp() {
     }
     
     @Test
-    public void testGetLongitude(){
-        assertTrue(gps.getLongitude() == 213123.323f);
+    public void testIsActive(){
+        assertTrue(actuator.isActive() == isActive);
     }
     
     @Test
-    public void testGetLatitude(){
-        assertTrue(gps.getLatitude() == 123445.23433f);
+    public void testActivate(){
+        actuator.activate();
+        assertTrue(actuator.isActive() == true);
     }
     
     @Test
-    public void testGetAltitude(){
-        assertTrue(gps.getAltitude() ==  231232.2323f);
+    public void testDeactivate(){
+        actuator.deactivate();
+        assertTrue(actuator.isActive() == false);
     }
-    
     
     @After
     public void tearDown() {
     }
 
-    
-    
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:
     //

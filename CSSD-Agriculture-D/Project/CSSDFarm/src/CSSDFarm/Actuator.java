@@ -3,15 +3,19 @@ package CSSDFarm;
 public class Actuator {
     private boolean isActive;
     
+    public Actuator(boolean isActive){
+        this.isActive = isActive;
+    }
+    
     public void activate(){
-        
+        isActive = true;
     }
     
     public boolean isActive(){        
-        return false;
+        return isActive;
     }
     
     public void deactivate(){
-        
+        isActive = false;
     }
 }
