@@ -17,11 +17,14 @@ import CSSDFarm.GPSData;
  * @author Luke
  */
 public class GPSDataTest {
-    GPSData gps = new GPSData(123445.23433f, 213123.323f, 231232.2323f); 
+    float latitude = 123445.23433f;
+    float longitude = 213123.323f;
+    float altitude = 231232.2323f;
+    
+    GPSData gps = new GPSData(latitude, longitude, altitude); 
     
     public GPSDataTest() {
     }
-    
     
     @BeforeClass
     public static void setUpClass() {
@@ -36,18 +39,18 @@ public class GPSDataTest {
     }
     
     @Test
-    public void testGetLongitude(){
-        assertTrue(gps.getLongitude() == 213123.323f);
+    public void testGetLatitude(){
+        assertTrue(gps.getLatitude() == latitude);
     }
     
     @Test
-    public void testGetLatitude(){
-        assertTrue(gps.getLatitude() == 123445.23433f);
+    public void testGetLongitude(){
+        assertTrue(gps.getLongitude() == longitude);
     }
     
     @Test
     public void testGetAltitude(){
-        assertTrue(gps.getAltitude() ==  231232.2323f);
+        assertTrue(gps.getAltitude() ==  altitude);
     }
     
     
