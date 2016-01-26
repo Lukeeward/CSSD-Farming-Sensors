@@ -6,8 +6,13 @@ public class UserAccount {
     private String username;
     private String password;
     
+    public UserAccount(String username, String password){
+        this.username = username;
+        this.password = password;
+    }
+    
     public boolean checkCredentials(String username, String password){
-        return false;
+        return (this.username.equals(username)) && (this.password.equals(password));
     }
     
     public void addStation(FieldStation fieldStation){
