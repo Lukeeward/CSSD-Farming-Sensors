@@ -20,13 +20,13 @@ import java.util.UUID;
  * @author Webby
  */
 public class SensorDataTest {
-    
-    public SensorDataTest() {
-    }
     String id = UUID.randomUUID().toString();
     Date time = new Date();
     GPSData gps = new GPSData(123445.23433f, 213123.323f, 231232.2323f); 
     SensorData sensorData = new SensorData(id, time, "mm", 11, gps);
+    
+    public SensorDataTest() {
+    }
     
     @BeforeClass
     public static void setUpClass() {

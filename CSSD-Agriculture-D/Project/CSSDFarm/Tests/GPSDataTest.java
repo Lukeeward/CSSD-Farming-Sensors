@@ -17,10 +17,11 @@ import CSSDFarm.GPSData;
  * @author Luke
  */
 public class GPSDataTest {
+    GPSData gps = new GPSData(123445.23433f, 213123.323f, 231232.2323f); 
     
     public GPSDataTest() {
     }
-    GPSData gps = new GPSData(123445.23433f, 213123.323f, 231232.2323f); 
+    
     
     @BeforeClass
     public static void setUpClass() {
