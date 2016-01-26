@@ -5,15 +5,21 @@ public class GPSData {
     private float longitude;
     private float altitude;
     
+    public GPSData(float lat, float lon, float alt){
+        latitude = lat;
+        longitude = lon;
+        altitude = alt;
+    }
+    
     public float getLatitude(){
-        return 0;
+        return latitude;
     }
     
     public float getLongitude(){
-        return 0;
+        return longitude;
     }
     
     public float getAltitude(){
-        return 0;
+        return altitude;
     }
 }
