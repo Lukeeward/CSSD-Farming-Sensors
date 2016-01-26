@@ -15,6 +15,10 @@ public class Sensor {
     private Date lastReadingTime;
     private Actuator actuator;
     
+    public Sensor(){
+    
+    }
+    
     public SensorData getData()
     {   
         return data;
