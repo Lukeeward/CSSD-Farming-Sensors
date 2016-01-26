@@ -7,7 +7,7 @@ public class UserAccount {
     private String password;
     
     public boolean checkCredentials(String username, String password){
-        return null;
+        return false;
     }
     
     public void addStation(FieldStation fieldStation){
@@ -27,7 +27,7 @@ public class UserAccount {
     }
     
     public boolean canAccess(String string1){
-        return null;
+        return false;
     }
     
 }

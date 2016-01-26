@@ -35,7 +35,7 @@ public class Server {
     }
     
     public boolean addData(Vector<SensorData> sensorData){
-        return null;
+        return false;
     }
     
     public Vector<FieldStation> loadData(){
@@ -43,7 +43,7 @@ public class Server {
     }
     
     public boolean verifyFieldStation(String id){
-        return null;
+        return false;
     }
     
     //repeated call "addFieldStation"
