@@ -39,6 +39,14 @@ public class GPSDataTest {
         assertTrue(gps.getLongitude() == 213123.323f);
     }
     
+    public void testGetLatitude(){
+        assertTrue(gps.getLatitude() == 123445.23433f);
+    }
+    
+    public void testGetAltitude(){
+        assertTrue(gps.getAltitude() ==  231232.2323f);
+    }
+    
     
     @After
     public void tearDown() {
