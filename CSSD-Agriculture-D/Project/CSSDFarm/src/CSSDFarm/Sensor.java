@@ -15,10 +15,22 @@ public class Sensor {
     private Date lastReadingTime;
     private Actuator actuator;
     
-    public Sensor(){
-    
+    public Sensor(String id, FieldStation station, int intervalSeconds, String sensorType, 
+            float power, float threshold, boolean thresholdIsUpperLimit, Actuator actuator){
+        this.id = id;
+        this.station =  station;
+        this.intervalSeconds = intervalSeconds;
+        this.sensorType = sensorType;
+        this.power = power;
+        this.threshold = threshold;
+        this.thresholdIsUpperLimit = thresholdIsUpperLimit;
+        this.actuator = actuator;
+        //Set GPSData
+        calculateLocation();
+        //Set SensorData
+        collectData();
     }
-    
+
     public SensorData getData()
     {   
         return data;
@@ -49,6 +61,8 @@ public class Sensor {
         /*if(new Date(lastReadingTime.getSeconds() + intervalSeconds) == new Date())
         {
             collectData();
+            //The Sequence Diagram says it should call the fieldstation but doesnt say what the string is
+            station.update(string, data);
         }*/
     }
     

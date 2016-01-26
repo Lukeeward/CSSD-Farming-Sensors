@@ -3,6 +3,9 @@ package CSSDFarm;
 public class Actuator {
     private boolean isActive;
     
+    public Actuator(){
+    }
+    
     public Actuator(boolean isActive){
         this.isActive = isActive;
     }
