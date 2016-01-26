@@ -2,14 +2,14 @@ package CSSDFarm;
 import java.util.Vector;
 
 public class SetOfSensors {
-    private Vector<SetOfSensors> data;
+    private Vector<Sensor> data;
     
     public void addSensor(Sensor sensor){
-        
+        data.add(sensor);
     }
     
     public void removeSensor(Sensor sensor){
-        
+        data.remove(sensor);
     }
     
     public void checkSensors(){
