@@ -1,5 +1,9 @@
 package CSSDFarm;
 
+/**
+* The Actuator system that interacts with Sensors
+*/
+
 public class Actuator {
     private boolean isActive;
     
