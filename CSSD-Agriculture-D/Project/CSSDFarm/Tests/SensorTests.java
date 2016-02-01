@@ -20,7 +20,7 @@ import CSSDFarm.Actuator;
  */
 public class SensorTests {
     String id = UUID.randomUUID().toString();
-    FieldStation station = new FieldStation();
+    FieldStation station = new FieldStation("123","Lukeyx2");
     int interval = 200;
     String type = "Temperature"; 
     float power = 1234.5f; //??? replace me when we know what power is
@@ -50,7 +50,7 @@ public class SensorTests {
     public void testWithinThreshold(){
 
         String id = UUID.randomUUID().toString();
-        FieldStation station = new FieldStation();
+        FieldStation station = new FieldStation("123", "Lukey123");
         int interval = 200;
         String type = "Temperature"; 
         float power = 1234.5f; //??? replace me when we know what power is

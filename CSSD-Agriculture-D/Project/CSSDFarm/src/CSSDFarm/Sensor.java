@@ -14,6 +14,7 @@ public class Sensor {
     private boolean thresholdIsUpperLimit;
     private Date lastReadingTime;
     private Actuator actuator;
+    private String units;
     
     public Sensor(String id, FieldStation station, int intervalSeconds, String sensorType, 
             float power, float threshold, boolean thresholdIsUpperLimit, Actuator actuator){
@@ -30,6 +31,15 @@ public class Sensor {
         //Set SensorData
         collectData();
     }
+    
+    public Sensor(String id, String sensorType, String units, int interval)
+    {
+        this.id = id;
+        this.sensorType = sensorType;
+        this.units = units;
+        this.intervalSeconds = interval;
+    }
+    
 
     public SensorData getData()
     {   
