@@ -22,11 +22,11 @@ public class FieldStation {
     }
     
     public void addSensor(Sensor sensor){
-        
+        sensors.addSensor(sensor);
     }
     
     public void removeSensor(String id){
-        
+        sensors.removeSensor(sensors.getSensor(id));
     }
     
     public void update(String string1, SensorData sensorData){

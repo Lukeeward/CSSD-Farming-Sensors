@@ -46,6 +46,10 @@ public class Sensor {
         return data;
     }
     
+    public String getId(){
+        return this.id;
+    }
+    
     public void toggleModule()
     {
         if(actuator.isActive())

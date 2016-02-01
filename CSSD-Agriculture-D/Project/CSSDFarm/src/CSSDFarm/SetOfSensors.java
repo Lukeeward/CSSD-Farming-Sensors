@@ -12,8 +12,18 @@ public class SetOfSensors {
         data.remove(sensor);
     }
     
+    public Sensor getSensor(String id){
+        for(Sensor aSensor : data){
+            if(aSensor.getId() == id)
+            {
+                return aSensor;
+            }
+        }
+        return null;
+    }
+    
     public void checkSensors(){
-        
+        //Check sensor threshold??
     }
     
     public SensorData getData(String string){
