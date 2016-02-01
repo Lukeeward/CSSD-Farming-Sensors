@@ -10,40 +10,74 @@ public class Server {
     private Vector<FieldStation> stations;
     
     //why does authenticate return that
-    public Vector<FieldStation> authenticateUser(String username, String password){
-        return null;
+    public boolean authenticateUser(String username, String password){
+        for(int i = 0; i < users.size(); i++){
+            if(users.elementAt(i).checkCredentials(username, password))
+            {
+                currentUser = users.elementAt(i);
+                return true;
+            }
+        }
+        return false;
     }
     
+    public Vector<FieldStation> getUserFieldStation(){
+        return currentUser.getFieldStations();
+    }
+    //String1 = FieldStationId??
     public Report compileReport(String string1){
-        return null;
+        HistoricalData stationHistoricalData = data.get(string1);
+        return new Report(string1, stationHistoricalData);
     }
     
     public void createUserAccount(String username, String password){
-        
+        users.add(new UserAccount(username, password));
     }
     
-    public void createFieldStation(String name){
-       
+    public void createFieldStation(String name, String id){
+       stations.add(new FieldStation(name, id));
     }
     
     public void addFieldStation(String name, String id){
-        
+        FieldStation station = getFieldStation(id);
+        currentUser.addStation(station);
     }
-    
+    //String1 = stationid??
+    //String2 = sensorID???
     public SensorData getMostRecentData(String string1, String string2){
+        if(currentUser.canAccess(string1))
+        {
+            for(FieldStation aFieldStation : stations)
+            {
+                if(aFieldStation.getId() == string1)
+                {
+                    return aFieldStation.getData(string2);
+                }
+            }
+        }
         return null;
     }
     
-    public boolean addData(Vector<SensorData> sensorData){
-        return false;
+    //Returns true as they are expecting connection issues with an actual 'server'
+    //The return true would be the response from the server so they know to clear buffer
+    public boolean addData(Vector<SensorData> sensorData, String fieldStationId){
+        HistoricalData test = data.get(fieldStationId);
+        for(SensorData data : sensorData){
+            test.addData(data);
+        }
+        return true;
     }
     
     public Vector<FieldStation> loadData(){
-        return null;
+        return currentUser.getFieldStations();
     }
     
     public boolean verifyFieldStation(String id){
-        return false;
+        for(FieldStation fieldStation: stations){
+            if(fieldStation.getId() == id)
+                return false;
+        }
+        return true;
     }
     
     //repeated call "addFieldStation"
@@ -52,10 +86,17 @@ public class Server {
 //    }
     
     public FieldStation getFieldStation(String id){
+        for(FieldStation aStation : stations)
+        {
+            if(aStation.getId() == id){
+                return aStation;
+            }
+        }
         return null;
     }
     
-    public void addSensor(String string1, String string2, String string3, String string4){
-        
+    public void addSensor(String fieldStationId, String sensorId, String sensorType, String sensorUnits, int interval){
+        FieldStation aFieldStation = getFieldStation(fieldStationId);
+        aFieldStation.addSensor(sensorId, sensorType, sensorUnits, interval);
     }
 }

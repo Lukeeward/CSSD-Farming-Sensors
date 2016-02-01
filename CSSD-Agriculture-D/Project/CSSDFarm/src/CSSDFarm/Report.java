@@ -5,6 +5,10 @@ public class Report {
     
     private Map<String, HistoricalData> data;
     
+    public Report(String FieldStationid, HistoricalData data){
+        this.data.put(FieldStationid, data);
+    }
+    
     public Vector<SensorData> getDataByDate(Date date){
         return null;
     }

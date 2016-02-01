@@ -4,11 +4,21 @@ import java.util.*;
 public class FieldStation {
     private String name;
     private String id;
-    private Vector<Sensor> sensors;
+    private SetOfSensors sensors;
     private Vector<SensorData> buffer;
+    
+    public FieldStation(String name, String id)
+    {
+        this.name = name;
+        this.id = id;
+    }
     
     public Report compileReport(){
         return null;
+    }
+    
+    public String getId(){
+        return id;
     }
     
     public void addSensor(Sensor sensor){
@@ -39,7 +49,8 @@ public class FieldStation {
         
     }
     
-    public void addSensor(String string1, String string2, String string3){
-        
+    public void addSensor(String sensorId, String sensorType, String sensorUnits, int interval){
+        Sensor theSensor = new Sensor(sensorId, sensorType, sensorUnits, interval);
+        sensors.addSensor(theSensor);
     }
 }
