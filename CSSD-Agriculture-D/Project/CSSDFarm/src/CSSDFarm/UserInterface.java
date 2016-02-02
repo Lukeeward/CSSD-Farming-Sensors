@@ -10,7 +10,9 @@ import java.util.Vector;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 
 /**
  *
@@ -70,7 +72,7 @@ public class UserInterface extends javax.swing.JFrame {
         panelLogIn = new java.awt.Panel();
         jButton1 = new javax.swing.JButton();
         txtUsername = new javax.swing.JTextField();
-        txtPassword = new javax.swing.JTextField();
+        txtPassword = new javax.swing.JPasswordField();
         panelManager = new java.awt.Panel();
         jScrollPane1 = new javax.swing.JScrollPane();
         listUserStations = new javax.swing.JList();
@@ -91,20 +93,22 @@ public class UserInterface extends javax.swing.JFrame {
         txtUsername.setName("txtUsername"); // NOI18N
 
         txtPassword.setText("Password");
-        txtPassword.setName("txtPassword"); // NOI18N
 
         javax.swing.GroupLayout panelLogInLayout = new javax.swing.GroupLayout(panelLogIn);
         panelLogIn.setLayout(panelLogInLayout);
         panelLogInLayout.setHorizontalGroup(
             panelLogInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelLogInLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(panelLogInLayout.createSequentialGroup()
-                .addGap(100, 100, 100)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(panelLogInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelLogInLayout.createSequentialGroup()
+                        .addGap(100, 100, 100)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelLogInLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(416, Short.MAX_VALUE))
         );
         panelLogInLayout.setVerticalGroup(
             panelLogInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -173,7 +177,17 @@ public class UserInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnAddFieldStationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddFieldStationActionPerformed
-        addFieldStation("Lukes", "Station2");
+        JTextField id = new JTextField();
+        JTextField name = new JTextField();
+        Object[] message = {
+            "ID:", id,
+            "Name:", name
+        };
+        int inputFields = JOptionPane.showConfirmDialog(null, message, "Add Field Station", JOptionPane.OK_CANCEL_OPTION);
+        if (inputFields == JOptionPane.OK_OPTION) {
+            addFieldStation(id.getText(), name.getText());
+        }
+        
     }//GEN-LAST:event_btnAddFieldStationActionPerformed
 
     /**
@@ -218,7 +232,7 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JList listUserStations;
     private java.awt.Panel panelLogIn;
     private java.awt.Panel panelManager;
-    private javax.swing.JTextField txtPassword;
+    private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 }
