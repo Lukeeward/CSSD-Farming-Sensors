@@ -5,7 +5,12 @@
  */
 package CSSDFarm;
 
+import java.awt.Component;
 import java.util.Vector;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JScrollPane;
 
 /**
  *
@@ -15,12 +20,42 @@ import java.util.Vector;
 
 public class UserInterface extends javax.swing.JFrame {
 
-    Server server;
+    static final Server server = new Server();
     public UserInterface() {
         initComponents();
-        server = new Server();
     }
     
+    public void displayManagerScreen(){
+        Vector<FieldStation> userFieldStations = server.loadData();
+        userFieldStations.add(new FieldStation("Test","Station"));
+        listUserStations.setListData(userFieldStations);
+        
+        listUserStations.setCellRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                Component renderer = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                if (renderer instanceof JLabel && value instanceof FieldStation) {
+                    // Here value will be of the Type 'FieldStation'
+                    ((JLabel) renderer).setText(((FieldStation) value).getId());
+                }
+                return renderer;
+            }
+        });
+        
+        
+        //System.out.println(userStationList);
+        
+        panelManager.setVisible(true);
+        
+    }
+    
+    public void addFieldStation(String id, String name){
+        if(server.verifyFieldStation(id)){
+            server.addFieldStation(name, id);
+            Vector<FieldStation> userFieldStations = server.loadData();
+            listUserStations.setListData(userFieldStations);
+        }
+    }
     
 
     /**
@@ -32,11 +67,17 @@ public class UserInterface extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        panelLogIn = new java.awt.Panel();
         jButton1 = new javax.swing.JButton();
         txtUsername = new javax.swing.JTextField();
         txtPassword = new javax.swing.JTextField();
+        panelManager = new java.awt.Panel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        listUserStations = new javax.swing.JList();
+        btnAddFieldStation = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new java.awt.CardLayout());
 
         jButton1.setText("Log in");
         jButton1.setName("btnLogIn"); // NOI18N
@@ -46,38 +87,77 @@ public class UserInterface extends javax.swing.JFrame {
             }
         });
 
-        txtUsername.setText("Username");
+        txtUsername.setText("John");
         txtUsername.setName("txtUsername"); // NOI18N
 
         txtPassword.setText("Password");
         txtPassword.setName("txtPassword"); // NOI18N
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(62, 62, 62)
+        javax.swing.GroupLayout panelLogInLayout = new javax.swing.GroupLayout(panelLogIn);
+        panelLogIn.setLayout(panelLogInLayout);
+        panelLogInLayout.setHorizontalGroup(
+            panelLogInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelLogInLayout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
-                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(57, 57, 57))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(143, 143, 143))
+                .addGap(18, 18, 18)
+                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(panelLogInLayout.createSequentialGroup()
+                .addGap(100, 100, 100)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(64, 64, 64)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+        panelLogInLayout.setVerticalGroup(
+            panelLogInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelLogInLayout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addGroup(panelLogInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(76, 76, 76)
+                .addGap(113, 113, 113)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(139, Short.MAX_VALUE))
+                .addContainerGap(159, Short.MAX_VALUE))
         );
+
+        getContentPane().add(panelLogIn, "card2");
+
+        listUserStations.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane1.setViewportView(listUserStations);
+
+        btnAddFieldStation.setText("Add Field Station");
+        btnAddFieldStation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddFieldStationActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelManagerLayout = new javax.swing.GroupLayout(panelManager);
+        panelManager.setLayout(panelManagerLayout);
+        panelManagerLayout.setHorizontalGroup(
+            panelManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelManagerLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelManagerLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(btnAddFieldStation))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(368, Short.MAX_VALUE))
+        );
+        panelManagerLayout.setVerticalGroup(
+            panelManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelManagerLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnAddFieldStation)
+                .addContainerGap(185, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(panelManager, "card3");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -86,12 +166,15 @@ public class UserInterface extends javax.swing.JFrame {
         String name = txtUsername.getText();
         String password = txtPassword.getText();
         boolean authenticateUser = server.authenticateUser(name, password);
-        if (authenticateUser){
-            Vector<FieldStation> userFieldStations = server.loadData();
-            System.out.println(authenticateUser);
+        if (authenticateUser){            
+            panelLogIn.setVisible(false);
+           displayManagerScreen();
         }
-        
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnAddFieldStationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddFieldStationActionPerformed
+        addFieldStation("Lukes", "Station2");
+    }//GEN-LAST:event_btnAddFieldStationActionPerformed
 
     /**
      * @param args the command line arguments
@@ -129,7 +212,12 @@ public class UserInterface extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddFieldStation;
     private javax.swing.JButton jButton1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JList listUserStations;
+    private java.awt.Panel panelLogIn;
+    private java.awt.Panel panelManager;
     private javax.swing.JTextField txtPassword;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables

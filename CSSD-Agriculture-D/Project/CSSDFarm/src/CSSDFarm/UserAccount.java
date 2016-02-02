@@ -7,6 +7,7 @@ public class UserAccount {
     private String password;
     
     public UserAccount(String username, String password){
+        this.stations = new Vector<FieldStation>();
         this.username = username;
         this.password = password;
     }
@@ -16,7 +17,7 @@ public class UserAccount {
     }
     
     public void addStation(FieldStation fieldStation){
-        
+        this.stations.add(fieldStation);
     }
     
     public void removeStation(FieldStation fieldStation){
@@ -28,7 +29,7 @@ public class UserAccount {
     }
     
     public Vector<FieldStation> getFieldStations(){
-        return null;
+        return stations;
     }
     
     public boolean canAccess(String string1){

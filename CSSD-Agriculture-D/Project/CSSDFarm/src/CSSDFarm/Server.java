@@ -12,6 +12,7 @@ public class Server {
     public Server(){
         this.users = new Vector<UserAccount>();
         this.users.add(new UserAccount("John","Password"));
+        this.stations = new Vector<FieldStation>();
     }
     
     //why does authenticate return that
@@ -44,6 +45,7 @@ public class Server {
     }
     
     public void addFieldStation(String name, String id){
+        createFieldStation(name, id);
         FieldStation station = getFieldStation(id);
         currentUser.addStation(station);
     }
