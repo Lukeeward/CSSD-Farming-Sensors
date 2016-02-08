@@ -25,6 +25,10 @@ public class FieldStation {
         return name;
     }
     
+    public SetOfSensors getSetOfSensors(){
+        return sensors;
+    }
+    
     public void addSensor(Sensor sensor){
         sensors.addSensor(sensor);
     }

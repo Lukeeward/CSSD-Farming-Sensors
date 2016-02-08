@@ -387,7 +387,12 @@ public class UserInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddFieldStationActionPerformed
 
     private void changeSelectedFieldStation(FieldStation selectedStation){
+        selectedStation.addSensor(new Sensor("testid", "Temp", "C", 10));
+        SetOfSensors stationSensors = selectedStation.getSetOfSensors();
+        
         lblFieldStationName.setText(selectedStation.getName());
+        
+        
     }
     
     private void listUserStationsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listUserStationsValueChanged

@@ -38,6 +38,7 @@ public class Sensor {
         this.sensorType = sensorType;
         this.units = units;
         this.intervalSeconds = interval;
+        calculateLocation();
     }
     
 
