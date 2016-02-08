@@ -40,12 +40,12 @@ public class Server {
         users.add(new UserAccount(username, password));
     }
     
-    public void createFieldStation(String name, String id){
-       stations.add(new FieldStation(name, id));
+    public void createFieldStation(String id, String name){
+       stations.add(new FieldStation(id, name));
     }
     
-    public void addFieldStation(String name, String id){
-        createFieldStation(name, id);
+    public void addFieldStation(String id, String name){
+        createFieldStation(id, name);
         FieldStation station = getFieldStation(id);
         currentUser.addStation(station);
     }
@@ -81,7 +81,7 @@ public class Server {
     
     public boolean verifyFieldStation(String id){
         for(FieldStation fieldStation: stations){
-            if(fieldStation.getId() == id)
+            if(fieldStation.getId().toUpperCase().equals(id.toUpperCase()))
                 return false;
         }
         return true;

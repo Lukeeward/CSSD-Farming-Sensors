@@ -7,10 +7,10 @@ public class FieldStation {
     private SetOfSensors sensors;
     private Vector<SensorData> buffer;
     
-    public FieldStation(String name, String id)
+    public FieldStation(String id, String name)
     {
-        this.name = name;
         this.id = id;
+        this.name = name;
     }
     
     public Report compileReport(){
@@ -19,6 +19,10 @@ public class FieldStation {
     
     public String getId(){
         return id;
+    }
+    
+    public String getName(){
+        return name;
     }
     
     public void addSensor(Sensor sensor){
