@@ -51,6 +51,18 @@ public class Sensor {
         return this.id;
     }
     
+    public String getType() {
+        return this.sensorType;
+    }
+    
+    public String getUnits(){
+        return this.units;
+    }
+    
+    public String getGps(){
+        return location.getLatitude() + ", " +location.getLongitude() +  ", " + location.getAltitude();
+    }
+    
     public void toggleModule()
     {
         if(actuator.isActive())

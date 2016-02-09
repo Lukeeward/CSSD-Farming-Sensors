@@ -5,6 +5,9 @@
  */
 package CSSDFarm;
 
+import ca.odell.glazedlists.BasicEventList;
+import ca.odell.glazedlists.EventList;
+import ca.odell.glazedlists.swing.EventTableModel;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.KeyAdapter;
@@ -29,12 +32,15 @@ import javax.swing.event.DocumentListener;
 public class UserInterface extends javax.swing.JFrame {
 
     static final Server server = new Server();
+    FieldStation selectedStation;
+    Vector<FieldStation> userFieldStations;
+    
     public UserInterface() {
         initComponents();
     }
     
     public void displayManagerScreen(){
-        Vector<FieldStation> userFieldStations = server.loadData();
+        userFieldStations = server.loadData();
         listUserStations.setListData(userFieldStations);
         
         listUserStations.setCellRenderer(new DefaultListCellRenderer() {
@@ -53,6 +59,14 @@ public class UserInterface extends javax.swing.JFrame {
         //System.out.println(userStationList);
         
         panelManager.setVisible(true);
+        
+    }
+    
+    public void displayAddSensorPanel(){
+        panelManager.setVisible(false);
+        panelAddSensor.setVisible(true);
+        lblFieldStationName2.setText(selectedStation.getName());
+        
         
     }
     
@@ -95,6 +109,26 @@ public class UserInterface extends javax.swing.JFrame {
         btnAddSensor = new javax.swing.JButton();
         btnRemoveSensor = new javax.swing.JButton();
         btnSensorDetails = new javax.swing.JButton();
+        panelAddSensor = new java.awt.Panel();
+        lblAddNewSensor = new javax.swing.JLabel();
+        lblFieldStationName2 = new javax.swing.JLabel();
+        lblSensorType = new javax.swing.JLabel();
+        lblSensorId = new javax.swing.JLabel();
+        lblSensorInterval = new javax.swing.JLabel();
+        lblSensorUnits = new javax.swing.JLabel();
+        txtSensorId = new javax.swing.JTextField();
+        comboSensorType = new javax.swing.JComboBox();
+        comboSensorUnits = new javax.swing.JComboBox();
+        lblIntervalMinutes = new javax.swing.JLabel();
+        lblIntervalDays = new javax.swing.JLabel();
+        lblIntervalHours = new javax.swing.JLabel();
+        lblIntervalSeconds = new javax.swing.JLabel();
+        comboIntervalDays = new javax.swing.JComboBox();
+        comboIntervalHours = new javax.swing.JComboBox();
+        comboIntervalMinutes = new javax.swing.JComboBox();
+        comboIntervalSeconds = new javax.swing.JComboBox();
+        btnSaveSensor = new javax.swing.JButton();
+        btnCancelSensor = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.CardLayout());
@@ -137,7 +171,7 @@ public class UserInterface extends javax.swing.JFrame {
                     .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(113, 113, 113)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(159, Short.MAX_VALUE))
+                .addContainerGap(191, Short.MAX_VALUE))
         );
 
         getContentPane().add(panelLogIn, "card2");
@@ -241,7 +275,11 @@ public class UserInterface extends javax.swing.JFrame {
         btnFieldStationDetails.setText("Field Station Details");
 
         btnAddSensor.setText("Add Sensor");
-        btnAddSensor.setActionCommand("Add Sensor");
+        btnAddSensor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddSensorActionPerformed(evt);
+            }
+        });
 
         btnRemoveSensor.setText("Remove Sensor");
 
@@ -303,6 +341,164 @@ public class UserInterface extends javax.swing.JFrame {
         );
 
         getContentPane().add(panelManager, "card3");
+
+        lblAddNewSensor.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
+        lblAddNewSensor.setText("Add New Sensor");
+
+        lblFieldStationName2.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
+        lblFieldStationName2.setText("jLabel1");
+
+        lblSensorType.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
+        lblSensorType.setText("Sensor Type:");
+
+        lblSensorId.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
+        lblSensorId.setText("Sensor Id:");
+
+        lblSensorInterval.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
+        lblSensorInterval.setText("Measurement Interval:");
+
+        lblSensorUnits.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
+        lblSensorUnits.setText("Units:");
+
+        txtSensorId.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
+
+        comboSensorType.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
+        comboSensorType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Soil Moisture", "Soil Temperature", "Air Temperature", "Soil Acidity", "Light Intensity" }));
+
+        comboSensorUnits.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
+        comboSensorUnits.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "LUX", "PH", "C", "F", "%" }));
+
+        lblIntervalMinutes.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
+        lblIntervalMinutes.setText("Minutes:");
+
+        lblIntervalDays.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
+        lblIntervalDays.setText("Days:");
+
+        lblIntervalHours.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
+        lblIntervalHours.setText("Hours:");
+
+        lblIntervalSeconds.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
+        lblIntervalSeconds.setText("Seconds:");
+
+        comboIntervalDays.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
+        comboIntervalDays.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
+
+        comboIntervalHours.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
+        comboIntervalHours.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24" }));
+
+        comboIntervalMinutes.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
+        comboIntervalMinutes.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60" }));
+
+        comboIntervalSeconds.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
+        comboIntervalSeconds.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60" }));
+
+        btnSaveSensor.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
+        btnSaveSensor.setText("Save");
+        btnSaveSensor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveSensorActionPerformed(evt);
+            }
+        });
+
+        btnCancelSensor.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
+        btnCancelSensor.setText("Cancel");
+        btnCancelSensor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelSensorActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelAddSensorLayout = new javax.swing.GroupLayout(panelAddSensor);
+        panelAddSensor.setLayout(panelAddSensorLayout);
+        panelAddSensorLayout.setHorizontalGroup(
+            panelAddSensorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelAddSensorLayout.createSequentialGroup()
+                .addGroup(panelAddSensorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelAddSensorLayout.createSequentialGroup()
+                        .addGap(343, 343, 343)
+                        .addComponent(lblAddNewSensor))
+                    .addGroup(panelAddSensorLayout.createSequentialGroup()
+                        .addGap(372, 372, 372)
+                        .addComponent(lblFieldStationName2))
+                    .addGroup(panelAddSensorLayout.createSequentialGroup()
+                        .addGap(157, 157, 157)
+                        .addGroup(panelAddSensorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblSensorId, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblSensorType, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblSensorUnits, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblSensorInterval, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(panelAddSensorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtSensorId)
+                            .addComponent(comboSensorType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(comboSensorUnits, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(panelAddSensorLayout.createSequentialGroup()
+                                .addGap(22, 22, 22)
+                                .addComponent(lblIntervalDays, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(comboIntervalDays, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(31, 31, 31)
+                                .addComponent(lblIntervalHours, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(comboIntervalHours, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAddSensorLayout.createSequentialGroup()
+                                .addGroup(panelAddSensorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(btnSaveSensor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(panelAddSensorLayout.createSequentialGroup()
+                                        .addComponent(lblIntervalMinutes, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(comboIntervalMinutes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(panelAddSensorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(panelAddSensorLayout.createSequentialGroup()
+                                        .addGap(14, 14, 14)
+                                        .addComponent(lblIntervalSeconds, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(comboIntervalSeconds, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(panelAddSensorLayout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnCancelSensor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))))
+                .addContainerGap(201, Short.MAX_VALUE))
+        );
+        panelAddSensorLayout.setVerticalGroup(
+            panelAddSensorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelAddSensorLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblAddNewSensor)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblFieldStationName2)
+                .addGap(50, 50, 50)
+                .addGroup(panelAddSensorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblSensorId)
+                    .addComponent(txtSensorId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelAddSensorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblSensorType)
+                    .addComponent(comboSensorType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelAddSensorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(comboSensorUnits, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblSensorUnits))
+                .addGap(32, 32, 32)
+                .addGroup(panelAddSensorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblIntervalDays)
+                    .addComponent(lblSensorInterval)
+                    .addComponent(lblIntervalHours)
+                    .addComponent(comboIntervalDays, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboIntervalHours, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelAddSensorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblIntervalMinutes)
+                    .addComponent(lblIntervalSeconds)
+                    .addComponent(comboIntervalMinutes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboIntervalSeconds, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                .addGroup(panelAddSensorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSaveSensor)
+                    .addComponent(btnCancelSensor))
+                .addGap(46, 46, 46))
+        );
+
+        getContentPane().add(panelAddSensor, "card5");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -387,8 +583,19 @@ public class UserInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddFieldStationActionPerformed
 
     private void changeSelectedFieldStation(FieldStation selectedStation){
-        selectedStation.addSensor(new Sensor("testid", "Temp", "C", 10));
         SetOfSensors stationSensors = selectedStation.getSetOfSensors();
+        
+        EventList<Sensor> eventList = new BasicEventList<Sensor>();
+        
+        eventList.clear();
+        for(Sensor sensor:stationSensors.getSensors()){
+            eventList.add(sensor);
+        }
+        
+        EventTableModel tableModel = new EventTableModel(eventList, new SensorTableFormat());
+        tblSensorTable.setModel(tableModel);
+//        AdvancedTableModel<Sensor> issuesTableModel =
+//            GlazedListsSwing.eventTableModelWithThreadProxyList(stationSensors, new SensorTableFormat());
         
         lblFieldStationName.setText(selectedStation.getName());
         
@@ -396,9 +603,35 @@ public class UserInterface extends javax.swing.JFrame {
     }
     
     private void listUserStationsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listUserStationsValueChanged
-        FieldStation selectedStation = server.getFieldStation(((FieldStation)listUserStations.getSelectedValue()).getId());
-        changeSelectedFieldStation(selectedStation);
+        FieldStation selected = (FieldStation)listUserStations.getSelectedValue();
+        if(selected != null){
+            selectedStation = server.getFieldStation(selected.getId());
+            changeSelectedFieldStation(selectedStation);
+        }
     }//GEN-LAST:event_listUserStationsValueChanged
+
+    private void btnAddSensorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddSensorActionPerformed
+        displayAddSensorPanel();
+    }//GEN-LAST:event_btnAddSensorActionPerformed
+
+    private void btnSaveSensorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveSensorActionPerformed
+        
+        int secondsSeconds = Integer.parseInt(comboIntervalSeconds.getSelectedItem().toString());
+        int minutesSeconds = Integer.parseInt(comboIntervalMinutes.getSelectedItem().toString()) * 60;
+        int hoursSeconds = Integer.parseInt(comboIntervalHours.getSelectedItem().toString()) * 60 * 60;
+        int daysSeconds = Integer.parseInt(comboIntervalDays.getSelectedItem().toString()) * 60 * 60 * 24;
+        int interval = secondsSeconds + minutesSeconds + hoursSeconds + daysSeconds;
+        
+        server.addSensor(selectedStation.getId(), txtSensorId.getText(), (String)comboSensorType.getSelectedItem(), (String)comboSensorUnits.getSelectedItem(), interval);
+        
+        panelAddSensor.setVisible(false);
+        displayManagerScreen();
+    }//GEN-LAST:event_btnSaveSensorActionPerformed
+
+    private void btnCancelSensorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelSensorActionPerformed
+        panelAddSensor.setVisible(false);
+        displayManagerScreen();
+    }//GEN-LAST:event_btnCancelSensorActionPerformed
 
     
     
@@ -440,24 +673,44 @@ public class UserInterface extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddFieldStation;
     private javax.swing.JButton btnAddSensor;
+    private javax.swing.JButton btnCancelSensor;
     private javax.swing.JButton btnFieldStationDetails;
     private javax.swing.JButton btnRemoveFieldStation;
     private javax.swing.JButton btnRemoveSensor;
     private javax.swing.JButton btnReport;
+    private javax.swing.JButton btnSaveSensor;
     private javax.swing.JButton btnSensorDetails;
+    private javax.swing.JComboBox comboIntervalDays;
+    private javax.swing.JComboBox comboIntervalHours;
+    private javax.swing.JComboBox comboIntervalMinutes;
+    private javax.swing.JComboBox comboIntervalSeconds;
+    private javax.swing.JComboBox comboSensorType;
+    private javax.swing.JComboBox comboSensorUnits;
     private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblAddNewSensor;
     private javax.swing.JLabel lblFieldStationManager;
     private javax.swing.JLabel lblFieldStationName;
+    private javax.swing.JLabel lblFieldStationName2;
+    private javax.swing.JLabel lblIntervalDays;
+    private javax.swing.JLabel lblIntervalHours;
+    private javax.swing.JLabel lblIntervalMinutes;
+    private javax.swing.JLabel lblIntervalSeconds;
+    private javax.swing.JLabel lblSensorId;
+    private javax.swing.JLabel lblSensorInterval;
     private javax.swing.JLabel lblSensorList;
+    private javax.swing.JLabel lblSensorType;
+    private javax.swing.JLabel lblSensorUnits;
     private javax.swing.JList listUserStations;
+    private java.awt.Panel panelAddSensor;
     private java.awt.Panel panelLogIn;
     private java.awt.Panel panelManager;
     private javax.swing.JTable tblSensorTable;
     private javax.swing.JPasswordField txtPassword;
+    private javax.swing.JTextField txtSensorId;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 }

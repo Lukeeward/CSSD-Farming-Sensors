@@ -4,12 +4,20 @@ import java.util.Vector;
 public class SetOfSensors {
     private Vector<Sensor> data;
     
+    public SetOfSensors() {
+        data = new Vector<Sensor>();
+    }
+    
     public void addSensor(Sensor sensor){
         data.add(sensor);
     }
     
     public void removeSensor(Sensor sensor){
         data.remove(sensor);
+    }
+    
+    public Vector<Sensor> getSensors(){
+        return data;
     }
     
     public Sensor getSensor(String id){

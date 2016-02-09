@@ -11,6 +11,7 @@ public class FieldStation {
     {
         this.id = id;
         this.name = name;
+        sensors = new SetOfSensors();
     }
     
     public Report compileReport(){
