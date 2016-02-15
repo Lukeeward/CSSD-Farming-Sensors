@@ -88,11 +88,11 @@ public class UserInterface extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        panelLogIn = new java.awt.Panel();
+        panelLogIn = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         txtUsername = new javax.swing.JTextField();
         txtPassword = new javax.swing.JPasswordField();
-        panelManager = new java.awt.Panel();
+        panelManager = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         listUserStations = new javax.swing.JList();
         btnAddFieldStation = new javax.swing.JButton();
@@ -109,7 +109,7 @@ public class UserInterface extends javax.swing.JFrame {
         btnAddSensor = new javax.swing.JButton();
         btnRemoveSensor = new javax.swing.JButton();
         btnSensorDetails = new javax.swing.JButton();
-        panelAddSensor = new java.awt.Panel();
+        panelAddSensor = new javax.swing.JPanel();
         lblAddNewSensor = new javax.swing.JLabel();
         lblFieldStationName2 = new javax.swing.JLabel();
         lblSensorType = new javax.swing.JLabel();
@@ -174,7 +174,7 @@ public class UserInterface extends javax.swing.JFrame {
                 .addContainerGap(191, Short.MAX_VALUE))
         );
 
-        getContentPane().add(panelLogIn, "card2");
+        getContentPane().add(panelLogIn, "card5");
 
         listUserStations.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -296,10 +296,10 @@ public class UserInterface extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(panelManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnReport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnRemoveFieldStation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAddFieldStation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnFieldStationDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnAddFieldStation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnRemoveFieldStation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(panelManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelManagerLayout.createSequentialGroup()
                         .addGroup(panelManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -343,7 +343,7 @@ public class UserInterface extends javax.swing.JFrame {
                     .addComponent(btnSensorDetails)))
         );
 
-        getContentPane().add(panelManager, "card3");
+        getContentPane().add(panelManager, "card5");
 
         lblAddNewSensor.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
         lblAddNewSensor.setText("Add New Sensor");
@@ -460,7 +460,7 @@ public class UserInterface extends javax.swing.JFrame {
                                     .addGroup(panelAddSensorLayout.createSequentialGroup()
                                         .addGap(18, 18, 18)
                                         .addComponent(btnCancelSensor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))))
-                .addContainerGap(201, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         panelAddSensorLayout.setVerticalGroup(
             panelAddSensorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -494,7 +494,7 @@ public class UserInterface extends javax.swing.JFrame {
                     .addComponent(lblIntervalSeconds)
                     .addComponent(comboIntervalMinutes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(comboIntervalSeconds, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panelAddSensorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSaveSensor)
                     .addComponent(btnCancelSensor))
@@ -723,9 +723,9 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JLabel lblSensorType;
     private javax.swing.JLabel lblSensorUnits;
     private javax.swing.JList listUserStations;
-    private java.awt.Panel panelAddSensor;
-    private java.awt.Panel panelLogIn;
-    private java.awt.Panel panelManager;
+    private javax.swing.JPanel panelAddSensor;
+    private javax.swing.JPanel panelLogIn;
+    private javax.swing.JPanel panelManager;
     private javax.swing.JTable tblSensorTable;
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtSensorId;
