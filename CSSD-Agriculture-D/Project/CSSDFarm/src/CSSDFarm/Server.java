@@ -95,7 +95,7 @@ public class Server {
     public FieldStation getFieldStation(String id){
         for(FieldStation aStation : stations)
         {
-            if(aStation.getId() == id){
+            if(aStation.getId().equals(id)){
                 return aStation;
             }
         }

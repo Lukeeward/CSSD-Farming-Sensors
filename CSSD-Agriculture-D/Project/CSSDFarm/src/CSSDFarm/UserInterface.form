@@ -332,6 +332,7 @@
         <Component class="javax.swing.JButton" name="btnAddSensor">
           <Properties>
             <Property name="text" type="java.lang.String" value="Add Sensor"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddSensorActionPerformed"/>
@@ -340,11 +341,13 @@
         <Component class="javax.swing.JButton" name="btnRemoveSensor">
           <Properties>
             <Property name="text" type="java.lang.String" value="Remove Sensor"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="btnSensorDetails">
           <Properties>
             <Property name="text" type="java.lang.String" value="Sensor Details"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
         </Component>
       </SubComponents>

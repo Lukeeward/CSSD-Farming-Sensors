@@ -41,7 +41,7 @@ public class UserInterface extends javax.swing.JFrame {
     
     public void displayManagerScreen(){
         userFieldStations = server.loadData();
-        listUserStations.setListData(userFieldStations);
+       // listUserStations.setListData(userFieldStations);
         
         listUserStations.setCellRenderer(new DefaultListCellRenderer() {
             @Override
@@ -275,6 +275,7 @@ public class UserInterface extends javax.swing.JFrame {
         btnFieldStationDetails.setText("Field Station Details");
 
         btnAddSensor.setText("Add Sensor");
+        btnAddSensor.setEnabled(false);
         btnAddSensor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddSensorActionPerformed(evt);
@@ -282,8 +283,10 @@ public class UserInterface extends javax.swing.JFrame {
         });
 
         btnRemoveSensor.setText("Remove Sensor");
+        btnRemoveSensor.setEnabled(false);
 
         btnSensorDetails.setText("Sensor Details");
+        btnSensorDetails.setEnabled(false);
 
         javax.swing.GroupLayout panelManagerLayout = new javax.swing.GroupLayout(panelManager);
         panelManager.setLayout(panelManagerLayout);
@@ -510,6 +513,7 @@ public class UserInterface extends javax.swing.JFrame {
         if (authenticateUser){            
             panelLogIn.setVisible(false);
            displayManagerScreen();
+           listUserStations.setListData(userFieldStations);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
     
@@ -527,6 +531,7 @@ public class UserInterface extends javax.swing.JFrame {
                 String nameText = name.getText();
                 addFieldStation(id.getText(), name.getText());
                 JOptionPane.getRootFrame().dispose();
+                listUserStations.setSelectedValue(server.getFieldStation(idText), false);
             }
         });
         
@@ -593,7 +598,16 @@ public class UserInterface extends javax.swing.JFrame {
         }
         
         EventTableModel tableModel = new EventTableModel(eventList, new SensorTableFormat());
+        
         tblSensorTable.setModel(tableModel);
+        int lastRowIndex = tblSensorTable.getModel().getRowCount()-1;
+        if(lastRowIndex >= 0)
+        {
+            tblSensorTable.setRowSelectionInterval(lastRowIndex, lastRowIndex);
+            btnRemoveSensor.setEnabled(true);
+            btnSensorDetails.setEnabled(true);
+        }
+        
 //        AdvancedTableModel<Sensor> issuesTableModel =
 //            GlazedListsSwing.eventTableModelWithThreadProxyList(stationSensors, new SensorTableFormat());
         
@@ -605,8 +619,11 @@ public class UserInterface extends javax.swing.JFrame {
     private void listUserStationsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listUserStationsValueChanged
         FieldStation selected = (FieldStation)listUserStations.getSelectedValue();
         if(selected != null){
+            btnAddSensor.setEnabled(true);
             selectedStation = server.getFieldStation(selected.getId());
             changeSelectedFieldStation(selectedStation);
+        } else {
+            btnAddSensor.setEnabled(false);
         }
     }//GEN-LAST:event_listUserStationsValueChanged
 
@@ -626,6 +643,7 @@ public class UserInterface extends javax.swing.JFrame {
         
         panelAddSensor.setVisible(false);
         displayManagerScreen();
+        changeSelectedFieldStation(selectedStation);
     }//GEN-LAST:event_btnSaveSensorActionPerformed
 
     private void btnCancelSensorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelSensorActionPerformed
