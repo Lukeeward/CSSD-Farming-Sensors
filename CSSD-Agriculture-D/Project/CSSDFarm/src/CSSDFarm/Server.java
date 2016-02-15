@@ -49,6 +49,13 @@ public class Server {
         FieldStation station = getFieldStation(id);
         currentUser.addStation(station);
     }
+    
+    public void removeFieldStation(String id){
+        FieldStation toDelete = currentUser.getStation(id);
+        //TODO: If Farmer then remove from server
+        stations.remove(toDelete);
+        currentUser.removeStation(toDelete);
+    }
     //String1 = stationid??
     //String2 = sensorID???
     public SensorData getMostRecentData(String string1, String string2){

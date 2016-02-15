@@ -21,10 +21,15 @@ public class UserAccount {
     }
     
     public void removeStation(FieldStation fieldStation){
-        
+        stations.remove(fieldStation);
     }
     
     public FieldStation getStation(String id){
+        for(FieldStation aStation : stations){
+            if(aStation.getId().equals(id)){
+                return aStation;
+            }
+        }
         return null;
     }
     

@@ -322,11 +322,16 @@
         <Component class="javax.swing.JButton" name="btnRemoveFieldStation">
           <Properties>
             <Property name="text" type="java.lang.String" value="Remove Field Station"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRemoveFieldStationActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnFieldStationDetails">
           <Properties>
             <Property name="text" type="java.lang.String" value="Field Station Details"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="btnAddSensor">

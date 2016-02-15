@@ -78,6 +78,20 @@ public class UserInterface extends javax.swing.JFrame {
         }
     }
     
+    public void removeFieldStation(String id){
+        server.removeFieldStation(id);
+        Vector<FieldStation> userFieldStations = server.loadData();
+        listUserStations.setListData(userFieldStations);
+        
+        if(listUserStations.getModel().getSize() > 0 ){
+            listUserStations.setSelectedIndex(0);
+        } else {
+            selectedStation = null;
+            lblFieldStationName.setText(" ");
+        }
+            
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -271,8 +285,15 @@ public class UserInterface extends javax.swing.JFrame {
         lblFieldStationManager.setText("Field Station Manager");
 
         btnRemoveFieldStation.setText("Remove Field Station");
+        btnRemoveFieldStation.setEnabled(false);
+        btnRemoveFieldStation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoveFieldStationActionPerformed(evt);
+            }
+        });
 
         btnFieldStationDetails.setText("Field Station Details");
+        btnFieldStationDetails.setEnabled(false);
 
         btnAddSensor.setText("Add Sensor");
         btnAddSensor.setEnabled(false);
@@ -620,10 +641,14 @@ public class UserInterface extends javax.swing.JFrame {
         FieldStation selected = (FieldStation)listUserStations.getSelectedValue();
         if(selected != null){
             btnAddSensor.setEnabled(true);
+            btnRemoveFieldStation.setEnabled(true);
+            btnFieldStationDetails.setEnabled(true);
             selectedStation = server.getFieldStation(selected.getId());
             changeSelectedFieldStation(selectedStation);
         } else {
             btnAddSensor.setEnabled(false);
+            btnRemoveFieldStation.setEnabled(false);
+            btnFieldStationDetails.setEnabled(false);
         }
     }//GEN-LAST:event_listUserStationsValueChanged
 
@@ -650,6 +675,13 @@ public class UserInterface extends javax.swing.JFrame {
         panelAddSensor.setVisible(false);
         displayManagerScreen();
     }//GEN-LAST:event_btnCancelSensorActionPerformed
+
+    private void btnRemoveFieldStationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveFieldStationActionPerformed
+        
+        
+        removeFieldStation(selectedStation.getId());
+        
+    }//GEN-LAST:event_btnRemoveFieldStationActionPerformed
 
     
     
