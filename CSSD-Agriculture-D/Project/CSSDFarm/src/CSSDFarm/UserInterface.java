@@ -12,7 +12,12 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.Properties;
 import java.util.Vector;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -34,6 +39,8 @@ public class UserInterface extends javax.swing.JFrame {
     static final Server server = new Server();
     FieldStation selectedStation;
     Vector<FieldStation> userFieldStations;
+    EventTableModel sensorsTable;
+    EventTableModel sensorsReportTable;
     
     public UserInterface() {
         initComponents();
@@ -66,8 +73,32 @@ public class UserInterface extends javax.swing.JFrame {
         panelManager.setVisible(false);
         panelAddSensor.setVisible(true);
         lblFieldStationName2.setText(selectedStation.getName());
+    }
+    
+    public void displayReportScreen(){
+        panelManager.setVisible(false);
+        panelReport.setVisible(true);
+        dpReportCalendar.getEditor().setEditable(false);
+        
+        userFieldStations = server.loadData();
+        comboReportFieldStations.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                if(value instanceof FieldStation){
+                    FieldStation station = (FieldStation) value;
+                    setText(station.getName());
+                }
+                return this;
+            }
+        });
+        for(FieldStation station : userFieldStations){
+            comboReportFieldStations.addItem(station);
+        }
         
         
+        Date date = new Date();
+        dpReportCalendar.setDate(date);
     }
     
     public void addFieldStation(String id, String name){
@@ -90,6 +121,40 @@ public class UserInterface extends javax.swing.JFrame {
             lblFieldStationName.setText(" ");
         }
             
+    }
+    
+    public void removeSensor(String id){
+        FieldStation station = server.getFieldStation(selectedStation.getId());
+        station.removeSensor(id);
+        displayManagerScreen();
+        changeSelectedFieldStation(selectedStation);
+    }
+    
+    public void updateReport(){
+        FieldStation fieldStation = (FieldStation)comboReportFieldStations.getSelectedItem();
+        String sensorType = (String)comboReportSensorType.getSelectedItem();
+        //Date date = dpReportCalendar.getDate();
+        
+        Vector<Sensor> sensors = fieldStation.getSetOfSensors().getByType(sensorType);
+        
+        EventList<Sensor> eventList = new BasicEventList<Sensor>();
+        
+        eventList.clear();
+        for(Sensor sensor:sensors){
+            eventList.add(sensor);
+        }
+        
+        sensorsReportTable = new EventTableModel(eventList, new SensorTableFormat());
+        
+        tblSensorData.setModel(sensorsReportTable);
+        int lastRowIndex = tblSensorData.getModel().getRowCount()-1;
+        if(lastRowIndex >= 0){
+            tblSensorData.setRowSelectionInterval(lastRowIndex, lastRowIndex);
+        }
+    }
+    
+    public void changeReportView(){
+        
     }
     
 
@@ -143,6 +208,21 @@ public class UserInterface extends javax.swing.JFrame {
         comboIntervalSeconds = new javax.swing.JComboBox();
         btnSaveSensor = new javax.swing.JButton();
         btnCancelSensor = new javax.swing.JButton();
+        panelReport = new javax.swing.JPanel();
+        lblReportTitle = new javax.swing.JLabel();
+        btnManager = new javax.swing.JButton();
+        comboReportFieldStations = new javax.swing.JComboBox();
+        lblReportTitle1 = new javax.swing.JLabel();
+        sliderView = new javax.swing.JSlider();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        lblReportTitle2 = new javax.swing.JLabel();
+        comboReportSensorType = new javax.swing.JComboBox();
+        lblReportTitle3 = new javax.swing.JLabel();
+        dpReportCalendar = new org.jdesktop.swingx.JXDatePicker();
+        panelReportTable = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tblSensorData = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.CardLayout());
@@ -174,7 +254,7 @@ public class UserInterface extends javax.swing.JFrame {
                         .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(416, Short.MAX_VALUE))
+                .addContainerGap(414, Short.MAX_VALUE))
         );
         panelLogInLayout.setVerticalGroup(
             panelLogInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -185,7 +265,7 @@ public class UserInterface extends javax.swing.JFrame {
                     .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(113, 113, 113)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(191, Short.MAX_VALUE))
+                .addContainerGap(205, Short.MAX_VALUE))
         );
 
         getContentPane().add(panelLogIn, "card5");
@@ -265,7 +345,7 @@ public class UserInterface extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -280,6 +360,11 @@ public class UserInterface extends javax.swing.JFrame {
         );
 
         btnReport.setText("Report");
+        btnReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReportActionPerformed(evt);
+            }
+        });
 
         lblFieldStationManager.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
         lblFieldStationManager.setText("Field Station Manager");
@@ -305,6 +390,11 @@ public class UserInterface extends javax.swing.JFrame {
 
         btnRemoveSensor.setText("Remove Sensor");
         btnRemoveSensor.setEnabled(false);
+        btnRemoveSensor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoveSensorActionPerformed(evt);
+            }
+        });
 
         btnSensorDetails.setText("Sensor Details");
         btnSensorDetails.setEnabled(false);
@@ -481,7 +571,7 @@ public class UserInterface extends javax.swing.JFrame {
                                     .addGroup(panelAddSensorLayout.createSequentialGroup()
                                         .addGap(18, 18, 18)
                                         .addComponent(btnCancelSensor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(203, Short.MAX_VALUE))
         );
         panelAddSensorLayout.setVerticalGroup(
             panelAddSensorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -523,6 +613,150 @@ public class UserInterface extends javax.swing.JFrame {
         );
 
         getContentPane().add(panelAddSensor, "card5");
+
+        panelReport.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+                panelReportCaretPositionChanged(evt);
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+            }
+        });
+
+        lblReportTitle.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
+        lblReportTitle.setText("Report");
+
+        btnManager.setText("Manager");
+
+        comboReportFieldStations.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                comboReportFieldStationsItemStateChanged(evt);
+            }
+        });
+
+        lblReportTitle1.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
+        lblReportTitle1.setText("View:");
+
+        sliderView.setMaximum(1);
+
+        jLabel1.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
+        jLabel1.setText("GPS");
+
+        jLabel2.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
+        jLabel2.setText("Table");
+
+        lblReportTitle2.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
+        lblReportTitle2.setText("Sensor Type:");
+
+        comboReportSensorType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Soil Moisture", "Soil Temperature", "Air Temperature", "Soil Acidity", "Light Intensity" }));
+        comboReportSensorType.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                comboReportSensorTypeItemStateChanged(evt);
+            }
+        });
+
+        lblReportTitle3.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
+        lblReportTitle3.setText("Date:");
+
+        dpReportCalendar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dpReportCalendarActionPerformed(evt);
+            }
+        });
+
+        tblSensorData.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane3.setViewportView(tblSensorData);
+
+        javax.swing.GroupLayout panelReportTableLayout = new javax.swing.GroupLayout(panelReportTable);
+        panelReportTable.setLayout(panelReportTableLayout);
+        panelReportTableLayout.setHorizontalGroup(
+            panelReportTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelReportTableLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 774, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        panelReportTableLayout.setVerticalGroup(
+            panelReportTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelReportTableLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(14, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout panelReportLayout = new javax.swing.GroupLayout(panelReport);
+        panelReport.setLayout(panelReportLayout);
+        panelReportLayout.setHorizontalGroup(
+            panelReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelReportLayout.createSequentialGroup()
+                .addGroup(panelReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelReportLayout.createSequentialGroup()
+                        .addGroup(panelReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelReportLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(btnManager, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(panelReportLayout.createSequentialGroup()
+                                .addGap(187, 187, 187)
+                                .addGroup(panelReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(lblReportTitle2)
+                                    .addComponent(lblReportTitle1)
+                                    .addComponent(lblReportTitle3))
+                                .addGap(37, 37, 37)
+                                .addGroup(panelReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(panelReportLayout.createSequentialGroup()
+                                        .addComponent(jLabel1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(sliderView, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel2))
+                                    .addComponent(comboReportSensorType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(dpReportCalendar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelReportLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(lblReportTitle)
+                                .addGap(18, 18, 18)
+                                .addComponent(comboReportFieldStations, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(panelReportLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(panelReportTable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        panelReportLayout.setVerticalGroup(
+            panelReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelReportLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblReportTitle)
+                    .addComponent(btnManager)
+                    .addComponent(comboReportFieldStations, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28)
+                .addGroup(panelReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblReportTitle1)
+                        .addComponent(jLabel1))
+                    .addComponent(sliderView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblReportTitle2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(comboReportSensorType, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblReportTitle3, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
+                    .addComponent(dpReportCalendar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(panelReportTable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        getContentPane().add(panelReport, "card5");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -618,9 +852,9 @@ public class UserInterface extends javax.swing.JFrame {
             eventList.add(sensor);
         }
         
-        EventTableModel tableModel = new EventTableModel(eventList, new SensorTableFormat());
+        sensorsTable = new EventTableModel(eventList, new SensorTableFormat());
         
-        tblSensorTable.setModel(tableModel);
+        tblSensorTable.setModel(sensorsTable);
         int lastRowIndex = tblSensorTable.getModel().getRowCount()-1;
         if(lastRowIndex >= 0)
         {
@@ -677,13 +911,41 @@ public class UserInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelSensorActionPerformed
 
     private void btnRemoveFieldStationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveFieldStationActionPerformed
-        
-        
         removeFieldStation(selectedStation.getId());
-        
     }//GEN-LAST:event_btnRemoveFieldStationActionPerformed
 
-    
+    private void btnRemoveSensorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveSensorActionPerformed
+        // TODO add your handling code here:
+        int index = tblSensorTable.getSelectedRow();
+        Sensor sensor = (Sensor)sensorsTable.getElementAt(index);
+        removeSensor(sensor.getId());
+    }//GEN-LAST:event_btnRemoveSensorActionPerformed
+
+    private void btnReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportActionPerformed
+        // TODO add your handling code here:
+        displayReportScreen();
+    }//GEN-LAST:event_btnReportActionPerformed
+
+    private void comboReportFieldStationsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboReportFieldStationsItemStateChanged
+        // TODO add your handling code here:
+        updateReport();
+    }//GEN-LAST:event_comboReportFieldStationsItemStateChanged
+
+    private void comboReportSensorTypeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboReportSensorTypeItemStateChanged
+        // TODO add your handling code here:
+        updateReport();
+    }//GEN-LAST:event_comboReportSensorTypeItemStateChanged
+
+    private void dpReportCalendarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dpReportCalendarActionPerformed
+        // TODO add your handling code here:
+        updateReport();
+    }//GEN-LAST:event_dpReportCalendarActionPerformed
+
+    private void panelReportCaretPositionChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_panelReportCaretPositionChanged
+        // TODO add your handling code here:
+        changeReportView();
+    }//GEN-LAST:event_panelReportCaretPositionChanged
+
     
     /**
      * @param args the command line arguments
@@ -725,6 +987,7 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JButton btnAddSensor;
     private javax.swing.JButton btnCancelSensor;
     private javax.swing.JButton btnFieldStationDetails;
+    private javax.swing.JButton btnManager;
     private javax.swing.JButton btnRemoveFieldStation;
     private javax.swing.JButton btnRemoveSensor;
     private javax.swing.JButton btnReport;
@@ -734,13 +997,19 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JComboBox comboIntervalHours;
     private javax.swing.JComboBox comboIntervalMinutes;
     private javax.swing.JComboBox comboIntervalSeconds;
+    private javax.swing.JComboBox comboReportFieldStations;
+    private javax.swing.JComboBox comboReportSensorType;
     private javax.swing.JComboBox comboSensorType;
     private javax.swing.JComboBox comboSensorUnits;
+    private org.jdesktop.swingx.JXDatePicker dpReportCalendar;
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel lblAddNewSensor;
     private javax.swing.JLabel lblFieldStationManager;
     private javax.swing.JLabel lblFieldStationName;
@@ -749,6 +1018,10 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JLabel lblIntervalHours;
     private javax.swing.JLabel lblIntervalMinutes;
     private javax.swing.JLabel lblIntervalSeconds;
+    private javax.swing.JLabel lblReportTitle;
+    private javax.swing.JLabel lblReportTitle1;
+    private javax.swing.JLabel lblReportTitle2;
+    private javax.swing.JLabel lblReportTitle3;
     private javax.swing.JLabel lblSensorId;
     private javax.swing.JLabel lblSensorInterval;
     private javax.swing.JLabel lblSensorList;
@@ -758,6 +1031,10 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JPanel panelAddSensor;
     private javax.swing.JPanel panelLogIn;
     private javax.swing.JPanel panelManager;
+    private javax.swing.JPanel panelReport;
+    private javax.swing.JPanel panelReportTable;
+    private javax.swing.JSlider sliderView;
+    private javax.swing.JTable tblSensorData;
     private javax.swing.JTable tblSensorTable;
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtSensorId;

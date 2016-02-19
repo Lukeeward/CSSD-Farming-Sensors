@@ -37,4 +37,13 @@ public class SetOfSensors {
     public SensorData getData(String string){
         return null;
     }
+    
+    public Vector<Sensor> getByType(String type){
+        Vector<Sensor> sensors = new Vector<Sensor>();
+        for(Sensor sensor : data){
+            if(sensor.getType() == type)
+                sensors.add(sensor);
+        }
+        return sensors;
+    }
 }
