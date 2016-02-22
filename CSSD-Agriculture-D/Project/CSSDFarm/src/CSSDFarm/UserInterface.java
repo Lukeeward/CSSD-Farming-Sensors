@@ -146,14 +146,15 @@ public class UserInterface extends javax.swing.JFrame {
         
         Vector<Sensor> sensors = fieldStation.getSetOfSensors().getByType(sensorType);
         
-        EventList<Sensor> eventList = new BasicEventList<Sensor>();
+        EventList<SensorData> eventList = new BasicEventList<SensorData>();
         
         eventList.clear();
         for(Sensor sensor:sensors){
-            eventList.add(sensor);
+            sensor.collectData();
+            eventList.add(sensor.getData());
         }
         
-        sensorsReportTable = new EventTableModel(eventList, new SensorTableFormat());
+        sensorsReportTable = new EventTableModel(eventList, new SensorDataTableFormat());
         
         tblSensorData.setModel(sensorsReportTable);
         int lastRowIndex = tblSensorData.getModel().getRowCount()-1;
