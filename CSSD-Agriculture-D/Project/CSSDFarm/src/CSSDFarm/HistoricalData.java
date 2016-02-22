@@ -8,7 +8,11 @@ class HistoricalData {
     private String sensorID;
     private Vector<SensorData> data;
     
-    public HistoricalData(){
+    public HistoricalData(String SensorType, String fieldStationId, String sensorId){
+        this.dataType = SensorType;
+        this.fieldStationID = fieldStationId;
+        this.sensorID = sensorId;
+        this.data = new Vector<SensorData>();
     }
     
     public SensorData getData(Date date){

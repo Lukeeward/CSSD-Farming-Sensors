@@ -1,4 +1,5 @@
 package CSSDFarm;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
@@ -9,10 +10,17 @@ public class Server {
     private Vector<UserAccount> users;
     private Vector<FieldStation> stations;
     
-    public Server(){
+    private static Server server = new Server();
+    
+    private Server(){
         this.users = new Vector<UserAccount>();
         this.users.add(new UserAccount("John","Password"));
         this.stations = new Vector<FieldStation>();
+        this.data = new HashMap<>();
+    }
+    
+    public static Server getInstance(){
+        return server;
     }
     
     //why does authenticate return that
@@ -75,9 +83,9 @@ public class Server {
     //Returns true as they are expecting connection issues with an actual 'server'
     //The return true would be the response from the server so they know to clear buffer
     public boolean addData(Vector<SensorData> sensorData, String fieldStationId){
-        HistoricalData test = data.get(fieldStationId);
+        HistoricalData historicaldata = data.get(fieldStationId);
         for(SensorData data : sensorData){
-            test.addData(data);
+            historicaldata.addData(data);
         }
         return true;
     }
@@ -112,5 +120,6 @@ public class Server {
     public void addSensor(String fieldStationId, String sensorId, String sensorType, String sensorUnits, int interval){
         FieldStation aFieldStation = getFieldStation(fieldStationId);
         aFieldStation.addSensor(sensorId, sensorType, sensorUnits, interval);
+        data.put(aFieldStation.getId(), new HistoricalData(sensorType, aFieldStation.getId(), sensorId));
     }
 }

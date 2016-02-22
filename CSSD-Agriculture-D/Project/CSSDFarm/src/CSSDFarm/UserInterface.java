@@ -36,7 +36,7 @@ import javax.swing.event.DocumentListener;
 
 public class UserInterface extends javax.swing.JFrame {
 
-    static final Server server = new Server();
+    static final Server server = Server.getInstance();
     FieldStation selectedStation;
     Vector<FieldStation> userFieldStations;
     EventTableModel sensorsTable;
@@ -233,6 +233,7 @@ public class UserInterface extends javax.swing.JFrame {
         panelReportTable = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblSensorData = new javax.swing.JTable();
+        btnDebug = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.CardLayout());
@@ -419,9 +420,8 @@ public class UserInterface extends javax.swing.JFrame {
                     .addComponent(btnAddFieldStation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnFieldStationDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnRemoveFieldStation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(panelManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(btnReport, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)))
+                    .addComponent(btnReport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE))
                 .addGroup(panelManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelManagerLayout.createSequentialGroup()
                         .addGroup(panelManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -706,6 +706,13 @@ public class UserInterface extends javax.swing.JFrame {
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
+        btnDebug.setText("Interval test button");
+        btnDebug.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDebugActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelReportLayout = new javax.swing.GroupLayout(panelReport);
         panelReport.setLayout(panelReportLayout);
         panelReportLayout.setHorizontalGroup(
@@ -737,6 +744,8 @@ public class UserInterface extends javax.swing.JFrame {
                                 .addComponent(lblReportTitle)
                                 .addGap(18, 18, 18)
                                 .addComponent(comboReportFieldStations, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(123, 123, 123)
+                        .addComponent(btnDebug)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(panelReportLayout.createSequentialGroup()
                         .addContainerGap()
@@ -761,7 +770,9 @@ public class UserInterface extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lblReportTitle2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(comboReportSensorType, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(comboReportSensorType, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnDebug)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblReportTitle3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -966,6 +977,11 @@ public class UserInterface extends javax.swing.JFrame {
         displayManagerScreen();
     }//GEN-LAST:event_btnManagerActionPerformed
 
+    private void btnDebugActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDebugActionPerformed
+        FieldStation fieldStation = (FieldStation)comboReportFieldStations.getSelectedItem();
+        fieldStation.uploadData();
+    }//GEN-LAST:event_btnDebugActionPerformed
+
     
     /**
      * @param args the command line arguments
@@ -1006,6 +1022,7 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JButton btnAddFieldStation;
     private javax.swing.JButton btnAddSensor;
     private javax.swing.JButton btnCancelSensor;
+    private javax.swing.JButton btnDebug;
     private javax.swing.JButton btnFieldStationDetails;
     private javax.swing.JButton btnManager;
     private javax.swing.JButton btnRemoveFieldStation;

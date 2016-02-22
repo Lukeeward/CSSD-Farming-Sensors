@@ -29,7 +29,7 @@ public class SensorTableFormat implements TableFormat<Sensor> {
         if(column == 0)      return sensor.getId();
         else if(column == 1) return sensor.getType();
         else if(column == 2) return sensor.getUnits();
-        else if(column == 3) return sensor.getGps();
+        else if(column == 3) return sensor.getGps().GPStoString();
 
         throw new IllegalStateException();
     }

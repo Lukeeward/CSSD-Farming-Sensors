@@ -38,8 +38,13 @@ public class FieldStation {
         sensors.removeSensor(sensors.getSensor(id));
     }
     
+    //string1 could be the filename of where the data is stored?
     public void update(String string1, SensorData sensorData){
-        
+        addToBuffer(string1, sensorData);
+        if(uploadData())
+        {
+            clearBuffer();
+        }
     }
     
     public SensorData getData(String id){
@@ -47,15 +52,19 @@ public class FieldStation {
     }
     
     public boolean uploadData(){
-        return false;
+        //Possibly upload multiple sensorDatas from the buffer files
+        Vector<SensorData> dummyData = new Vector<SensorData>();
+        dummyData.add(new SensorData("test", new Date(),"mm",12.0f, new GPSData(1234f, 1234f, 1234f), 120));
+        Server.getInstance().addData(dummyData, id);
+        return true;
     }
     
     public void addToBuffer(String string1, SensorData sensorData){
-        
+        //This could be where the data is serialised before being sent to the server
     }
     
     public void clearBuffer(){
-        
+        System.out.print("Clearning buffer");
     }
     
     public void addSensor(String sensorId, String sensorType, String sensorUnits, int interval){

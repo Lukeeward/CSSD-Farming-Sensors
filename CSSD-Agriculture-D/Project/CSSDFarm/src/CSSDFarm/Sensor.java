@@ -86,11 +86,12 @@ public class Sensor {
     {
         //If lastReadingTime == lastReadingTime + intervalSeconds
         /*if(new Date(lastReadingTime.getSeconds() + intervalSeconds) == new Date())
-        {
+        {*/
             collectData();
             //The Sequence Diagram says it should call the fieldstation but doesnt say what the string is
-            station.update(string, data);
-        }*/
+            //"data.txt"??
+            station.update("data", data);
+        //}
     }
     
     public void setFieldStation(FieldStation fieldStation)
