@@ -15,17 +15,29 @@ class HistoricalData {
         this.data = new Vector<SensorData>();
     }
     
-    public SensorData getData(Date date){
-        return null;
+    public Vector<SensorData> getData(Date date){
+        Vector<SensorData> returnData = new Vector<SensorData>();
+        for(SensorData dt : data)
+        {
+            if (dt.getTime().equals(date)){
+                returnData.add(dt);
+            }
+        }
+        return returnData;
     }
     
     public SensorData getMostRecent(){
         return null;
     }
     
+    public String getType(){
+        return dataType;
+    }
+    
     public void addData(SensorData data){
         this.data.add(data);
     }
+    
     
     //GET MOST RECENT TWICE!? Maybe getAllData?
     /*

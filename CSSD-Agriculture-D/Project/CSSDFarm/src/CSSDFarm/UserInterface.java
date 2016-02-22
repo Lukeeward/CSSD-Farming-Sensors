@@ -144,14 +144,17 @@ public class UserInterface extends javax.swing.JFrame {
         String sensorType = (String)comboReportSensorType.getSelectedItem();
         //Date date = dpReportCalendar.getDate();
         
-        Vector<Sensor> sensors = fieldStation.getSetOfSensors().getByType(sensorType);
+        //Vector<Sensor> sensors = fieldStation.getSetOfSensors().getByType(sensorType);
         
-        EventList<SensorData> eventList = new BasicEventList<SensorData>();
+        EventList<SensorData> eventList = new BasicEventList<SensorData>();        
+        Report report = server.compileReport(fieldStation.getId());
+        Vector<SensorData> sensorData = report.getDataByTypeAndDate(sensorType, new Date());
+        
         
         eventList.clear();
-        for(Sensor sensor:sensors){
-            sensor.collectData();
-            eventList.add(sensor.getData());
+        for(SensorData sensor:sensorData){
+            //sensor.collectData();
+            eventList.add(sensor);
         }
         
         sensorsReportTable = new EventTableModel(eventList, new SensorDataTableFormat());
@@ -421,7 +424,7 @@ public class UserInterface extends javax.swing.JFrame {
                     .addComponent(btnFieldStationDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnRemoveFieldStation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnReport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(panelManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelManagerLayout.createSequentialGroup()
                         .addGroup(panelManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
