@@ -59,8 +59,8 @@ public class Sensor {
         return this.units;
     }
     
-    public String getGps(){
-        return location.getLatitude() + ", " +location.getLongitude() +  ", " + location.getAltitude();
+    public GPSData getGps(){
+        return location;
     }
     
     public void toggleModule()
@@ -79,7 +79,7 @@ public class Sensor {
     {
         //Replace 'mm' with 'unit'
         //Replace 12.0f with 'value'
-        data = new SensorData(id, new Date(),"mm",12.0f, location);
+        data = new SensorData(id, new Date(),"mm",12.0f, location, 120);
     }
     
     public void onInterval()

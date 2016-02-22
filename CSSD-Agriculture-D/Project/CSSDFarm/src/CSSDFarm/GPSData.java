@@ -22,4 +22,8 @@ public class GPSData {
     public float getAltitude(){
         return altitude;
     }
+        
+    public String GPStoString(){
+        return latitude + "," + longitude + "," + altitude;
+    }
 }
