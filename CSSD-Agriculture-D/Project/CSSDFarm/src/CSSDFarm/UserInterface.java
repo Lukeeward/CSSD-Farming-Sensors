@@ -30,6 +30,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentListener;
 import com.teamdev.jxbrowser.chromium.Browser;
+import com.teamdev.jxbrowser.chromium.LoggerProvider;
 import com.teamdev.jxbrowser.chromium.swing.BrowserView;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -37,6 +38,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.time.Clock;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JInternalFrame;
@@ -57,6 +59,7 @@ public class UserInterface extends javax.swing.JFrame {
     Vector<FieldStation> userFieldStations;
     EventTableModel sensorsTable;
     EventTableModel sensorsReportTable;
+    Browser browser = new Browser();
     
     public UserInterface() {
         initComponents();
@@ -125,7 +128,9 @@ public class UserInterface extends javax.swing.JFrame {
     }
    
     public void displayHeatmap(){
-        Browser browser = new Browser();
+        LoggerProvider.getChromiumProcessLogger().setLevel(Level.OFF);
+        LoggerProvider.getIPCLogger().setLevel(Level.OFF);
+        LoggerProvider.getBrowserLogger().setLevel(Level.OFF);
         BrowserView view = new BrowserView(browser);
         JPanel toolBar = new JPanel();
         
@@ -153,6 +158,22 @@ public class UserInterface extends javax.swing.JFrame {
         browser.loadHTML(htmlString);
         
         panelHeatmap.add(internalFrame);
+    }
+    
+    public void updateHeatmap(EventList<SensorData> sensorData)
+    {
+        ArrayList stringData = new ArrayList();
+        sensorData.stream().map((sensorDataPoint) -> {
+            System.out.println(sensorDataPoint.getLocation().toString());
+            return sensorDataPoint;
+        }).forEach((sensorDataPoint) -> {
+            stringData.add(sensorDataPoint.getLocation().toString());
+        });
+
+         System.out.println(stringData.get(0).toString());
+         browser.executeJavaScript("addMyData("+
+                 stringData
+                 +")");
     }
     
     public void addFieldStation(String id, String name){
@@ -218,6 +239,8 @@ public class UserInterface extends javax.swing.JFrame {
         if(lastRowIndex >= 0){
             tblSensorData.setRowSelectionInterval(lastRowIndex, lastRowIndex);
         }
+        
+//        updateHeatmap(eventList);
     }
     
     public void changeReportView(){
