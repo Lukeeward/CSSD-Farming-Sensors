@@ -18,6 +18,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Properties;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
@@ -44,9 +46,12 @@ public class UserInterface extends javax.swing.JFrame {
     EventTableModel sensorsTable;
     EventTableModel sensorsReportTable;
     
+    
     public UserInterface() {
         initComponents();
     }
+    
+    
     
     public void displayManagerScreen(){
         //remove old panel details
@@ -1029,6 +1034,16 @@ public class UserInterface extends javax.swing.JFrame {
                 new UserInterface().setVisible(true);
             }
         });
+        
+        Timer t = new Timer();
+        t.scheduleAtFixedRate(new TimerTask() {
+
+            @Override
+            public void run() {
+                //ADD INTERVALL CALLS HERE
+
+            }
+        },1000,1000);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
