@@ -1041,7 +1041,15 @@ public class UserInterface extends javax.swing.JFrame {
             @Override
             public void run() {
                 //ADD INTERVALL CALLS HERE
+                Vector<FieldStation> fieldStations = server.loadData();
+                if (fieldStations != null) {
+                    for (FieldStation aFieldStations: fieldStations){
 
+                        for (Sensor aSensor: aFieldStations.getSetOfSensors().getSensors()){
+                            aSensor.onInterval();
+                        }
+                    }
+                }
             }
         },1000,1000);
     }

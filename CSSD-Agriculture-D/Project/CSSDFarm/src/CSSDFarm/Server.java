@@ -91,7 +91,11 @@ public class Server {
     }
     
     public Vector<FieldStation> loadData(){
-        return currentUser.getFieldStations();
+        if(currentUser == null) {
+            return null;
+        } else {
+            return currentUser.getFieldStations();
+        }
     }
     
     public boolean verifyFieldStation(String id){
