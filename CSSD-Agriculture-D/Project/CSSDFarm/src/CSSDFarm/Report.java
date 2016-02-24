@@ -24,6 +24,15 @@ public class Report {
         return returnData;
     }
     
+    public Vector<SensorData> getDataForSensorOnDate(String sensorId, Date date){
+        for(Entry<String,HistoricalData> entry : data.entrySet()){
+            if(entry.getValue().getSensorId().equals(sensorId)){
+                return entry.getValue().getData(date);
+            }
+        }
+        return null;
+    }
+    
     public Vector<SensorData> getDataByTypeAndDate(String sensorType, Date date){
         Vector<SensorData> returnData = new Vector<SensorData>();
         for(HistoricalData dt : getDataByType(sensorType))

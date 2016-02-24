@@ -22,7 +22,7 @@ public class SetOfSensors {
     
     public Sensor getSensor(String id){
         for(Sensor aSensor : data){
-            if(aSensor.getId() == id)
+            if(aSensor.getId().equals(id))
             {
                 return aSensor;
             }

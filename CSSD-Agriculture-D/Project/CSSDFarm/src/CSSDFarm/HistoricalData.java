@@ -50,6 +50,9 @@ class HistoricalData {
         this.data.add(data);
     }
     
+    public String getSensorId(){
+        return this.sensorID;
+    }
     
     //GET MOST RECENT TWICE!? Maybe getAllData?
     /*

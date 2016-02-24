@@ -39,9 +39,9 @@ public class Server {
         return currentUser.getFieldStations();
     }
     //String1 = FieldStationId??
-    public Report compileReport(String string1){
-        HistoricalData stationHistoricalData = data.get(string1);
-        return new Report(string1, stationHistoricalData);
+    public Report compileReport(String fieldStationId){
+        HistoricalData stationHistoricalData = data.get(fieldStationId);
+        return new Report(fieldStationId, stationHistoricalData);
     }
     
     public void createUserAccount(String username, String password){

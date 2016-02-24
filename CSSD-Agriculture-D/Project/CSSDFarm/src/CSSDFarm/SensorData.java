@@ -21,7 +21,7 @@ public class SensorData {
         this.power = power;
     }
     
-    public String getID()
+    public String getId()
     {
         return sensorID;
     }

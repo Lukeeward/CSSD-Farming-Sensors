@@ -19,7 +19,7 @@ public class SensorDataTableFormat implements TableFormat<SensorData> {
     }
 
     public Object getColumnValue(SensorData sensorData, int column) {
-        if(column == 0)      return sensorData.getID();
+        if(column == 0)      return sensorData.getId();
         else if(column == 1) return sensorData.getUnit();
         else if(column == 2) return sensorData.getValue();
         else if(column == 3) return sensorData.getFullDate();
