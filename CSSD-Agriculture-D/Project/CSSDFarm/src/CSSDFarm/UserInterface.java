@@ -106,8 +106,6 @@ public class UserInterface extends javax.swing.JFrame {
         for(FieldStation station : userFieldStations){
             comboReportFieldStations.addItem(station);
         }
-        
-        
         Date date = new Date();
         dpReportCalendar.setDate(date);
     }
@@ -686,6 +684,7 @@ public class UserInterface extends javax.swing.JFrame {
         lblReportTitle3.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
         lblReportTitle3.setText("Date:");
 
+        dpReportCalendar.setDate(new Date());
         dpReportCalendar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 dpReportCalendarActionPerformed(evt);

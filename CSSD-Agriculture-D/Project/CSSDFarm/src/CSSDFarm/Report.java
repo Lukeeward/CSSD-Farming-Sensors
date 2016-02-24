@@ -28,7 +28,10 @@ public class Report {
         Vector<SensorData> returnData = new Vector<SensorData>();
         for(HistoricalData dt : getDataByType(sensorType))
         {
-            returnData.addAll(dt.getData(date));
+            Vector<SensorData> ret = dt.getData(date);
+            if(ret.size() >= 1){
+                returnData.add(ret.elementAt(0));
+            }
         }
         return returnData;
     }
