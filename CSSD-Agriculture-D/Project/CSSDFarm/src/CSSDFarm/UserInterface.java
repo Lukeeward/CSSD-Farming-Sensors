@@ -29,6 +29,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentListener;
+import com.teamdev.jxbrowser.chromium.Browser;
+import java.time.Clock;
+import javax.swing.JSlider;
 
 /**
  *
@@ -241,9 +244,12 @@ public class UserInterface extends javax.swing.JFrame {
         comboReportSensorType = new javax.swing.JComboBox();
         lblReportTitle3 = new javax.swing.JLabel();
         dpReportCalendar = new org.jdesktop.swingx.JXDatePicker();
+        panelSwitcher = new javax.swing.JPanel();
         panelReportTable = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblSensorData = new javax.swing.JTable();
+        panelHeatmap = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
         btnDebug = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -664,6 +670,11 @@ public class UserInterface extends javax.swing.JFrame {
         lblReportTitle1.setText("View:");
 
         sliderView.setMaximum(1);
+        sliderView.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                sliderViewStateChanged(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
         jLabel1.setText("GPS");
@@ -691,6 +702,8 @@ public class UserInterface extends javax.swing.JFrame {
             }
         });
 
+        panelSwitcher.setLayout(new java.awt.CardLayout());
+
         tblSensorData.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -717,6 +730,29 @@ public class UserInterface extends javax.swing.JFrame {
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(14, Short.MAX_VALUE))
         );
+
+        panelSwitcher.add(panelReportTable, "card13");
+
+        jLabel3.setText("Sick heatmap brah");
+
+        javax.swing.GroupLayout panelHeatmapLayout = new javax.swing.GroupLayout(panelHeatmap);
+        panelHeatmap.setLayout(panelHeatmapLayout);
+        panelHeatmapLayout.setHorizontalGroup(
+            panelHeatmapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelHeatmapLayout.createSequentialGroup()
+                .addGap(346, 346, 346)
+                .addComponent(jLabel3)
+                .addContainerGap(360, Short.MAX_VALUE))
+        );
+        panelHeatmapLayout.setVerticalGroup(
+            panelHeatmapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelHeatmapLayout.createSequentialGroup()
+                .addGap(121, 121, 121)
+                .addComponent(jLabel3)
+                .addContainerGap(148, Short.MAX_VALUE))
+        );
+
+        panelSwitcher.add(panelHeatmap, "card15");
 
         btnDebug.setText("Interval test button");
         btnDebug.addActionListener(new java.awt.event.ActionListener() {
@@ -758,10 +794,10 @@ public class UserInterface extends javax.swing.JFrame {
                                 .addComponent(comboReportFieldStations, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(123, 123, 123)
                         .addComponent(btnDebug)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(panelReportLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(panelReportTable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(0, 74, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelReportLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(panelSwitcher, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         panelReportLayout.setVerticalGroup(
@@ -789,8 +825,8 @@ public class UserInterface extends javax.swing.JFrame {
                 .addGroup(panelReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblReportTitle3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(dpReportCalendar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(panelReportTable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addComponent(panelSwitcher, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -995,6 +1031,24 @@ public class UserInterface extends javax.swing.JFrame {
         updateReport();
     }//GEN-LAST:event_btnDebugActionPerformed
 
+    private void sliderViewStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sliderViewStateChanged
+        // TODO add your handling code here:
+        JSlider source = (JSlider) evt.getSource();
+        if (!source.getValueIsAdjusting()) {
+            if (source.getValue() == 0) 
+            {
+                panelReportTable.setVisible(false);
+                panelHeatmap.setVisible(true);
+            }
+            else
+            {
+                panelReportTable.setVisible(true);
+                panelHeatmap.setVisible(false);
+            }
+            
+        }
+    }//GEN-LAST:event_sliderViewStateChanged
+
     
     /**
      * @param args the command line arguments
@@ -1055,6 +1109,7 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -1079,10 +1134,12 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JLabel lblSensorUnits;
     private javax.swing.JList listUserStations;
     private javax.swing.JPanel panelAddSensor;
+    private javax.swing.JPanel panelHeatmap;
     private javax.swing.JPanel panelLogIn;
     private javax.swing.JPanel panelManager;
     private javax.swing.JPanel panelReport;
     private javax.swing.JPanel panelReportTable;
+    private javax.swing.JPanel panelSwitcher;
     private javax.swing.JSlider sliderView;
     private javax.swing.JTable tblSensorData;
     private javax.swing.JTable tblSensorTable;
