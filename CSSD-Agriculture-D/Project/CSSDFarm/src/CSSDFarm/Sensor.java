@@ -1,5 +1,8 @@
 package CSSDFarm;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Random;
 
 public class Sensor {
     
@@ -39,6 +42,7 @@ public class Sensor {
         this.units = units;
         this.intervalSeconds = interval;
         calculateLocation();
+        collectData();
     }
     
 
@@ -79,19 +83,29 @@ public class Sensor {
     {
         //Replace 'mm' with 'unit'
         //Replace 12.0f with 'value'
-        data = new SensorData(id, new Date(),"mm",12.0f, location, 120);
+        Random rand = new Random();
+        float randomNumber = (float)(0 + rand.nextInt((100 - 0) + 1));
+        data = new SensorData(id, new Date(),"mm",randomNumber, location, 120);
+        lastReadingTime = new Date();
     }
     
     public void onInterval()
     {
-        //If lastReadingTime == lastReadingTime + intervalSeconds
-        /*if(new Date(lastReadingTime.getSeconds() + intervalSeconds) == new Date())
-        {*/
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(lastReadingTime);
+        cal.add(Calendar.SECOND, intervalSeconds);
+        String intDate = df.format(cal.getTime());
+        
+        System.out.println(intDate);
+        System.out.println(df.format(new Date()));
+        if(intDate.equals(df.format(new Date()))){
+            System.out.println(lastReadingTime.getTime());
             collectData();
             //The Sequence Diagram says it should call the fieldstation but doesnt say what the string is
             //"data.txt"??
-            station.update("data", data);
-        //}
+            //station.update("data", data);
+        }
     }
     
     public void setFieldStation(FieldStation fieldStation)
