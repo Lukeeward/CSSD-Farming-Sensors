@@ -57,7 +57,7 @@ public class FieldStation {
         int reading = rn.nextInt(10) + 1;
     
         Vector<SensorData> dummyData = new Vector<SensorData>();
-        dummyData.add(new SensorData("test", new Date(),"mm",reading, new GPSData(1234f, 1234f, 1234f), 120));
+        dummyData.add(new SensorData("test", new Date(),"mm",reading, new GPSData(53.367785f, -1.507226f, 0.5f), 120));
         Server.getInstance().addData(dummyData, id);
         return true;
     }
