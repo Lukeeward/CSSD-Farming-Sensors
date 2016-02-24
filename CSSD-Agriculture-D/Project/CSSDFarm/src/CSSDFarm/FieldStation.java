@@ -53,8 +53,11 @@ public class FieldStation {
     
     public boolean uploadData(){
         //Possibly upload multiple sensorDatas from the buffer files
+        Random rn = new Random();
+        int reading = rn.nextInt(10) + 1;
+    
         Vector<SensorData> dummyData = new Vector<SensorData>();
-        dummyData.add(new SensorData("test", new Date(),"mm",12.0f, new GPSData(1234f, 1234f, 1234f), 120));
+        dummyData.add(new SensorData("test", new Date(),"mm",reading, new GPSData(1234f, 1234f, 1234f), 120));
         Server.getInstance().addData(dummyData, id);
         return true;
     }

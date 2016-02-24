@@ -50,6 +50,10 @@ public class SensorData {
         return date;
     }
     
+    public Date getFullDate(){
+        return date;
+    }
+    
     public GPSData getLocation()
     {
         return location;

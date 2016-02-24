@@ -1,6 +1,8 @@
 package CSSDFarm;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Vector;
 
@@ -25,6 +27,14 @@ class HistoricalData {
                 returnData.add(dt);
             }
         }
+        
+        Collections.sort(returnData, new Comparator<SensorData>() {
+            public int compare(SensorData o1, SensorData o2) {
+                return o1.getFullDate().compareTo(o2.getFullDate());
+                //return Float.compare(o1.getValue(), o2.getValue());
+            }
+        });
+        
         return returnData;
     }
     
