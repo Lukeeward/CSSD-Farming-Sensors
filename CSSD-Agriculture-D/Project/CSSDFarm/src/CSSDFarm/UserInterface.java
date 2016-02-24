@@ -30,8 +30,19 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentListener;
 import com.teamdev.jxbrowser.chromium.Browser;
+import com.teamdev.jxbrowser.chromium.swing.BrowserView;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 import java.time.Clock;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JInternalFrame;
+import javax.swing.JPanel;
 import javax.swing.JSlider;
+import org.apache.commons.io.FileUtils;
 
 /**
  *
@@ -112,6 +123,37 @@ public class UserInterface extends javax.swing.JFrame {
         Date date = new Date();
         dpReportCalendar.setDate(date);
     }
+   
+    public void displayHeatmap(){
+        Browser browser = new Browser();
+        BrowserView view = new BrowserView(browser);
+        JPanel toolBar = new JPanel();
+        
+        Dimension dimension = panelHeatmap.getSize();
+        
+        JInternalFrame internalFrame = new JInternalFrame();
+        internalFrame.add(view, BorderLayout.CENTER);
+        internalFrame.add(toolBar, BorderLayout.NORTH);
+        internalFrame.setSize(dimension);
+        internalFrame.setLocation(0,0);
+        internalFrame.setBorder(null);
+        internalFrame.setVisible(true);
+        ((javax.swing.plaf.basic.BasicInternalFrameUI)internalFrame.getUI()).setNorthPane(null);
+        
+        URL url = getClass().getResource("map.html");
+        File html = new File(url.getPath());
+        
+        String htmlString = null;
+        try {
+            htmlString = FileUtils.readFileToString(html);
+        } catch (IOException ex) {
+            Logger.getLogger(UserInterface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        browser.loadHTML(htmlString);
+        
+        panelHeatmap.add(internalFrame);
+    }
     
     public void addFieldStation(String id, String name){
         if(server.verifyFieldStation(id)){
@@ -120,6 +162,7 @@ public class UserInterface extends javax.swing.JFrame {
             listUserStations.setListData(userFieldStations);
         }
     }
+   
     
     public void removeFieldStation(String id){
         server.removeFieldStation(id);
@@ -1039,6 +1082,7 @@ public class UserInterface extends javax.swing.JFrame {
             {
                 panelReportTable.setVisible(false);
                 panelHeatmap.setVisible(true);
+                displayHeatmap();
             }
             else
             {
