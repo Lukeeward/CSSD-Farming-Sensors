@@ -1,9 +1,12 @@
 package CSSDFarm;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class SensorData {
     private String sensorID;
-    private Date time;
+    private Date date;
     private String unit;
     private float value;
     private GPSData location;
@@ -11,7 +14,7 @@ public class SensorData {
     
     public SensorData(String sensorID, Date time, String unit, float value, GPSData location, float power){
         this.sensorID = sensorID;
-        this.time = time;
+        this.date = time;
         this.unit = unit;
         this.value = value;
         this.location = location;
@@ -33,9 +36,18 @@ public class SensorData {
         return unit;//mm - inches
     }
     
-    public Date getTime()
+    public Date getDate()
     {
-        return time;
+        DateFormat inputformatter = new SimpleDateFormat("dd/MM/yyyy");
+        String newDate = inputformatter.format(date);
+        Date date = new Date();
+                
+        try {
+            date = inputformatter.parse(newDate);
+        } catch(ParseException ex) {
+            
+        }
+        return date;
     }
     
     public GPSData getLocation()

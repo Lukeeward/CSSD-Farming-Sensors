@@ -50,7 +50,7 @@ public class SensorDataTest {
     }
     
     public void testGetTime(){
-        assertTrue(sensorData.getTime() ==  time);
+        assertTrue(sensorData.getDate() ==  time);
     }
     
     @After

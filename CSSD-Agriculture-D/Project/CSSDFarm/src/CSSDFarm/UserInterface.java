@@ -12,6 +12,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -142,13 +144,21 @@ public class UserInterface extends javax.swing.JFrame {
     public void updateReport(){
         FieldStation fieldStation = (FieldStation)comboReportFieldStations.getSelectedItem();
         String sensorType = (String)comboReportSensorType.getSelectedItem();
-        //Date date = dpReportCalendar.getDate();
+        DateFormat inputformatter = new SimpleDateFormat("dd/MM/yyyy");
+        String newDate = inputformatter.format(dpReportCalendar.getDate());
+        Date date = new Date();
+                
+        try {
+            date = inputformatter.parse(newDate);
+        } catch(ParseException ex) {
+            
+        }
         
         //Vector<Sensor> sensors = fieldStation.getSetOfSensors().getByType(sensorType);
         
         EventList<SensorData> eventList = new BasicEventList<SensorData>();        
         Report report = server.compileReport(fieldStation.getId());
-        Vector<SensorData> sensorData = report.getDataByTypeAndDate(sensorType, new Date());
+        Vector<SensorData> sensorData = report.getDataByTypeAndDate(sensorType, date);
         
         
         eventList.clear();
@@ -983,6 +993,8 @@ public class UserInterface extends javax.swing.JFrame {
     private void btnDebugActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDebugActionPerformed
         FieldStation fieldStation = (FieldStation)comboReportFieldStations.getSelectedItem();
         fieldStation.uploadData();
+        updateReport();
+        
     }//GEN-LAST:event_btnDebugActionPerformed
 
     

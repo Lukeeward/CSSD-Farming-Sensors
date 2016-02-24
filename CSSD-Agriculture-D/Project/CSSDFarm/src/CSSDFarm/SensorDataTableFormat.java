@@ -22,7 +22,7 @@ public class SensorDataTableFormat implements TableFormat<SensorData> {
         if(column == 0)      return sensorData.getID();
         else if(column == 1) return sensorData.getUnit();
         else if(column == 2) return sensorData.getValue();
-        else if(column == 3) return sensorData.getTime();
+        else if(column == 3) return sensorData.getDate();
         else if(column == 4) return sensorData.getLocation().GPStoString();
         else if(column == 5) return sensorData.getPower();
         throw new IllegalStateException();

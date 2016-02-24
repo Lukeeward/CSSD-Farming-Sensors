@@ -1,4 +1,6 @@
 package CSSDFarm;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Vector;
 
@@ -19,7 +21,7 @@ class HistoricalData {
         Vector<SensorData> returnData = new Vector<SensorData>();
         for(SensorData dt : data)
         {
-            if (dt.getTime().equals(date)){
+            if (dt.getDate().equals(date)){
                 returnData.add(dt);
             }
         }
