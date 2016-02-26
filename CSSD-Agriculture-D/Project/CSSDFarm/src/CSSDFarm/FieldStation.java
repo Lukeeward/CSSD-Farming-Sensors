@@ -65,7 +65,7 @@ public class FieldStation {
         ObjectInputStream instream = null;
         Vector<SensorData> dummyData = new Vector<SensorData>();
         try {
-            FileInputStream fileinput = new FileInputStream ("buffer.ser");
+            FileInputStream fileinput = new FileInputStream ("data/buffer.ser");
             instream = new ObjectInputStream(fileinput);
             do{
                 try {
@@ -111,7 +111,7 @@ public class FieldStation {
     
     public void clearBuffer(){
         System.out.print("Clearning beffer");
-        File bufferFile = new File("buffer.ser");
+        File bufferFile = new File("data/buffer.ser");
         bufferFile.delete();
     }
     

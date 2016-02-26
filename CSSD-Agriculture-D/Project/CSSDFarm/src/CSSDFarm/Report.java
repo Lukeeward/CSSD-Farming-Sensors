@@ -39,6 +39,7 @@ public class Report {
         {
             Vector<SensorData> ret = dt.getData(date);
             if(ret.size() >= 1){
+                System.out.println();
                 returnData.add(ret.lastElement());
             }
         }
