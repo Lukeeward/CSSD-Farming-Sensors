@@ -1,10 +1,11 @@
 package CSSDFarm;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 
-public class Sensor {
+public class Sensor implements Serializable {
     
     private String id;
     private FieldStation station;

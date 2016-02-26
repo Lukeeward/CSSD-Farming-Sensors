@@ -12,6 +12,12 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -53,7 +59,39 @@ public class UserInterface extends javax.swing.JFrame {
         initComponents();
     }
     
+    public void serializeData(){
+        ObjectOutputStream outstream;
+        try {
+            outstream = new ObjectOutputStream(new FileOutputStream ("data/server.ser"));   
+            outstream.writeObject(server);
+            outstream.close();
+        } catch(IOException io) {
+            System.out.println(io);
+        }
+    }
     
+    public void loadData(){
+        ObjectInputStream instream = null;
+        Server newData;
+        try {
+            FileInputStream fileinput = new FileInputStream ("data/server.ser");
+            instream = new ObjectInputStream(fileinput);
+            do{
+                try {
+                    newData = (Server)instream.readObject();
+                } catch(ClassNotFoundException ex) {
+                    System.out.println(ex);
+                }
+            } while (true);
+        } catch(IOException io) {
+            System.out.println(io);             
+        }
+        try {
+            instream.close();
+        } catch (IOException ex) {
+            System.out.println(ex); 
+        }
+    }
     
     public void displayManagerScreen(){
         //remove old panel details
@@ -327,6 +365,11 @@ public class UserInterface extends javax.swing.JFrame {
         tblReportSensorData = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
         getContentPane().setLayout(new java.awt.CardLayout());
 
         jButton1.setText("Log in");
@@ -1156,9 +1199,8 @@ public class UserInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_btnManagerActionPerformed
 
     private void btnDebugActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDebugActionPerformed
-        FieldStation fieldStation = (FieldStation)comboReportFieldStations.getSelectedItem();
-        fieldStation.uploadData();
-        updateReport();
+
+        loadData();
     }//GEN-LAST:event_btnDebugActionPerformed
 
     private void tblSensorDataMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSensorDataMouseClicked
@@ -1173,6 +1215,11 @@ public class UserInterface extends javax.swing.JFrame {
         panelReport.setVisible(true);
         panelReportSensorData.setVisible(false);
     }//GEN-LAST:event_btnBackReportSensorDataActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        serializeData();
+    }//GEN-LAST:event_formWindowClosing
 
     
     /**

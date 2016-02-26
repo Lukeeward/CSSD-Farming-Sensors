@@ -1,10 +1,12 @@
 package CSSDFarm;
 
+import java.io.Serializable;
+
 /**
 * The Actuator system that interacts with Sensors
 */
 
-public class Actuator {
+public class Actuator implements Serializable{
     private boolean isActive;
     
     public Actuator(){

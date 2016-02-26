@@ -1,8 +1,9 @@
 package CSSDFarm;
+import java.io.Serializable;
 import java.util.*;
 import java.util.Map.Entry;
 
-public class Report {
+public class Report implements Serializable {
     
     private Map<String, HistoricalData> data = new HashMap<>();
     
