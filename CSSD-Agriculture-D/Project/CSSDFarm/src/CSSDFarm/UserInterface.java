@@ -30,6 +30,7 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentListener;
 
 /**
@@ -194,12 +195,13 @@ public class UserInterface extends javax.swing.JFrame {
             }
 
             sensorsReportTable = new EventTableModel(eventList, new SensorDataTableFormat());
-
-            tblSensorData.setModel(sensorsReportTable);
-            int lastRowIndex = tblSensorData.getModel().getRowCount()-1;
-            if(lastRowIndex >= 0){
-                tblSensorData.setRowSelectionInterval(lastRowIndex, lastRowIndex);
-            }
+            SwingUtilities.invokeLater(new Runnable(){public void run(){
+                tblSensorData.setModel(sensorsReportTable);
+                int lastRowIndex = tblSensorData.getModel().getRowCount()-1;
+                if(lastRowIndex >= 0){
+                    tblSensorData.setRowSelectionInterval(lastRowIndex, lastRowIndex);
+                }
+            }});
         }
     }
     
