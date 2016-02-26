@@ -167,36 +167,39 @@ public class UserInterface extends javax.swing.JFrame {
     
     public void updateReport(){
         FieldStation fieldStation = (FieldStation)comboReportFieldStations.getSelectedItem();
-        String sensorType = (String)comboReportSensorType.getSelectedItem();
-        DateFormat inputformatter = new SimpleDateFormat("dd/MM/yyyy");
-        String newDate = inputformatter.format(dpReportCalendar.getDate());
-        Date date = new Date();
-                
-        try {
-            date = inputformatter.parse(newDate);
-        } catch(ParseException ex) {
-            
-        }
-        
-        //Vector<Sensor> sensors = fieldStation.getSetOfSensors().getByType(sensorType);
-        
-        EventList<SensorData> eventList = new BasicEventList<SensorData>();        
-        Report report = server.compileReport(fieldStation.getId());
-        Vector<SensorData> sensorData = report.getDataByTypeAndDate(sensorType, date);
-        
-        
-        eventList.clear();
-        for(SensorData sensor:sensorData){
-            //sensor.collectData();
-            eventList.add(sensor);
-        }
-        
-        sensorsReportTable = new EventTableModel(eventList, new SensorDataTableFormat());
-        
-        tblSensorData.setModel(sensorsReportTable);
-        int lastRowIndex = tblSensorData.getModel().getRowCount()-1;
-        if(lastRowIndex >= 0){
-            tblSensorData.setRowSelectionInterval(lastRowIndex, lastRowIndex);
+        if(fieldStation != null) 
+        {
+            String sensorType = (String)comboReportSensorType.getSelectedItem();
+            DateFormat inputformatter = new SimpleDateFormat("dd/MM/yyyy");
+            String newDate = inputformatter.format(dpReportCalendar.getDate());
+            Date date = new Date();
+
+            try {
+                date = inputformatter.parse(newDate);
+            } catch(ParseException ex) {
+
+            }
+
+            //Vector<Sensor> sensors = fieldStation.getSetOfSensors().getByType(sensorType);
+
+            EventList<SensorData> eventList = new BasicEventList<SensorData>();        
+            Report report = server.compileReport(fieldStation.getId());
+            Vector<SensorData> sensorData = report.getDataByTypeAndDate(sensorType, date);
+
+
+            eventList.clear();
+            for(SensorData sensor:sensorData){
+                //sensor.collectData();
+                eventList.add(sensor);
+            }
+
+            sensorsReportTable = new EventTableModel(eventList, new SensorDataTableFormat());
+
+            tblSensorData.setModel(sensorsReportTable);
+            int lastRowIndex = tblSensorData.getModel().getRowCount()-1;
+            if(lastRowIndex >= 0){
+                tblSensorData.setRowSelectionInterval(lastRowIndex, lastRowIndex);
+            }
         }
     }
     
@@ -1198,9 +1201,10 @@ public class UserInterface extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
+        UserInterface userint = new UserInterface();
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new UserInterface().setVisible(true);
+                userint.setVisible(true);
             }
         });
         
@@ -1215,7 +1219,9 @@ public class UserInterface extends javax.swing.JFrame {
                     for (FieldStation aFieldStations: fieldStations){
 
                         for (Sensor aSensor: aFieldStations.getSetOfSensors().getSensors()){
-                            aSensor.onInterval();
+                            if(aSensor.onInterval()){
+                                userint.updateReport();
+                            }
                         }
                     }
                 }

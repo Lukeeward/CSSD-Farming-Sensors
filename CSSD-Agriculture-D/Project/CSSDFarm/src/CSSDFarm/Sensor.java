@@ -89,7 +89,7 @@ public class Sensor {
         lastReadingTime = new Date();
     }
     
-    public void onInterval()
+    public boolean onInterval()
     {
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Calendar cal = Calendar.getInstance();
@@ -104,8 +104,10 @@ public class Sensor {
             collectData();
             //The Sequence Diagram says it should call the fieldstation but doesnt say what the string is
             //"data.txt"??
-            //station.update("data", data);
+            station.update("buffer.ser", data);
+            return true;
         }
+        return false;
     }
     
     public void setFieldStation(FieldStation fieldStation)
@@ -120,7 +122,7 @@ public class Sensor {
     public void calculateLocation()     
     {
         //change to realistic gps data
-        location = new GPSData(12345.54321f, 6789.9876f, 123.4f);
+        location = new GPSData(53.367785f, -1.507226f, 0.5f);
     }
     
     public void update(FieldStation fieldStation, Sensor sensor)

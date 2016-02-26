@@ -1,6 +1,8 @@
 package CSSDFarm;
 
-public class GPSData {
+import java.io.Serializable;
+
+public class GPSData implements Serializable{
     private float latitude;
     private float longitude;
     private float altitude;

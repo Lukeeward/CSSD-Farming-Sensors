@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.Vector;
 
 public class Server {
-    private Map<String, HistoricalData> data;
+    private Map<String, Map<String, HistoricalData>> data;
     private UserAccount currentUser;
     private Interface currentClient;
     private Vector<UserAccount> users;
@@ -40,8 +40,9 @@ public class Server {
     }
     //String1 = FieldStationId??
     public Report compileReport(String fieldStationId){
-        HistoricalData stationHistoricalData = data.get(fieldStationId);
-        return new Report(fieldStationId, stationHistoricalData);
+        Map<String, HistoricalData> sensorHashMap = data.get(fieldStationId);
+        HistoricalData stationHistoricalData = sensorHashMap.get(fieldStationId);
+        return new Report(fieldStationId, sensorHashMap);
     }
     
     public void createUserAccount(String username, String password){
@@ -83,8 +84,9 @@ public class Server {
     //Returns true as they are expecting connection issues with an actual 'server'
     //The return true would be the response from the server so they know to clear buffer
     public boolean addData(Vector<SensorData> sensorData, String fieldStationId){
-        HistoricalData historicaldata = data.get(fieldStationId);
+        Map<String, HistoricalData> sensorHashMap = data.get(fieldStationId);
         for(SensorData data : sensorData){
+            HistoricalData historicaldata = sensorHashMap.get(data.getId());
             historicaldata.addData(data);
         }
         return true;
@@ -124,6 +126,12 @@ public class Server {
     public void addSensor(String fieldStationId, String sensorId, String sensorType, String sensorUnits, int interval){
         FieldStation aFieldStation = getFieldStation(fieldStationId);
         aFieldStation.addSensor(sensorId, sensorType, sensorUnits, interval);
-        data.put(aFieldStation.getId(), new HistoricalData(sensorType, aFieldStation.getId(), sensorId));
+        Map<String, HistoricalData> sensorHashMap = data.get(aFieldStation.getId());
+        if(sensorHashMap == null) {
+            data.put(aFieldStation.getId(), new HashMap<>());
+        }
+        sensorHashMap = data.get(aFieldStation.getId());
+        sensorHashMap.put(sensorId, new HistoricalData(sensorType, aFieldStation.getId(), sensorId));
+        //data.put(aFieldStation.getId(), new HistoricalData(sensorType, aFieldStation.getId(), sensorId));
     }
 }

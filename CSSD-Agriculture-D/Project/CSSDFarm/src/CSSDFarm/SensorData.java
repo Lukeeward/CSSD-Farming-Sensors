@@ -1,10 +1,11 @@
 package CSSDFarm;
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class SensorData {
+public class SensorData implements Serializable {
     private String sensorID;
     private Date date;
     private String unit;

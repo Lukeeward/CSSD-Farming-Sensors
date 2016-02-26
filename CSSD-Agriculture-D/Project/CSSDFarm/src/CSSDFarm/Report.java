@@ -6,8 +6,8 @@ public class Report {
     
     private Map<String, HistoricalData> data = new HashMap<>();
     
-    public Report(String FieldStationid, HistoricalData data){
-        this.data.put(FieldStationid, data);
+    public Report(String FieldStationid, Map<String, HistoricalData> data){
+        this.data = data;
     }
     
     public Vector<SensorData> getDataByDate(Date date){
@@ -39,7 +39,7 @@ public class Report {
         {
             Vector<SensorData> ret = dt.getData(date);
             if(ret.size() >= 1){
-                returnData.add(ret.elementAt(0));
+                returnData.add(ret.lastElement());
             }
         }
         return returnData;
