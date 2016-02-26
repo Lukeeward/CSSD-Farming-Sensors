@@ -29,9 +29,11 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentListener;
+import javax.swing.table.TableColumn;
 
 /**
  *
@@ -51,6 +53,8 @@ public class UserInterface extends javax.swing.JFrame {
     
     public UserInterface() {
         initComponents();
+        tblSensorData.getTableHeader().setReorderingAllowed(false);
+         
     }
     
     
@@ -196,11 +200,24 @@ public class UserInterface extends javax.swing.JFrame {
 
             sensorsReportTable = new EventTableModel(eventList, new SensorDataTableFormat());
             SwingUtilities.invokeLater(new Runnable(){public void run(){
+                
                 tblSensorData.setModel(sensorsReportTable);
                 int lastRowIndex = tblSensorData.getModel().getRowCount()-1;
                 if(lastRowIndex >= 0){
                     tblSensorData.setRowSelectionInterval(lastRowIndex, lastRowIndex);
                 }
+                TableColumn column = null;
+                for (int i = 0; i < tblSensorData.getColumnModel().getColumnCount(); i++) {
+                    column = tblSensorData.getColumnModel().getColumn(i);
+                    if (i == 4) {
+                        column.setPreferredWidth(250);
+                    } else if (i == 3) {
+                        column.setPreferredWidth(200);
+                    } 
+                    else {
+                        column.setPreferredWidth(50);
+                    }
+                }   
             }});
         }
     }
@@ -512,7 +529,7 @@ public class UserInterface extends javax.swing.JFrame {
                     .addComponent(btnFieldStationDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnRemoveFieldStation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnReport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1))
                 .addGroup(panelManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelManagerLayout.createSequentialGroup()
                         .addGroup(panelManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -909,7 +926,7 @@ public class UserInterface extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6"
             }
         ));
         jScrollPane4.setViewportView(tblReportSensorData);
