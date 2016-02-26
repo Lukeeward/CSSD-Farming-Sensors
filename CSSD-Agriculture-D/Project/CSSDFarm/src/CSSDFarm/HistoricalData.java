@@ -1,4 +1,5 @@
 package CSSDFarm;
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
@@ -6,7 +7,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.Vector;
 
-class HistoricalData {
+class HistoricalData implements Serializable {
     private String dataType;
     private String fieldStationID;
     private String sensorID;

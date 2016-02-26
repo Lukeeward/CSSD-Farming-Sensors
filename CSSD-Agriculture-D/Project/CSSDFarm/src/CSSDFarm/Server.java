@@ -1,9 +1,10 @@
 package CSSDFarm;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
-public class Server {
+public class Server implements Serializable {
     private Map<String, Map<String, HistoricalData>> data;
     private UserAccount currentUser;
     private Interface currentClient;

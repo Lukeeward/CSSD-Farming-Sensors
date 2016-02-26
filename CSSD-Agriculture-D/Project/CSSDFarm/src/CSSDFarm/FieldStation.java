@@ -6,11 +6,12 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.io.Serializable;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class FieldStation {
+public class FieldStation implements Serializable {
     private String name;
     private String id;
     private SetOfSensors sensors;

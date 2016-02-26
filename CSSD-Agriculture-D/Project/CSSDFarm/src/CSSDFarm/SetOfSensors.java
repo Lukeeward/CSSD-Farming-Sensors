@@ -1,7 +1,8 @@
 package CSSDFarm;
+import java.io.Serializable;
 import java.util.Vector;
 
-public class SetOfSensors {
+public class SetOfSensors implements Serializable{
     private Vector<Sensor> data;
     
     public SetOfSensors() {

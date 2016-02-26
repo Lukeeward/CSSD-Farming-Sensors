@@ -1,7 +1,8 @@
 package CSSDFarm;
+import java.io.Serializable;
 import java.util.*;
 
-public class UserAccount {
+public class UserAccount implements Serializable{
     private Vector<FieldStation> stations;
     private String username;
     private String password;
