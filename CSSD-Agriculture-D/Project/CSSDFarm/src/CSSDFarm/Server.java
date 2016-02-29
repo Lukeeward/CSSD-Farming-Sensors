@@ -11,7 +11,7 @@ public class Server implements Serializable {
     private Vector<UserAccount> users;
     private Vector<FieldStation> stations;
     
-    private static Server server = new Server();
+    private static Server server;
     
     private Server(){
         this.users = new Vector<UserAccount>();
@@ -21,7 +21,20 @@ public class Server implements Serializable {
     }
     
     public static Server getInstance(){
+        if(server == null)
+            return getInstance(null);
+        else 
+            return server;
+    }
+    
+    public static Server getInstance(Server loadedServer){
+        if(loadedServer != null)
+            server = loadedServer;
+        else
+            server = new Server();
+        
         return server;
+        //return (loadedServer != null) ? (server = loadedServer) : (server = new Server());
     }
     
     //why does authenticate return that

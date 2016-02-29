@@ -1,9 +1,12 @@
 package CSSDFarm;
 import java.io.Serializable;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Sensor implements Serializable {
     
@@ -100,7 +103,16 @@ public class Sensor implements Serializable {
         
         System.out.println(intDate);
         System.out.println(df.format(new Date()));
-        if(intDate.equals(df.format(new Date()))){
+        
+        Date intervalDate = new Date();
+                
+        try {
+            intervalDate = df.parse(intDate);
+        } catch (ParseException ex) {
+            System.out.println(ex);
+        }
+                
+        if(intDate.equals(df.format(new Date())) || intervalDate.before(new Date())){
             System.out.println(lastReadingTime.getTime());
             collectData();
             //The Sequence Diagram says it should call the fieldstation but doesnt say what the string is

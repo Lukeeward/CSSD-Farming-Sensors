@@ -48,8 +48,9 @@ import javax.swing.table.TableColumn;
 
 
 public class UserInterface extends javax.swing.JFrame {
-
-    static final Server server = Server.getInstance();
+    
+    //static final Server server = Server.getInstance();
+    static Server server = Server.getInstance();
     FieldStation selectedStation;
     Vector<FieldStation> userFieldStations;
     EventTableModel sensorsTable;
@@ -60,7 +61,7 @@ public class UserInterface extends javax.swing.JFrame {
     public UserInterface() {
         initComponents();
         tblSensorData.getTableHeader().setReorderingAllowed(false);
-         
+        loadData();
     }
     
     public void serializeData(){
@@ -76,24 +77,30 @@ public class UserInterface extends javax.swing.JFrame {
     
     public void loadData(){
         ObjectInputStream instream = null;
-        Server newData;
+        Server loadedServer = null;
         try {
             FileInputStream fileinput = new FileInputStream ("data/server.ser");
             instream = new ObjectInputStream(fileinput);
             do{
                 try {
-                    newData = (Server)instream.readObject();
+                    loadedServer = (Server)instream.readObject();
+                    server = Server.getInstance(loadedServer);
                 } catch(ClassNotFoundException ex) {
                     System.out.println(ex);
                 }
             } while (true);
         } catch(IOException io) {
-            System.out.println(io);             
+            System.out.println(io);
+            if(server == null)
+                server = Server.getInstance(null);
         }
-        try {
-            instream.close();
-        } catch (IOException ex) {
-            System.out.println(ex); 
+        
+        if(instream != null){
+            try {
+                instream.close();
+            } catch (IOException ex) {
+                System.out.println(ex); 
+            }
         }
     }
     
@@ -302,6 +309,16 @@ public class UserInterface extends javax.swing.JFrame {
         
     }
     
+    public void clearSensorScreen(){
+        txtSensorId.setText("");
+        comboIntervalSeconds.setSelectedIndex(0);
+        comboIntervalMinutes.setSelectedIndex(0);
+        comboIntervalHours.setSelectedIndex(0);
+        comboIntervalDays.setSelectedIndex(0);
+        comboSensorType.setSelectedIndex(0);
+        comboSensorUnits.setSelectedIndex(0);
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -353,6 +370,7 @@ public class UserInterface extends javax.swing.JFrame {
         comboIntervalSeconds = new javax.swing.JComboBox();
         btnSaveSensor = new javax.swing.JButton();
         btnCancelSensor = new javax.swing.JButton();
+        btnClearSensor = new javax.swing.JButton();
         panelReport = new javax.swing.JPanel();
         lblReportTitle = new javax.swing.JLabel();
         btnManager = new javax.swing.JButton();
@@ -570,9 +588,9 @@ public class UserInterface extends javax.swing.JFrame {
                 .addGroup(panelManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnAddFieldStation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnFieldStationDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnRemoveFieldStation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnRemoveFieldStation, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
                     .addComponent(btnReport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(panelManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelManagerLayout.createSequentialGroup()
                         .addGroup(panelManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -586,9 +604,9 @@ public class UserInterface extends javax.swing.JFrame {
                                 .addGap(228, 228, 228)
                                 .addComponent(lblFieldStationManager, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(panelManagerLayout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelManagerLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())))
         );
         panelManagerLayout.setVerticalGroup(
@@ -684,6 +702,14 @@ public class UserInterface extends javax.swing.JFrame {
             }
         });
 
+        btnClearSensor.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
+        btnClearSensor.setText("Clear");
+        btnClearSensor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearSensorActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelAddSensorLayout = new javax.swing.GroupLayout(panelAddSensor);
         panelAddSensor.setLayout(panelAddSensorLayout);
         panelAddSensorLayout.setHorizontalGroup(
@@ -732,7 +758,10 @@ public class UserInterface extends javax.swing.JFrame {
                                         .addComponent(comboIntervalSeconds, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(panelAddSensorLayout.createSequentialGroup()
                                         .addGap(18, 18, 18)
-                                        .addComponent(btnCancelSensor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))))
+                                        .addComponent(btnCancelSensor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                    .addGroup(panelAddSensorLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnClearSensor)))
                 .addContainerGap(203, Short.MAX_VALUE))
         );
         panelAddSensorLayout.setVerticalGroup(
@@ -767,20 +796,22 @@ public class UserInterface extends javax.swing.JFrame {
                     .addComponent(lblIntervalSeconds)
                     .addComponent(comboIntervalMinutes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(comboIntervalSeconds, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addGroup(panelAddSensorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSaveSensor)
                     .addComponent(btnCancelSensor))
-                .addGap(46, 46, 46))
+                .addGap(4, 4, 4)
+                .addComponent(btnClearSensor)
+                .addContainerGap())
         );
 
         getContentPane().add(panelAddSensor, "card5");
 
         panelReport.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+            }
             public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
                 panelReportCaretPositionChanged(evt);
-            }
-            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
             }
         });
 
@@ -969,7 +1000,7 @@ public class UserInterface extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6"
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
         jScrollPane4.setViewportView(tblReportSensorData);
@@ -1167,10 +1198,12 @@ public class UserInterface extends javax.swing.JFrame {
         panelAddSensor.setVisible(false);
         displayManagerScreen();
         changeSelectedFieldStation(selectedStation);
+        clearSensorScreen();
     }//GEN-LAST:event_btnSaveSensorActionPerformed
 
     private void btnCancelSensorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelSensorActionPerformed
         panelAddSensor.setVisible(false);
+        clearSensorScreen();
         displayManagerScreen();
     }//GEN-LAST:event_btnCancelSensorActionPerformed
 
@@ -1238,6 +1271,11 @@ public class UserInterface extends javax.swing.JFrame {
         serializeData();
     }//GEN-LAST:event_formWindowClosing
 
+    private void btnClearSensorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearSensorActionPerformed
+        // TODO add your handling code here:
+        clearSensorScreen();
+    }//GEN-LAST:event_btnClearSensorActionPerformed
+
     
     /**
      * @param args the command line arguments
@@ -1300,6 +1338,7 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JButton btnAddSensor;
     private javax.swing.JButton btnBackReportSensorData;
     private javax.swing.JButton btnCancelSensor;
+    private javax.swing.JButton btnClearSensor;
     private javax.swing.JButton btnDebug;
     private javax.swing.JButton btnFieldStationDetails;
     private javax.swing.JButton btnManager;
