@@ -246,12 +246,14 @@ public class UserInterface extends javax.swing.JFrame {
             for(SensorData sensor:sensorData){
                 //sensor.collectData();
                 eventList.add(sensor);
+                System.out.println(sensor.getValue());
             }
 
             sensorsReportTable = new EventTableModel(eventList, new SensorDataTableFormat());
-            SwingUtilities.invokeLater(new Runnable(){public void run(){
-                
+            
+            SwingUtilities.invokeLater(new Runnable(){public void run(){                
                 tblSensorData.setModel(sensorsReportTable);
+                
                 int lastRowIndex = tblSensorData.getModel().getRowCount()-1;
                 if(lastRowIndex >= 0){
                     tblSensorData.setRowSelectionInterval(lastRowIndex, lastRowIndex);
@@ -304,6 +306,7 @@ public class UserInterface extends javax.swing.JFrame {
         sensorsReportSensorDataTable = new EventTableModel(eventList, new SensorDataTableFormat());
         
         tblReportSensorData.setModel(sensorsReportSensorDataTable);
+        
         int lastRowIndex = tblReportSensorData.getModel().getRowCount()-1;
         if(lastRowIndex >= 0){
             tblReportSensorData.setRowSelectionInterval(lastRowIndex, lastRowIndex);
@@ -322,6 +325,7 @@ public class UserInterface extends javax.swing.JFrame {
         comboIntervalDays.setSelectedIndex(0);
         comboSensorType.setSelectedIndex(0);
         comboSensorUnits.setSelectedIndex(0);
+        txtThreshold.setText("");
     }
     
 
@@ -1326,7 +1330,7 @@ public class UserInterface extends javax.swing.JFrame {
         int daysSeconds = Integer.parseInt(comboIntervalDays.getSelectedItem().toString()) * 60 * 60 * 24;
         int interval = secondsSeconds + minutesSeconds + hoursSeconds + daysSeconds;
         int threshold = -1;
-        if(txtThreshold.getText() == "")
+        if(txtThreshold.getText() != "")
         {
             threshold = Integer.parseInt(txtThreshold.getText());   
         }

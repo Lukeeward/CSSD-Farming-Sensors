@@ -97,7 +97,7 @@ public class Sensor implements Serializable {
         if (data == null){
             newVal = 0;
         }
-        else{            
+        else{   
             Random rand = new Random();
             int randLimit;
             //calculate the randomRange based on the total threshold to make it unique for each sensor
@@ -185,12 +185,7 @@ public class Sensor implements Serializable {
     }
     
     public boolean withinThreshold()
-    {
-        System.out.println(this.actuator.isActive());
-        System.out.println("Threashold : " + this.threshold);
-        System.out.println("Value : " + this.data.getValue());
-        System.out.println("Is UpperLimit : " + this.thresholdIsUpperLimit);
-        
+    {        
         if(thresholdIsUpperLimit){
             if(data.getValue() <= threshold)
             {
@@ -200,8 +195,6 @@ public class Sensor implements Serializable {
             {
                 //if value is higher than threshold set the value to threshold
                 data.setValue(threshold);
-                
-                System.out.println("Value : " + this.data.getValue());
                 return false;
             }
         }
@@ -214,8 +207,6 @@ public class Sensor implements Serializable {
             {
                 return false;
             }
-        }
-    
-        
+        }        
     }
 }
