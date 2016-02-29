@@ -10,6 +10,7 @@ import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.swing.EventTableModel;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
@@ -43,6 +44,7 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.TableColumn;
 
 import javax.swing.JFrame;
+import javax.swing.table.DefaultTableCellRenderer;
 /**
  *
  * @author Webby
@@ -246,12 +248,17 @@ public class UserInterface extends javax.swing.JFrame {
             for(SensorData sensor:sensorData){
                 //sensor.collectData();
                 eventList.add(sensor);
+                
             }
 
             sensorsReportTable = new EventTableModel(eventList, new SensorDataTableFormat());
             
+           
             SwingUtilities.invokeLater(new Runnable(){public void run(){                
                 tblSensorData.setModel(sensorsReportTable);
+                int indexFs = comboReportFieldStations.getSelectedIndex();
+                CustomTableRendererColour cellRenderer = new CustomTableRendererColour(indexFs);
+                                
                 int lastRowIndex = tblSensorData.getModel().getRowCount()-1;
                 if(lastRowIndex >= 0){
                     tblSensorData.setRowSelectionInterval(lastRowIndex, lastRowIndex);
@@ -267,9 +274,56 @@ public class UserInterface extends javax.swing.JFrame {
                     else {
                         column.setPreferredWidth(50);
                     }
-                }   
+                    if (i == 2){
+                        tblSensorData.getColumnModel().getColumn(i).setCellRenderer(cellRenderer);
+                    }
+                }  
             }});
         }
+    }
+    
+    
+    //Custom DefaultTableCellRenderer
+    public static class CustomTableRendererColour extends DefaultTableCellRenderer {
+        //used as class is static so need a way to get the correct FieldStation
+        int id;
+        private CustomTableRendererColour(int s1) {
+            id = s1;
+        }
+        // You should override getTableCellRendererComponent
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value,
+                boolean isSelected, boolean hasFocus, int row, int column) {
+            
+            Component c = super.getTableCellRendererComponent(table, value, isSelected,
+                    hasFocus, row, column);              
+            
+            String sensorID = table.getModel().getValueAt(row, 0).toString();
+            float thresh = server.getUserFieldStation().get(id).getSetOfSensors().getSensor(sensorID).getThreshold();
+            boolean threshIsUpperLimit = server.getUserFieldStation().get(id).getSetOfSensors().getSensor(sensorID).getThresholdIsUpperLimit();
+            float val = Float.parseFloat(value.toString());
+            
+            if (threshIsUpperLimit){
+                if (val > thresh){
+                    c.setForeground(new Color(0xC91F37));
+                }
+                else
+                    c.setForeground(new Color(0x10ce00));
+            }
+            else if (!threshIsUpperLimit){
+                if (val < thresh){
+                    c.setForeground(new Color(0xC91F37));
+                }
+                else
+                    c.setForeground(new Color(0x10ce00));
+            }
+            
+            return c;
+        }
+    }
+    
+    public String getWebName(){
+        return comboReportFieldStations.getSelectedItem().toString();
     }
     
     public void updateReportSensorData(){

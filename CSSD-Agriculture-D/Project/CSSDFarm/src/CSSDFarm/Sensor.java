@@ -74,6 +74,14 @@ public class Sensor implements Serializable {
         return location;
     }
     
+    public float getThreshold(){
+        return threshold;
+    }
+    
+    public boolean getThresholdIsUpperLimit(){
+        return thresholdIsUpperLimit;
+    }
+    
     public void toggleModule()
     {
         if(actuator.isActive())
@@ -111,9 +119,9 @@ public class Sensor implements Serializable {
             }
             else{
                 if (thresholdIsUpperLimit)
-                    newVal = threshold/2.50f;
+                    newVal = threshold/2;
                 else
-                    newVal = threshold*2.50f;
+                    newVal = threshold*2;
             }
         }
                     
