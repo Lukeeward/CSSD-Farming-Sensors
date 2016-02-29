@@ -246,14 +246,12 @@ public class UserInterface extends javax.swing.JFrame {
             for(SensorData sensor:sensorData){
                 //sensor.collectData();
                 eventList.add(sensor);
-                System.out.println(sensor.getValue());
             }
 
             sensorsReportTable = new EventTableModel(eventList, new SensorDataTableFormat());
             
             SwingUtilities.invokeLater(new Runnable(){public void run(){                
                 tblSensorData.setModel(sensorsReportTable);
-                
                 int lastRowIndex = tblSensorData.getModel().getRowCount()-1;
                 if(lastRowIndex >= 0){
                     tblSensorData.setRowSelectionInterval(lastRowIndex, lastRowIndex);
