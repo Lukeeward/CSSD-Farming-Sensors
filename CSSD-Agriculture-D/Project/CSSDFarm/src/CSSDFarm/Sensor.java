@@ -96,13 +96,19 @@ public class Sensor implements Serializable {
         lastReadingTime = new Date();
     }
     
-    public boolean onInterval()
-    {
+    public String getNextIntervalTime(){
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Calendar cal = Calendar.getInstance();
         cal.setTime(lastReadingTime);
         cal.add(Calendar.SECOND, intervalSeconds);
         String intDate = df.format(cal.getTime());
+        return intDate;
+    }
+    
+    public boolean onInterval()
+    {
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        String intDate = getNextIntervalTime();
         
         System.out.println(intDate);
         System.out.println(df.format(new Date()));

@@ -21,6 +21,7 @@ import java.io.ObjectOutputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Properties;
@@ -182,6 +183,7 @@ public class UserInterface extends javax.swing.JFrame {
         lblReportSensorDataSensorName.setText(sensor.getId());
         lblReportSensorDataSensorType.setText(sensor.getType());
         lblReportSensorDataSensorUnits.setText(sensor.getUnits());
+        lblReportSensorDataNextIntervalDate.setText(sensor.getNextIntervalTime());
         
         Date date = dpReportCalendar.getDate();
         dpReportSensorDataDate.setDate(date);
@@ -409,6 +411,8 @@ public class UserInterface extends javax.swing.JFrame {
         dpReportSensorDataDate = new org.jdesktop.swingx.JXDatePicker();
         jScrollPane4 = new javax.swing.JScrollPane();
         tblReportSensorData = new javax.swing.JTable();
+        lblReportSensorDataNextIntervalDate = new javax.swing.JLabel();
+        lblReportSensorDataNextInterval = new javax.swing.JLabel();
 
         jFrameServer.setMinimumSize(new java.awt.Dimension(360, 200));
 
@@ -488,7 +492,7 @@ public class UserInterface extends javax.swing.JFrame {
                         .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(414, Short.MAX_VALUE))
+                .addContainerGap(416, Short.MAX_VALUE))
         );
         panelLogInLayout.setVerticalGroup(
             panelLogInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -865,7 +869,7 @@ public class UserInterface extends javax.swing.JFrame {
                     .addGroup(panelAddSensorLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(btnClearSensor)))
-                .addGap(70, 162, Short.MAX_VALUE))
+                .addGap(70, 164, Short.MAX_VALUE))
         );
         panelAddSensorLayout.setVerticalGroup(
             panelAddSensorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1006,7 +1010,7 @@ public class UserInterface extends javax.swing.JFrame {
             panelReportTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelReportTableLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 784, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 786, Short.MAX_VALUE)
                 .addContainerGap())
         );
         panelReportTableLayout.setVerticalGroup(
@@ -1050,7 +1054,7 @@ public class UserInterface extends javax.swing.JFrame {
                                 .addComponent(comboReportFieldStations, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(123, 123, 123)
                         .addComponent(btnDebug)
-                        .addGap(0, 74, Short.MAX_VALUE))
+                        .addGap(0, 76, Short.MAX_VALUE))
                     .addComponent(panelReportTable, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -1121,6 +1125,12 @@ public class UserInterface extends javax.swing.JFrame {
         ));
         jScrollPane4.setViewportView(tblReportSensorData);
 
+        lblReportSensorDataNextIntervalDate.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
+        lblReportSensorDataNextIntervalDate.setText("29/02/2016 16:27");
+
+        lblReportSensorDataNextInterval.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
+        lblReportSensorDataNextInterval.setText("Next interval:");
+
         javax.swing.GroupLayout panelReportSensorDataLayout = new javax.swing.GroupLayout(panelReportSensorData);
         panelReportSensorData.setLayout(panelReportSensorDataLayout);
         panelReportSensorDataLayout.setHorizontalGroup(
@@ -1135,10 +1145,14 @@ public class UserInterface extends javax.swing.JFrame {
                     .addGroup(panelReportSensorDataLayout.createSequentialGroup()
                         .addGap(22, 22, 22)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 692, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(100, Short.MAX_VALUE))
+                .addContainerGap(102, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelReportSensorDataLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(panelReportSensorDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(panelReportSensorDataLayout.createSequentialGroup()
+                        .addComponent(lblReportSensorDataNextInterval)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblReportSensorDataNextIntervalDate))
                     .addComponent(lblReportSensorDataSensorUnits)
                     .addComponent(lblReportSensorDataSensorType)
                     .addComponent(lblReportSensorDataSensorName)
@@ -1167,9 +1181,13 @@ public class UserInterface extends javax.swing.JFrame {
                 .addComponent(lblReportSensorDataSensorType)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblReportSensorDataSensorUnits)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelReportSensorDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblReportSensorDataNextIntervalDate)
+                    .addComponent(lblReportSensorDataNextInterval))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
 
         getContentPane().add(panelReportSensorData, "card6");
@@ -1551,6 +1569,8 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JLabel lblIntervalSeconds;
     private javax.swing.JLabel lblReportSensorDataDate;
     private javax.swing.JLabel lblReportSensorDataFieldStationName;
+    private javax.swing.JLabel lblReportSensorDataNextInterval;
+    private javax.swing.JLabel lblReportSensorDataNextIntervalDate;
     private javax.swing.JLabel lblReportSensorDataSensorName;
     private javax.swing.JLabel lblReportSensorDataSensorType;
     private javax.swing.JLabel lblReportSensorDataSensorUnits;

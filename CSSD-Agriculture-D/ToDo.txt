@@ -2,7 +2,6 @@ ToDo:
 HeatMap
 User Roles
 Unit Tests
-Display next interval on sensor details
 Sensor Details button
 Fieldstation details button
 remove sensor from historical data
