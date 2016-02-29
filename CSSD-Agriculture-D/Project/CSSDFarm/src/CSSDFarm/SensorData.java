@@ -32,6 +32,10 @@ public class SensorData implements Serializable {
         return value;
     }
     
+    public void setValue(float value){
+        this.value = value;
+    }
+    
     public String getUnit()
     {
         return unit;//mm - inches

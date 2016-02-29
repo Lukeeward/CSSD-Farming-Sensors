@@ -111,7 +111,7 @@ public class FieldStation implements Serializable {
     }
     
     public void clearBuffer(){
-        System.out.print("Clearning beffer");
+        System.out.println("Clearning beffer");
         File bufferFile = new File("data/buffer.ser");
         bufferFile.delete();
     }

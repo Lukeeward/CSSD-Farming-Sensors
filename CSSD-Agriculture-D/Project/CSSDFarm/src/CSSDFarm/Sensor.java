@@ -90,9 +90,34 @@ public class Sensor implements Serializable {
     {
         //Replace 'mm' with 'unit'
         //Replace 12.0f with 'value'
-        Random rand = new Random();
-        float randomNumber = (float)(0 + rand.nextInt((100 - 0) + 1));
-        data = new SensorData(id, new Date(),"mm",randomNumber, location, 120);
+        
+        float newVal = 0;
+        //sets the value for the sensorData to increment or decrement
+        //once it has reached the threshold it changes its value and slowly moves towards the threshold
+        if (data == null){
+            newVal = 0;
+        }
+        else{            
+            Random rand = new Random();
+            int randLimit;
+            //calculate the randomRange based on the total threshold to make it unique for each sensor
+            randLimit = (int)Math.sqrt(threshold);
+            float randomNumber = (float)(0 + rand.nextInt((randLimit - 0) + 1));
+            if (data.getValue() < threshold){
+                newVal = (data.getValue()+randomNumber);
+            }            
+            else if (data.getValue() > threshold){
+                newVal = (data.getValue()-randomNumber);
+            }
+            else{
+                if (thresholdIsUpperLimit)
+                    newVal = threshold/2.50f;
+                else
+                    newVal = threshold*2.50f;
+            }
+        }
+                    
+        data = new SensorData(id, new Date(),"mm",newVal, location, 120);
         lastReadingTime = new Date();
     }
     
@@ -155,19 +180,26 @@ public class Sensor implements Serializable {
     
     public boolean withinThreshold()
     {
-        if(thresholdIsUpperLimit)
-        {
+        System.out.println(this.actuator.isActive());
+        System.out.println("Threashold : " + this.threshold);
+        System.out.println("Value : " + this.data.getValue());
+        System.out.println("Is UpperLimit : " + this.thresholdIsUpperLimit);
+        
+        if(thresholdIsUpperLimit){
             if(data.getValue() <= threshold)
             {
                 return true;
             }
             else
             {
+                //if value is higher than threshold set the value to threshold
+                data.setValue(threshold);
+                
+                System.out.println("Value : " + this.data.getValue());
                 return false;
             }
         }
-        else
-        {
+        else{
             if(data.getValue() >= threshold)
             {
                 return true;
@@ -177,5 +209,7 @@ public class Sensor implements Serializable {
                 return false;
             }
         }
+    
+        
     }
 }
