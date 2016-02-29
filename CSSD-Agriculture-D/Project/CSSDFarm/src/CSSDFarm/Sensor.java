@@ -118,6 +118,14 @@ public class Sensor implements Serializable {
             //The Sequence Diagram says it should call the fieldstation but doesnt say what the string is
             //"data.txt"??
             station.update("data/buffer.ser", data);
+            
+            if(withinThreshold())
+            {
+                this.actuator.deactivate();
+            } else {
+                this.actuator.activate();
+            }
+            
             return true;
         }
         return false;
