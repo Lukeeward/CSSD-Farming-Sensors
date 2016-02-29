@@ -546,6 +546,9 @@
               <Font name="Calibri Light" size="18" style="0"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtSensorIdKeyReleased"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JComboBox" name="comboSensorType">
           <Properties>
@@ -632,6 +635,9 @@
               </StringArray>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="comboIntervalDaysActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JComboBox" name="comboIntervalHours">
           <Properties>
@@ -668,6 +674,9 @@
               </StringArray>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="comboIntervalHoursActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JComboBox" name="comboIntervalMinutes">
           <Properties>
@@ -740,6 +749,9 @@
               </StringArray>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="comboIntervalMinutesActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JComboBox" name="comboIntervalSeconds">
           <Properties>
@@ -812,6 +824,9 @@
               </StringArray>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="comboIntervalSecondsActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnSaveSensor">
           <Properties>
@@ -819,6 +834,7 @@
               <Font name="Calibri Light" size="18" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Save"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSaveSensorActionPerformed"/>

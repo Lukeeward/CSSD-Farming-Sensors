@@ -588,7 +588,7 @@ public class UserInterface extends javax.swing.JFrame {
                 .addGroup(panelManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnAddFieldStation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnFieldStationDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnRemoveFieldStation, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
+                    .addComponent(btnRemoveFieldStation, javax.swing.GroupLayout.PREFERRED_SIZE, 143, Short.MAX_VALUE)
                     .addComponent(btnReport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(panelManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -655,6 +655,11 @@ public class UserInterface extends javax.swing.JFrame {
         lblSensorUnits.setText("Units:");
 
         txtSensorId.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
+        txtSensorId.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtSensorIdKeyReleased(evt);
+            }
+        });
 
         comboSensorType.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
         comboSensorType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Soil Moisture", "Soil Temperature", "Air Temperature", "Soil Acidity", "Light Intensity" }));
@@ -676,18 +681,39 @@ public class UserInterface extends javax.swing.JFrame {
 
         comboIntervalDays.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
         comboIntervalDays.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
+        comboIntervalDays.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboIntervalDaysActionPerformed(evt);
+            }
+        });
 
         comboIntervalHours.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
         comboIntervalHours.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24" }));
+        comboIntervalHours.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboIntervalHoursActionPerformed(evt);
+            }
+        });
 
         comboIntervalMinutes.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
         comboIntervalMinutes.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60" }));
+        comboIntervalMinutes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboIntervalMinutesActionPerformed(evt);
+            }
+        });
 
         comboIntervalSeconds.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
         comboIntervalSeconds.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60" }));
+        comboIntervalSeconds.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboIntervalSecondsActionPerformed(evt);
+            }
+        });
 
         btnSaveSensor.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
         btnSaveSensor.setText("Save");
+        btnSaveSensor.setEnabled(false);
         btnSaveSensor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSaveSensorActionPerformed(evt);
@@ -808,10 +834,10 @@ public class UserInterface extends javax.swing.JFrame {
         getContentPane().add(panelAddSensor, "card5");
 
         panelReport.addInputMethodListener(new java.awt.event.InputMethodListener() {
-            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
-            }
             public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
                 panelReportCaretPositionChanged(evt);
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
             }
         });
 
@@ -1100,7 +1126,7 @@ public class UserInterface extends javax.swing.JFrame {
             public void keyReleased(KeyEvent key) {
                 boolean theid = id.getText().equals("");
                 boolean thename = name.getText().equals("");
-                if(server.verifyFieldStation(id.getText()) && !theid && !thename) {
+                if(server.verifyFieldStation(id.getText()) && !theid && !thename) {                    
                     verified.setText("Verified");      
                     verified.setForeground(new Color(0,102,0));
                     okButton.setEnabled(true);
@@ -1132,12 +1158,11 @@ public class UserInterface extends javax.swing.JFrame {
             "ID:", id,
             "Name:", name,
             verified
-            
         };
         int inputFields = JOptionPane.showOptionDialog(null, message, "Add Field Station", JOptionPane.OK_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE,null,new Object[]{okButton, cancelButton}, null);
         if(inputFields == JOptionPane.OK_OPTION)
         {
-            System.out.print("dddd");
+            System.out.print("Added Field Station!");
         }
         
     }//GEN-LAST:event_btnAddFieldStationActionPerformed
@@ -1275,6 +1300,54 @@ public class UserInterface extends javax.swing.JFrame {
         // TODO add your handling code here:
         clearSensorScreen();
     }//GEN-LAST:event_btnClearSensorActionPerformed
+
+    private boolean isIntervalSelected(){
+        if (comboIntervalSeconds.getSelectedIndex() == 0 && comboIntervalMinutes.getSelectedIndex() == 0
+                && comboIntervalHours.getSelectedIndex() == 0 && comboIntervalDays.getSelectedIndex() == 0){
+            return false;
+        }
+        else
+            return true;
+    }
+    
+    private void txtSensorIdKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSensorIdKeyReleased
+        validateAndSetSensorButtons();
+    }//GEN-LAST:event_txtSensorIdKeyReleased
+
+    private void validateAndSetSensorButtons(){
+        String sensorID = txtSensorId.getText();
+        //trim() removes whitespaces and ensures that it contains text other than spaces
+        boolean isEmpty = sensorID.trim().isEmpty();
+        if (!isEmpty){
+            boolean intervalSelected = false;
+            intervalSelected = isIntervalSelected();
+            //also check that sensor with this name doesn't already exist.
+            Sensor foundSensor = selectedStation.getSetOfSensors().getSensor(sensorID);
+            //if null means it doesn't already exist in the collection
+            if (foundSensor == null && intervalSelected != false) 
+                btnSaveSensor.setEnabled(true);
+            else
+                btnSaveSensor.setEnabled(false);
+        }
+        else
+            btnSaveSensor.setEnabled(false);
+    }
+    
+    private void comboIntervalDaysActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboIntervalDaysActionPerformed
+        validateAndSetSensorButtons();
+    }//GEN-LAST:event_comboIntervalDaysActionPerformed
+
+    private void comboIntervalMinutesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboIntervalMinutesActionPerformed
+        validateAndSetSensorButtons();
+    }//GEN-LAST:event_comboIntervalMinutesActionPerformed
+
+    private void comboIntervalHoursActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboIntervalHoursActionPerformed
+        validateAndSetSensorButtons();
+    }//GEN-LAST:event_comboIntervalHoursActionPerformed
+
+    private void comboIntervalSecondsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboIntervalSecondsActionPerformed
+        validateAndSetSensorButtons();
+    }//GEN-LAST:event_comboIntervalSecondsActionPerformed
 
     
     /**
