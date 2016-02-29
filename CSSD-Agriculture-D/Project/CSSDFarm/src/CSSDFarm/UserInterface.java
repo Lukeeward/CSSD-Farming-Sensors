@@ -61,10 +61,9 @@ public class UserInterface extends javax.swing.JFrame {
     EventTableModel sensorsReportTable;
     EventTableModel sensorsReportSensorDataTable;
     
-    
     public UserInterface() {
         initComponents();
-        //jFrameServer.setVisible(true);
+        jFrameServer.setVisible(true);
         tblSensorData.getTableHeader().setReorderingAllowed(false);
         loadData();
     }
@@ -499,6 +498,11 @@ public class UserInterface extends javax.swing.JFrame {
         jFrameServer.setMinimumSize(new java.awt.Dimension(360, 200));
 
         sliderServerOnOff.setMaximum(1);
+        sliderServerOnOff.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                sliderServerOnOffMouseReleased(evt);
+            }
+        });
 
         txtServerOff.setText("OFF");
 
@@ -1559,6 +1563,10 @@ public class UserInterface extends javax.swing.JFrame {
         displayReportSensorDataScreen();
     }//GEN-LAST:event_dpReportSensorDataDateActionPerformed
 
+    private void sliderServerOnOffMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sliderServerOnOffMouseReleased
+        server.togglePower();
+    }//GEN-LAST:event_sliderServerOnOffMouseReleased
+
     
     /**
      * @param args the command line arguments
@@ -1607,7 +1615,8 @@ public class UserInterface extends javax.swing.JFrame {
 
                         for (Sensor aSensor: aFieldStations.getSetOfSensors().getSensors()){
                             if(aSensor.onInterval()){
-                                userint.updateReport();
+                                if (server.getTurnedOn())
+                                    userint.updateReport();
                             }
                         }
                     }

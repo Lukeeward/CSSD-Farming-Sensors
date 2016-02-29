@@ -10,6 +10,7 @@ public class Server implements Serializable {
     private Interface currentClient;
     private Vector<UserAccount> users;
     private Vector<FieldStation> stations;
+    private Boolean turnedOn;
     
     private static Server server;
     
@@ -18,6 +19,7 @@ public class Server implements Serializable {
         this.users.add(new UserAccount("John","Password"));
         this.stations = new Vector<FieldStation>();
         this.data = new HashMap<>();
+        this.turnedOn = true;
     }
     
     public static Server getInstance(){
@@ -47,6 +49,14 @@ public class Server implements Serializable {
             }
         }
         return false;
+    }
+    
+    public Boolean getTurnedOn(){
+        return turnedOn;
+    }
+    
+    public void togglePower(){
+        this.turnedOn = !turnedOn;
     }
     
     public Vector<FieldStation> getUserFieldStation(){
@@ -110,8 +120,11 @@ public class Server implements Serializable {
     public boolean addData(Vector<SensorData> sensorData, String fieldStationId){
         Map<String, HistoricalData> sensorHashMap = data.get(fieldStationId);
         for(SensorData data : sensorData){
-            HistoricalData historicaldata = sensorHashMap.get(data.getId());
-            historicaldata.addData(data);
+            if (data.getId() != null){
+                HistoricalData historicaldata = sensorHashMap.get(data.getId());                
+                if (historicaldata != null)
+                    historicaldata.addData(data);
+            }
         }
         return true;
     }
