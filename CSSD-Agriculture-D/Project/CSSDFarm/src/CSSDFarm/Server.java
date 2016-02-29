@@ -55,6 +55,11 @@ public class Server implements Serializable {
     //String1 = FieldStationId??
     public Report compileReport(String fieldStationId){
         Map<String, HistoricalData> sensorHashMap = data.get(fieldStationId);
+        
+        //HashMap probably null due to the selected fieldstation having no sensors
+        //making it empty prevents an error later on
+        if(sensorHashMap == null)
+            sensorHashMap = new HashMap<>();
         HistoricalData stationHistoricalData = sensorHashMap.get(fieldStationId);
         return new Report(fieldStationId, sensorHashMap);
     }
@@ -78,6 +83,11 @@ public class Server implements Serializable {
         //TODO: If Farmer then remove from server
         stations.remove(toDelete);
         currentUser.removeStation(toDelete);
+        data.remove(id);
+    }
+    
+    public void removeSensor(String fieldStationId, String sensorId){
+        data.get(fieldStationId).remove(sensorId);
     }
     //String1 = stationid??
     //String2 = sensorID???
