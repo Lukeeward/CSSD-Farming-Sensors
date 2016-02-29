@@ -172,8 +172,16 @@ public class UserInterface extends javax.swing.JFrame {
     }
     
     public void displayReportSensorDataScreen(){
-        panelReport.setVisible(false);
+        if (panelReport.isVisible())
+            panelReport.setVisible(false);
         panelReportSensorData.setVisible(true);
+        
+        
+        //System.out.println(dpReportSensorDataDate.getDate());
+        if (dpReportSensorDataDate.getDate() == null){
+            Date date = dpReportCalendar.getDate();
+            dpReportSensorDataDate.setDate(date);
+        }        
         
         int index = tblSensorData.getSelectedRow();
         SensorData selectedSensorData = (SensorData)sensorsReportTable.getElementAt(index);
@@ -187,8 +195,7 @@ public class UserInterface extends javax.swing.JFrame {
         lblReportSensorDataSensorUnits.setText(sensor.getUnits());
         lblReportSensorDataNextIntervalDate.setText(sensor.getNextIntervalTime());
         
-        Date date = dpReportCalendar.getDate();
-        dpReportSensorDataDate.setDate(date);
+        
         
         updateReportSensorData();
     }
