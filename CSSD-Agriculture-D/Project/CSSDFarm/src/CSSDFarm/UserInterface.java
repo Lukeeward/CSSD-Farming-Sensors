@@ -371,6 +371,9 @@ public class UserInterface extends javax.swing.JFrame {
         btnSaveSensor = new javax.swing.JButton();
         btnCancelSensor = new javax.swing.JButton();
         btnClearSensor = new javax.swing.JButton();
+        txtThreshold = new javax.swing.JTextField();
+        lblThreshold = new javax.swing.JLabel();
+        checkIsUpperLimit = new javax.swing.JCheckBox();
         panelReport = new javax.swing.JPanel();
         lblReportTitle = new javax.swing.JLabel();
         btnManager = new javax.swing.JButton();
@@ -588,7 +591,7 @@ public class UserInterface extends javax.swing.JFrame {
                 .addGroup(panelManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnAddFieldStation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnFieldStationDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnRemoveFieldStation, javax.swing.GroupLayout.PREFERRED_SIZE, 143, Short.MAX_VALUE)
+                    .addComponent(btnRemoveFieldStation, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
                     .addComponent(btnReport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(panelManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -736,6 +739,19 @@ public class UserInterface extends javax.swing.JFrame {
             }
         });
 
+        txtThreshold.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
+        txtThreshold.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtThresholdKeyReleased(evt);
+            }
+        });
+
+        lblThreshold.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
+        lblThreshold.setText("Threshold:");
+
+        checkIsUpperLimit.setSelected(true);
+        checkIsUpperLimit.setText("Upper Limit?");
+
         javax.swing.GroupLayout panelAddSensorLayout = new javax.swing.GroupLayout(panelAddSensor);
         panelAddSensor.setLayout(panelAddSensorLayout);
         panelAddSensorLayout.setHorizontalGroup(
@@ -749,46 +765,56 @@ public class UserInterface extends javax.swing.JFrame {
                         .addGap(372, 372, 372)
                         .addComponent(lblFieldStationName2))
                     .addGroup(panelAddSensorLayout.createSequentialGroup()
-                        .addGap(157, 157, 157)
-                        .addGroup(panelAddSensorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblSensorId, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblSensorType, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblSensorUnits, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblSensorInterval, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panelAddSensorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtSensorId)
-                            .addComponent(comboSensorType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(comboSensorUnits, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(panelAddSensorLayout.createSequentialGroup()
-                                .addGap(22, 22, 22)
-                                .addComponent(lblIntervalDays, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(157, 157, 157)
+                                .addGroup(panelAddSensorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(lblSensorId, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblSensorType, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblSensorUnits, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblSensorInterval, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(panelAddSensorLayout.createSequentialGroup()
+                                .addGap(245, 245, 245)
+                                .addComponent(lblThreshold, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(panelAddSensorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelAddSensorLayout.createSequentialGroup()
+                                .addComponent(txtThreshold, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(comboIntervalDays, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(31, 31, 31)
-                                .addComponent(lblIntervalHours, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(comboIntervalHours, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAddSensorLayout.createSequentialGroup()
-                                .addGroup(panelAddSensorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(btnSaveSensor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGroup(panelAddSensorLayout.createSequentialGroup()
-                                        .addComponent(lblIntervalMinutes, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(comboIntervalMinutes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGroup(panelAddSensorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(panelAddSensorLayout.createSequentialGroup()
-                                        .addGap(14, 14, 14)
-                                        .addComponent(lblIntervalSeconds, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(comboIntervalSeconds, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(panelAddSensorLayout.createSequentialGroup()
-                                        .addGap(18, 18, 18)
-                                        .addComponent(btnCancelSensor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                                .addComponent(checkIsUpperLimit))
+                            .addGroup(panelAddSensorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtSensorId)
+                                .addComponent(comboSensorType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(comboSensorUnits, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(panelAddSensorLayout.createSequentialGroup()
+                                    .addGap(22, 22, 22)
+                                    .addComponent(lblIntervalDays, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(comboIntervalDays, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(31, 31, 31)
+                                    .addComponent(lblIntervalHours, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(comboIntervalHours, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAddSensorLayout.createSequentialGroup()
+                                    .addGroup(panelAddSensorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(btnSaveSensor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(panelAddSensorLayout.createSequentialGroup()
+                                            .addComponent(lblIntervalMinutes, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(comboIntervalMinutes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(panelAddSensorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(panelAddSensorLayout.createSequentialGroup()
+                                            .addGap(14, 14, 14)
+                                            .addComponent(lblIntervalSeconds, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(comboIntervalSeconds, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(panelAddSensorLayout.createSequentialGroup()
+                                            .addGap(18, 18, 18)
+                                            .addComponent(btnCancelSensor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))))
                     .addGroup(panelAddSensorLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(btnClearSensor)))
-                .addContainerGap(203, Short.MAX_VALUE))
+                .addGap(70, 162, Short.MAX_VALUE))
         );
         panelAddSensorLayout.setVerticalGroup(
             panelAddSensorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -798,31 +824,44 @@ public class UserInterface extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblFieldStationName2)
                 .addGap(50, 50, 50)
-                .addGroup(panelAddSensorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblSensorId)
-                    .addComponent(txtSensorId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelAddSensorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblSensorType)
-                    .addComponent(comboSensorType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelAddSensorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(comboSensorUnits, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblSensorUnits))
-                .addGap(32, 32, 32)
-                .addGroup(panelAddSensorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblIntervalDays)
-                    .addComponent(lblSensorInterval)
-                    .addComponent(lblIntervalHours)
-                    .addComponent(comboIntervalDays, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(comboIntervalHours, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelAddSensorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblIntervalMinutes)
-                    .addComponent(lblIntervalSeconds)
-                    .addComponent(comboIntervalMinutes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(comboIntervalSeconds, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addGroup(panelAddSensorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(panelAddSensorLayout.createSequentialGroup()
+                        .addGroup(panelAddSensorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblSensorId)
+                            .addComponent(txtSensorId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(panelAddSensorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblSensorType)
+                            .addComponent(comboSensorType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(panelAddSensorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(comboSensorUnits, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblSensorUnits))
+                        .addGap(18, 18, 18)
+                        .addGroup(panelAddSensorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelAddSensorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(comboIntervalHours, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblIntervalHours))
+                            .addGroup(panelAddSensorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(comboIntervalDays, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblIntervalDays)
+                                .addComponent(lblSensorInterval)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(panelAddSensorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelAddSensorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(comboIntervalMinutes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblIntervalMinutes))
+                            .addGroup(panelAddSensorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(comboIntervalSeconds, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblIntervalSeconds)))
+                        .addGap(18, 18, 18)
+                        .addGroup(panelAddSensorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtThreshold, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblThreshold)))
+                    .addGroup(panelAddSensorLayout.createSequentialGroup()
+                        .addComponent(checkIsUpperLimit, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(2, 2, 2)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addGroup(panelAddSensorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSaveSensor)
                     .addComponent(btnCancelSensor))
@@ -1218,7 +1257,7 @@ public class UserInterface extends javax.swing.JFrame {
         int daysSeconds = Integer.parseInt(comboIntervalDays.getSelectedItem().toString()) * 60 * 60 * 24;
         int interval = secondsSeconds + minutesSeconds + hoursSeconds + daysSeconds;
         
-        server.addSensor(selectedStation.getId(), txtSensorId.getText(), (String)comboSensorType.getSelectedItem(), (String)comboSensorUnits.getSelectedItem(), interval);
+        server.addSensor(selectedStation.getId(), txtSensorId.getText(), (String)comboSensorType.getSelectedItem(), (String)comboSensorUnits.getSelectedItem(), interval, Integer.parseInt(txtThreshold.getText()), checkIsUpperLimit.isSelected());
         
         panelAddSensor.setVisible(false);
         displayManagerScreen();
@@ -1349,6 +1388,10 @@ public class UserInterface extends javax.swing.JFrame {
         validateAndSetSensorButtons();
     }//GEN-LAST:event_comboIntervalSecondsActionPerformed
 
+    private void txtThresholdKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtThresholdKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtThresholdKeyReleased
+
     
     /**
      * @param args the command line arguments
@@ -1420,6 +1463,7 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JButton btnReport;
     private javax.swing.JButton btnSaveSensor;
     private javax.swing.JButton btnSensorDetails;
+    private javax.swing.JCheckBox checkIsUpperLimit;
     private javax.swing.JComboBox comboIntervalDays;
     private javax.swing.JComboBox comboIntervalHours;
     private javax.swing.JComboBox comboIntervalMinutes;
@@ -1462,6 +1506,7 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JLabel lblSensorList;
     private javax.swing.JLabel lblSensorType;
     private javax.swing.JLabel lblSensorUnits;
+    private javax.swing.JLabel lblThreshold;
     private javax.swing.JList listUserStations;
     private javax.swing.JPanel panelAddSensor;
     private javax.swing.JPanel panelLogIn;
@@ -1475,6 +1520,7 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JTable tblSensorTable;
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtSensorId;
+    private javax.swing.JTextField txtThreshold;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 }

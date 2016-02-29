@@ -39,12 +39,15 @@ public class Sensor implements Serializable {
         collectData();
     }
     
-    public Sensor(String id, String sensorType, String units, int interval)
+    public Sensor(String id, String sensorType, String units, int interval, int threshold, boolean upperlimit)
     {
         this.id = id;
         this.sensorType = sensorType;
         this.units = units;
         this.intervalSeconds = interval;
+        this.actuator = new Actuator();
+        this.threshold = threshold;
+        this.thresholdIsUpperLimit = upperlimit;
         calculateLocation();
         collectData();
     }

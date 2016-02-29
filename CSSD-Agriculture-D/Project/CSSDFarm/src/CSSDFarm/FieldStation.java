@@ -116,8 +116,8 @@ public class FieldStation implements Serializable {
         bufferFile.delete();
     }
     
-    public void addSensor(String sensorId, String sensorType, String sensorUnits, int interval){
-        Sensor theSensor = new Sensor(sensorId, sensorType, sensorUnits, interval);
+    public void addSensor(String sensorId, String sensorType, String sensorUnits, int interval, int threshold, boolean upperlimit){
+        Sensor theSensor = new Sensor(sensorId, sensorType, sensorUnits, interval, threshold, upperlimit);
         sensors.addSensor(theSensor);
         theSensor.setFieldStation(this);
     }

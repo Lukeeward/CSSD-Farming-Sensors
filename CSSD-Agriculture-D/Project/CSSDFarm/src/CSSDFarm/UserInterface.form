@@ -387,47 +387,62 @@
                           <Component id="lblFieldStationName2" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="157" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="lblSensorId" min="-2" pref="81" max="-2" attributes="0"/>
-                              <Component id="lblSensorType" min="-2" pref="104" max="-2" attributes="0"/>
-                              <Component id="lblSensorUnits" alignment="1" min="-2" pref="54" max="-2" attributes="0"/>
-                              <Component id="lblSensorInterval" alignment="1" min="-2" pref="175" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="txtSensorId" max="32767" attributes="0"/>
-                              <Component id="comboSensorType" max="32767" attributes="0"/>
-                              <Component id="comboSensorUnits" alignment="0" max="32767" attributes="0"/>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="22" pref="22" max="-2" attributes="0"/>
-                                  <Component id="lblIntervalDays" min="-2" pref="51" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="comboIntervalDays" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-                                  <Component id="lblIntervalHours" max="32767" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="comboIntervalHours" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                      <Component id="btnSaveSensor" max="32767" attributes="0"/>
-                                      <Group type="102" alignment="1" attributes="0">
-                                          <Component id="lblIntervalMinutes" min="-2" pref="73" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="comboIntervalMinutes" min="-2" max="-2" attributes="0"/>
-                                      </Group>
+                              <Group type="102" attributes="0">
+                                  <EmptySpace min="-2" pref="157" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="1" attributes="0">
+                                      <Component id="lblSensorId" min="-2" pref="81" max="-2" attributes="0"/>
+                                      <Component id="lblSensorType" min="-2" pref="104" max="-2" attributes="0"/>
+                                      <Component id="lblSensorUnits" alignment="1" min="-2" pref="54" max="-2" attributes="0"/>
+                                      <Component id="lblSensorInterval" alignment="1" min="-2" pref="175" max="-2" attributes="0"/>
                                   </Group>
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Group type="102" attributes="0">
-                                          <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
-                                          <Component id="lblIntervalSeconds" min="-2" pref="74" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="comboIntervalSeconds" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" attributes="0">
+                                  <EmptySpace min="-2" pref="245" max="-2" attributes="0"/>
+                                  <Component id="lblThreshold" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="txtThreshold" min="-2" pref="217" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="checkIsUpperLimit" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="txtSensorId" max="32767" attributes="0"/>
+                                  <Component id="comboSensorType" max="32767" attributes="0"/>
+                                  <Component id="comboSensorUnits" alignment="0" max="32767" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="22" pref="22" max="-2" attributes="0"/>
+                                      <Component id="lblIntervalDays" min="-2" pref="51" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="comboIntervalDays" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                                      <Component id="lblIntervalHours" max="32767" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="comboIntervalHours" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                          <Component id="btnSaveSensor" max="32767" attributes="0"/>
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <Component id="lblIntervalMinutes" min="-2" pref="73" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="comboIntervalMinutes" min="-2" max="-2" attributes="0"/>
+                                          </Group>
                                       </Group>
-                                      <Group type="102" attributes="0">
-                                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Component id="btnCancelSensor" max="32767" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Group type="102" attributes="0">
+                                              <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                                              <Component id="lblIntervalSeconds" min="-2" pref="74" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="comboIntervalSeconds" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" attributes="0">
+                                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                                              <Component id="btnCancelSensor" max="32767" attributes="0"/>
+                                          </Group>
                                       </Group>
                                   </Group>
                               </Group>
@@ -438,7 +453,7 @@
                           <Component id="btnClearSensor" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="203" max="32767" attributes="0"/>
+                  <EmptySpace min="70" pref="162" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -450,36 +465,57 @@
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="lblFieldStationName2" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="lblSensorId" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtSensorId" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lblSensorId" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtSensorId" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lblSensorType" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="comboSensorType" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="comboSensorUnits" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblSensorUnits" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="comboIntervalHours" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblIntervalHours" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="comboIntervalDays" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblIntervalDays" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblSensorInterval" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="comboIntervalMinutes" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblIntervalMinutes" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="comboIntervalSeconds" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblIntervalSeconds" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="txtThreshold" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblThreshold" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Component id="checkIsUpperLimit" min="-2" pref="27" max="-2" attributes="0"/>
+                          <EmptySpace min="2" pref="2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="lblSensorType" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="comboSensorType" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="comboSensorUnits" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblSensorUnits" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="lblIntervalDays" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblSensorInterval" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblIntervalHours" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="comboIntervalDays" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="comboIntervalHours" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="lblIntervalMinutes" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblIntervalSeconds" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="comboIntervalMinutes" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="comboIntervalSeconds" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace pref="14" max="32767" attributes="0"/>
+                  <EmptySpace pref="30" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btnSaveSensor" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnCancelSensor" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -861,6 +897,30 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnClearSensorActionPerformed"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JTextField" name="txtThreshold">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Calibri Light" size="18" style="0"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtThresholdKeyReleased"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblThreshold">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Calibri Light" size="18" style="0"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Threshold:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JCheckBox" name="checkIsUpperLimit">
+          <Properties>
+            <Property name="selected" type="boolean" value="true"/>
+            <Property name="text" type="java.lang.String" value="Upper Limit?"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>

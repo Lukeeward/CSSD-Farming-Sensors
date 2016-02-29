@@ -137,9 +137,9 @@ public class Server implements Serializable {
         return null;
     }
     
-    public void addSensor(String fieldStationId, String sensorId, String sensorType, String sensorUnits, int interval){
+    public void addSensor(String fieldStationId, String sensorId, String sensorType, String sensorUnits, int interval, int threshold, boolean upperlimit){
         FieldStation aFieldStation = getFieldStation(fieldStationId);
-        aFieldStation.addSensor(sensorId, sensorType, sensorUnits, interval);
+        aFieldStation.addSensor(sensorId, sensorType, sensorUnits, interval, threshold, upperlimit);
         Map<String, HistoricalData> sensorHashMap = data.get(aFieldStation.getId());
         if(sensorHashMap == null) {
             data.put(aFieldStation.getId(), new HashMap<>());
