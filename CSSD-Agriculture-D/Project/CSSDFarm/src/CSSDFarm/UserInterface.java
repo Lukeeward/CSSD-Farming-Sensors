@@ -257,7 +257,14 @@ public class UserInterface extends javax.swing.JFrame {
             SwingUtilities.invokeLater(new Runnable(){public void run(){                
                 tblSensorData.setModel(sensorsReportTable);
                 int indexFs = comboReportFieldStations.getSelectedIndex();
-                CustomTableRendererColour cellRenderer = new CustomTableRendererColour(indexFs);
+                SetOfSensors setOfSensors = server.getUserFieldStation().get(indexFs).getSetOfSensors();
+                CustomTableRendererColour cellRenderer = null;
+                try{
+                    cellRenderer = new CustomTableRendererColour(indexFs, setOfSensors);
+                }
+                catch(Exception eX){
+                    //System.out.println(eX);
+                }                
                                 
                 int lastRowIndex = tblSensorData.getModel().getRowCount()-1;
                 if(lastRowIndex >= 0){
@@ -287,8 +294,15 @@ public class UserInterface extends javax.swing.JFrame {
     public static class CustomTableRendererColour extends DefaultTableCellRenderer {
         //used as class is static so need a way to get the correct FieldStation
         int id;
-        private CustomTableRendererColour(int s1) {
-            id = s1;
+        SetOfSensors setOfSensors;        
+        
+        private CustomTableRendererColour(int indexFs, SetOfSensors setOfSensors) {
+            id = indexFs;
+            this.setOfSensors = setOfSensors;
+        }
+
+        private CustomTableRendererColour() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
         // You should override getTableCellRendererComponent
         @Override
@@ -298,26 +312,31 @@ public class UserInterface extends javax.swing.JFrame {
             Component c = super.getTableCellRendererComponent(table, value, isSelected,
                     hasFocus, row, column);              
             
-            String sensorID = table.getModel().getValueAt(row, 0).toString();
-            float thresh = server.getUserFieldStation().get(id).getSetOfSensors().getSensor(sensorID).getThreshold();
-            boolean threshIsUpperLimit = server.getUserFieldStation().get(id).getSetOfSensors().getSensor(sensorID).getThresholdIsUpperLimit();
-            float val = Float.parseFloat(value.toString());
-            
-            if (threshIsUpperLimit){
-                if (val > thresh){
-                    c.setForeground(new Color(0xC91F37));
+            try {
+                String sensorID = table.getModel().getValueAt(row, 0).toString();
+                Sensor sensor = setOfSensors.getSensor(sensorID);
+                float thresh = sensor.getThreshold();
+                boolean threshIsUpperLimit = sensor.getThresholdIsUpperLimit();
+                float val = Float.parseFloat(value.toString());
+
+                if (threshIsUpperLimit){
+                    if (val > thresh){
+                        c.setForeground(new Color(0xC91F37));
+                    }
+                    else
+                        c.setForeground(new Color(0x10ce00));
                 }
-                else
-                    c.setForeground(new Color(0x10ce00));
+                else if (!threshIsUpperLimit){
+                    if (val < thresh){
+                        c.setForeground(new Color(0xC91F37));
+                    }
+                    else
+                        c.setForeground(new Color(0x10ce00));
+                }                
             }
-            else if (!threshIsUpperLimit){
-                if (val < thresh){
-                    c.setForeground(new Color(0xC91F37));
-                }
-                else
-                    c.setForeground(new Color(0x10ce00));
+            catch(Exception eX){
+                //System.out.println(eX);
             }
-            
             return c;
         }
     }
@@ -702,7 +721,7 @@ public class UserInterface extends javax.swing.JFrame {
                 .addGroup(panelManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnAddFieldStation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnFieldStationDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnRemoveFieldStation, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
+                    .addComponent(btnRemoveFieldStation, javax.swing.GroupLayout.PREFERRED_SIZE, 143, Short.MAX_VALUE)
                     .addComponent(btnReport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(panelManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -972,7 +991,7 @@ public class UserInterface extends javax.swing.JFrame {
                     .addGroup(panelAddSensorLayout.createSequentialGroup()
                         .addComponent(checkIsUpperLimit, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(2, 2, 2)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panelAddSensorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSaveSensor)
                     .addComponent(btnCancelSensor))
@@ -1170,6 +1189,12 @@ public class UserInterface extends javax.swing.JFrame {
 
         lblReportSensorDataDate.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
         lblReportSensorDataDate.setText("Date:");
+
+        dpReportSensorDataDate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dpReportSensorDataDateActionPerformed(evt);
+            }
+        });
 
         tblReportSensorData.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1521,6 +1546,11 @@ public class UserInterface extends javax.swing.JFrame {
     private void txtThresholdKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtThresholdKeyReleased
         // TODO add your handling code here:
     }//GEN-LAST:event_txtThresholdKeyReleased
+
+    private void dpReportSensorDataDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dpReportSensorDataDateActionPerformed
+        // TODO add your handling code here:
+        displayReportSensorDataScreen();
+    }//GEN-LAST:event_dpReportSensorDataDateActionPerformed
 
     
     /**
