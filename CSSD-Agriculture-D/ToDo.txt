@@ -6,4 +6,3 @@ Sensor Details button
 Fieldstation details button
 Sensor data page calander doesnt work
 Make small UI frame for server etc
-SensorData reading red/green increased/decreased value/colour
