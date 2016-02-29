@@ -41,6 +41,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.TableColumn;
 
+import javax.swing.JFrame;
 /**
  *
  * @author Webby
@@ -60,6 +61,7 @@ public class UserInterface extends javax.swing.JFrame {
     
     public UserInterface() {
         initComponents();
+        //jFrameServer.setVisible(true);
         tblSensorData.getTableHeader().setReorderingAllowed(false);
         loadData();
     }
@@ -330,6 +332,11 @@ public class UserInterface extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jFrameServer = new javax.swing.JFrame();
+        sliderServerOnOff = new javax.swing.JSlider();
+        txtServerOff = new javax.swing.JLabel();
+        txtServerOn = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         panelLogIn = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         txtUsername = new javax.swing.JTextField();
@@ -402,6 +409,49 @@ public class UserInterface extends javax.swing.JFrame {
         dpReportSensorDataDate = new org.jdesktop.swingx.JXDatePicker();
         jScrollPane4 = new javax.swing.JScrollPane();
         tblReportSensorData = new javax.swing.JTable();
+
+        jFrameServer.setMinimumSize(new java.awt.Dimension(360, 200));
+
+        sliderServerOnOff.setMaximum(1);
+
+        txtServerOff.setText("OFF");
+
+        txtServerOn.setText("ON");
+
+        jLabel3.setText("Server");
+
+        javax.swing.GroupLayout jFrameServerLayout = new javax.swing.GroupLayout(jFrameServer.getContentPane());
+        jFrameServer.getContentPane().setLayout(jFrameServerLayout);
+        jFrameServerLayout.setHorizontalGroup(
+            jFrameServerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jFrameServerLayout.createSequentialGroup()
+                .addGroup(jFrameServerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jFrameServerLayout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(txtServerOff)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(sliderServerOnOff, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtServerOn))
+                    .addGroup(jFrameServerLayout.createSequentialGroup()
+                        .addGap(145, 145, 145)
+                        .addComponent(jLabel3)))
+                .addGap(0, 42, Short.MAX_VALUE))
+        );
+        jFrameServerLayout.setVerticalGroup(
+            jFrameServerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jFrameServerLayout.createSequentialGroup()
+                .addContainerGap(63, Short.MAX_VALUE)
+                .addGroup(jFrameServerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtServerOff, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jFrameServerLayout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jFrameServerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtServerOn, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(sliderServerOnOff, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(62, 62, 62))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -1481,8 +1531,10 @@ public class UserInterface extends javax.swing.JFrame {
     private org.jdesktop.swingx.JXDatePicker dpReportCalendar;
     private org.jdesktop.swingx.JXDatePicker dpReportSensorDataDate;
     private javax.swing.JButton jButton1;
+    private javax.swing.JFrame jFrameServer;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -1520,12 +1572,15 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JPanel panelReport;
     private javax.swing.JPanel panelReportSensorData;
     private javax.swing.JPanel panelReportTable;
+    private javax.swing.JSlider sliderServerOnOff;
     private javax.swing.JSlider sliderView;
     private javax.swing.JTable tblReportSensorData;
     private javax.swing.JTable tblSensorData;
     private javax.swing.JTable tblSensorTable;
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtSensorId;
+    private javax.swing.JLabel txtServerOff;
+    private javax.swing.JLabel txtServerOn;
     private javax.swing.JTextField txtThreshold;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
