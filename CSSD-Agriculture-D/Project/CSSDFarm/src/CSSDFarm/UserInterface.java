@@ -222,7 +222,7 @@ public class UserInterface extends javax.swing.JFrame {
     
     public void updateReport(){
         FieldStation fieldStation = (FieldStation)comboReportFieldStations.getSelectedItem();
-        if(fieldStation != null && (fieldStation.getSetOfSensors()).getSensors().size() > 0) 
+        if(fieldStation != null) 
         {
             String sensorType = (String)comboReportSensorType.getSelectedItem();
             DateFormat inputformatter = new SimpleDateFormat("dd/MM/yyyy");
