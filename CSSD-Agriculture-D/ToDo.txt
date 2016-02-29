@@ -1,0 +1,12 @@
+ToDo:
+HeatMap
+User Roles
+Unit Tests
+Display next interval on sensor details
+Sensor Details button
+Fieldstation details button
+remove sensor from historical data
+Fieldstation with no sensors breaks report
+Sensor data page calander doesnt work
+Make small UI frame for server etc
+SensorData reading red/green increased/decreased value/colour

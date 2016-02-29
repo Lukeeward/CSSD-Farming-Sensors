@@ -211,13 +211,14 @@ public class UserInterface extends javax.swing.JFrame {
     public void removeSensor(String id){
         FieldStation station = server.getFieldStation(selectedStation.getId());
         station.removeSensor(id);
+        server.removeSensor(station.getId(), id);
         displayManagerScreen();
         changeSelectedFieldStation(selectedStation);
     }
     
     public void updateReport(){
         FieldStation fieldStation = (FieldStation)comboReportFieldStations.getSelectedItem();
-        if(fieldStation != null) 
+        if(fieldStation != null && (fieldStation.getSetOfSensors()).getSensors().size() > 0) 
         {
             String sensorType = (String)comboReportSensorType.getSelectedItem();
             DateFormat inputformatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -1256,8 +1257,13 @@ public class UserInterface extends javax.swing.JFrame {
         int hoursSeconds = Integer.parseInt(comboIntervalHours.getSelectedItem().toString()) * 60 * 60;
         int daysSeconds = Integer.parseInt(comboIntervalDays.getSelectedItem().toString()) * 60 * 60 * 24;
         int interval = secondsSeconds + minutesSeconds + hoursSeconds + daysSeconds;
-        
-        server.addSensor(selectedStation.getId(), txtSensorId.getText(), (String)comboSensorType.getSelectedItem(), (String)comboSensorUnits.getSelectedItem(), interval, Integer.parseInt(txtThreshold.getText()), checkIsUpperLimit.isSelected());
+        int threshold = -1;
+        if(txtThreshold.getText() == "")
+        {
+            threshold = Integer.parseInt(txtThreshold.getText());   
+        }
+        boolean upperlimit = checkIsUpperLimit.isSelected();
+        server.addSensor(selectedStation.getId(), txtSensorId.getText(), (String)comboSensorType.getSelectedItem(), (String)comboSensorUnits.getSelectedItem(), interval, threshold, upperlimit);
         
         panelAddSensor.setVisible(false);
         displayManagerScreen();

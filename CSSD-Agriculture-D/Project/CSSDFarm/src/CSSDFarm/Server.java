@@ -78,6 +78,11 @@ public class Server implements Serializable {
         //TODO: If Farmer then remove from server
         stations.remove(toDelete);
         currentUser.removeStation(toDelete);
+        data.remove(id);
+    }
+    
+    public void removeSensor(String fieldStationId, String sensorId){
+        data.get(fieldStationId).remove(sensorId);
     }
     //String1 = stationid??
     //String2 = sensorID???
