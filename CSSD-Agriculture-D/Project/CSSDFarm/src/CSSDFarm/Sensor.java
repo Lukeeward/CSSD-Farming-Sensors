@@ -185,7 +185,24 @@ public class Sensor implements Serializable {
     public void calculateLocation()     
     {
         //change to realistic gps data
-        location = new GPSData(53.367785f, -1.507226f, 0.5f);
+        //53.427854, -1.585078 bl
+        //53.427649, -1.570444 br
+        //53.433837, -1.571689 tr
+        //53.433683, -1.586280 tl
+        Random rand = new Random();
+        
+        int minLatValue = 427854;
+        int maxLatValue = 433837;
+        int range = (maxLatValue - minLatValue);
+        int ranNum = rand.nextInt((range - 0 + 1) + 0);
+        String newCoordinate = "53." + (minLatValue + ranNum);
+        
+        int minLongValue = 570444;
+        int maxLongValue = 586280;
+        int longRange = (maxLongValue - minLongValue);
+        int longRanNum = rand.nextInt((longRange - 0 + 1) + 0);
+        String longNewCoordinate = "-1." + (minLongValue + longRanNum);
+        location = new GPSData(Float.parseFloat(newCoordinate), Float.parseFloat(longNewCoordinate), 0.5f);
     }
     
     public void update(FieldStation fieldStation, Sensor sensor)

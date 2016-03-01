@@ -18,8 +18,8 @@
      google.maps.event.addDomListener(window, 'load', initialize);
      function initialize() {
        var mapOptions = {
-         center: new google.maps.LatLng(53.3676784,-1.5068732),
-         zoom: 18,
+         center: new google.maps.LatLng(53.430104, -1.576967),
+         zoom: 15,
          mapTypeId: google.maps.MapTypeId.SATELLITE
        };
        map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
@@ -27,11 +27,11 @@
 
 
       heatmap = new google.maps.visualization.HeatmapLayer({
-      data: getPoints(),
+      //data: getPoints(),
       map: map,
       dissipating: true
       });
-      heatmap.set('radius', 40)
+      //heatmap.set('radius', 40)
 }
 
  function toggleHeatmap() {
@@ -66,22 +66,31 @@ function changeOpacity() {
   heatmap.set('opacity', heatmap.get('opacity') ? null : 0.2);
 }
 
-function addMyData(dataPointsArray){
+function addMyData(dataPointsArray, sensorData){
     
 //    heatmapdata.push({location: new google.maps.LatLng(lat, lon), weight: 0.5, radius: 200});
-      generatePoints(dataPointsArray);
+      generatePoints(dataPointsArray, sensorData);
 
 }
 
-function generatePoints(stringData)
+function generatePoints(dataPointsArray, sensorData)
 {
     var heatmapdata = new Array();
     
-    for (var i = 0; i < stringData.length; i++) {
-        console.log(stringData[i].lat +" "+stringData[i].long);
-        heatmapdata.push(new google.maps.LatLng(stringData[i].lat, stringData[i].long));
-    }
+    for (var i = 0; i < dataPointsArray.length; i++) {
+        //console.log(stringData[i].lat +" "+stringData[i].long);
+		var latlong = new google.maps.LatLng(dataPointsArray[i].lat, dataPointsArray[i].long);
+        heatmapdata.push({location: latlong, weight: sensorData[i]});
+    
+		var marker = new google.maps.Marker({
+			position: latlong,
+			map: map,
+			title: "sensor"
+		})
+	
+	}
     heatmap.setData(heatmapdata);
+	heatmap.set('radius', 20);
     return heatmapdata;
 }
 
