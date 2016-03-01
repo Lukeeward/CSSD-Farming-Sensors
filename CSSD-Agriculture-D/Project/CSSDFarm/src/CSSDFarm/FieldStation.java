@@ -52,10 +52,11 @@ public class FieldStation implements Serializable {
     //string1 could be the filename of where the data is stored?
     public void update(String filename, SensorData sensorData){
         addToBuffer(filename, sensorData);
-        if(uploadData())
-        {
-            clearBuffer();
-        }
+        if (Server.getInstance().getTurnedOn())
+            if(uploadData())
+            {
+                clearBuffer();
+            }
     }
     
     public SensorData getData(String id){
@@ -71,7 +72,8 @@ public class FieldStation implements Serializable {
             do{
                 try {
                     SensorData newData = (SensorData)instream.readObject();
-                    dummyData.add(newData);
+                    if (newData != null)
+                        dummyData.add(newData);
                 } catch(ClassNotFoundException ex) {
                     System.out.println(ex);
                 }
@@ -87,8 +89,13 @@ public class FieldStation implements Serializable {
     
 
         //        dummyData.add(new SensorData("test", new Date(),"mm",reading, new GPSData(53.367785f, -1.507226f, 0.5f), 120));
-        Server.getInstance().addData(dummyData, id);
-        return true;
+        if (dummyData.size() > 0){
+            Server.getInstance().addData(dummyData, id);
+            return true;
+        }
+        else
+            return false;
+            
     }
     
     public void addToBuffer(String filename, SensorData sensorData){

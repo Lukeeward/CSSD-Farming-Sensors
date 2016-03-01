@@ -61,10 +61,9 @@ public class UserInterface extends javax.swing.JFrame {
     EventTableModel sensorsReportTable;
     EventTableModel sensorsReportSensorDataTable;
     
-    
     public UserInterface() {
         initComponents();
-        //jFrameServer.setVisible(true);
+        jFrameServer.setVisible(true);
         tblSensorData.getTableHeader().setReorderingAllowed(false);
         loadData();
     }
@@ -172,8 +171,16 @@ public class UserInterface extends javax.swing.JFrame {
     }
     
     public void displayReportSensorDataScreen(){
-        panelReport.setVisible(false);
+        if (panelReport.isVisible())
+            panelReport.setVisible(false);
         panelReportSensorData.setVisible(true);
+        
+        
+        //System.out.println(dpReportSensorDataDate.getDate());
+        if (dpReportSensorDataDate.getDate() == null){
+            Date date = dpReportCalendar.getDate();
+            dpReportSensorDataDate.setDate(date);
+        }        
         
         int index = tblSensorData.getSelectedRow();
         SensorData selectedSensorData = (SensorData)sensorsReportTable.getElementAt(index);
@@ -187,8 +194,7 @@ public class UserInterface extends javax.swing.JFrame {
         lblReportSensorDataSensorUnits.setText(sensor.getUnits());
         lblReportSensorDataNextIntervalDate.setText(sensor.getNextIntervalTime());
         
-        Date date = dpReportCalendar.getDate();
-        dpReportSensorDataDate.setDate(date);
+        
         
         updateReportSensorData();
     }
@@ -492,6 +498,11 @@ public class UserInterface extends javax.swing.JFrame {
         jFrameServer.setMinimumSize(new java.awt.Dimension(360, 200));
 
         sliderServerOnOff.setMaximum(1);
+        sliderServerOnOff.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                sliderServerOnOffMouseReleased(evt);
+            }
+        });
 
         txtServerOff.setText("OFF");
 
@@ -1562,6 +1573,7 @@ public class UserInterface extends javax.swing.JFrame {
         displayReportSensorDataScreen();
     }//GEN-LAST:event_dpReportSensorDataDateActionPerformed
 
+
     private void btnFieldStationDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFieldStationDetailsActionPerformed
         // TODO add your handling code here:
         Object[] message = {
@@ -1588,6 +1600,11 @@ public class UserInterface extends javax.swing.JFrame {
         System.out.println(sensor.getThresholdIsUpperLimit());
         JOptionPane.showMessageDialog(null, message, "Sensor Details", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnSensorDetailsActionPerformed
+
+    private void sliderServerOnOffMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sliderServerOnOffMouseReleased
+        server.togglePower();
+    }//GEN-LAST:event_sliderServerOnOffMouseReleased
+
 
     
     /**
@@ -1637,7 +1654,8 @@ public class UserInterface extends javax.swing.JFrame {
 
                         for (Sensor aSensor: aFieldStations.getSetOfSensors().getSensors()){
                             if(aSensor.onInterval()){
-                                userint.updateReport();
+                                if (server.getTurnedOn())
+                                    userint.updateReport();
                             }
                         }
                     }
