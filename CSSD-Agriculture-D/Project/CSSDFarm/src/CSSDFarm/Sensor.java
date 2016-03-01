@@ -125,7 +125,7 @@ public class Sensor implements Serializable {
             }
         }
                     
-        data = new SensorData(id, new Date(),"mm",newVal, location, 120);
+        data = new SensorData(id, new Date(),units,newVal, location, 120);
         lastReadingTime = new Date();
     }
     
