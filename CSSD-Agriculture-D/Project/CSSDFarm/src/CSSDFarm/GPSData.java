@@ -24,6 +24,11 @@ public class GPSData implements Serializable{
     public float getAltitude(){
         return altitude;
     }
+    
+    @Override
+    public String toString() {
+        return "{lat : " + this.latitude + ", long : " + this.longitude + ",alt : " + this.altitude + "}";
+    }
         
     public String GPStoString(){
         return latitude + "," + longitude + "," + altitude;

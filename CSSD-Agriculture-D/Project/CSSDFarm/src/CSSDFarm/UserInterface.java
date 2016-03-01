@@ -10,6 +10,7 @@ import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.swing.EventTableModel;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -19,9 +20,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -29,6 +32,7 @@ import java.util.Properties;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Vector;
+import java.util.logging.Level;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
@@ -42,9 +46,17 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.TableColumn;
-
+import com.teamdev.jxbrowser.chromium.Browser;
+import com.teamdev.jxbrowser.chromium.LoggerProvider;
+import com.teamdev.jxbrowser.chromium.swing.BrowserView;
+import java.awt.BorderLayout;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
+import javax.swing.JPanel;
+import javax.swing.JSlider;
 import javax.swing.table.DefaultTableCellRenderer;
+import org.apache.commons.io.FileUtils;
 /**
  *
  * @author Webby
@@ -60,6 +72,7 @@ public class UserInterface extends javax.swing.JFrame {
     EventTableModel sensorsTable;
     EventTableModel sensorsReportTable;
     EventTableModel sensorsReportSensorDataTable;
+    Browser browser = new Browser();
     
     public UserInterface() {
         initComponents();
@@ -292,6 +305,7 @@ public class UserInterface extends javax.swing.JFrame {
                     }
                 }  
             }});
+            updateHeatmap(sensorData);
         }
     }
     
@@ -405,7 +419,61 @@ public class UserInterface extends javax.swing.JFrame {
         txtThreshold.setText("");
     }
     
+    public void displayHeatmap() {
+        LoggerProvider.getChromiumProcessLogger().setLevel(Level.OFF);
+        LoggerProvider.getIPCLogger().setLevel(Level.OFF);
+        LoggerProvider.getBrowserLogger().setLevel(Level.OFF);
+        BrowserView view = new BrowserView(browser);
+        JPanel toolBar = new JPanel();
 
+        Dimension dimension = panelHeatmap.getSize();
+
+        JInternalFrame internalFrame = new JInternalFrame();
+        internalFrame.add(view, BorderLayout.CENTER);
+        internalFrame.add(toolBar, BorderLayout.NORTH);
+        internalFrame.setSize(dimension);
+        internalFrame.setLocation(0, 0);
+        internalFrame.setBorder(null);
+        internalFrame.setVisible(true);
+        ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame.getUI()).setNorthPane(null);
+
+        URL url = getClass().getResource("map.html");
+        File html = new File(url.getPath());
+
+        String htmlString = null;
+        try {
+            htmlString = FileUtils.readFileToString(html);
+        } catch (IOException ex) {
+            Logger.getLogger(UserInterface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        browser.loadHTML(htmlString);
+
+        panelHeatmap.add(internalFrame);
+    }
+
+    public void updateHeatmap(Vector<SensorData> sensorData) {
+        ArrayList stringData = new ArrayList();
+        /*sensorData.stream().map((sensorDataPoint) -> {
+            System.out.println(sensorDataPoint.getLocation().toString());
+            return sensorDataPoint;
+        }).forEach((sensorDataPoint) -> {
+            stringData.add(sensorDataPoint.getLocation().toString());
+        });*/
+        
+        for(SensorData sensor : sensorData) {
+            stringData.add(sensor.getLocation().toString());
+        }
+
+        if (!sensorData.isEmpty()) {
+            browser.executeJavaScript("addMyData("
+                    + stringData
+                    + ")");
+        }
+
+    }
+
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -478,9 +546,11 @@ public class UserInterface extends javax.swing.JFrame {
         lblReportTitle3 = new javax.swing.JLabel();
         dpReportCalendar = new org.jdesktop.swingx.JXDatePicker();
         btnDebug = new javax.swing.JButton();
+        panelSwitcher = new javax.swing.JPanel();
         panelReportTable = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblSensorData = new javax.swing.JTable();
+        panelHeatmap = new javax.swing.JPanel();
         panelReportSensorData = new javax.swing.JPanel();
         btnBackReportSensorData = new javax.swing.JButton();
         lblReportTitle4 = new javax.swing.JLabel();
@@ -578,7 +648,7 @@ public class UserInterface extends javax.swing.JFrame {
                         .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(416, Short.MAX_VALUE))
+                .addContainerGap(438, Short.MAX_VALUE))
         );
         panelLogInLayout.setVerticalGroup(
             panelLogInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -589,7 +659,7 @@ public class UserInterface extends javax.swing.JFrame {
                     .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(113, 113, 113)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(205, Short.MAX_VALUE))
+                .addContainerGap(223, Short.MAX_VALUE))
         );
 
         getContentPane().add(panelLogIn, "card5");
@@ -742,7 +812,7 @@ public class UserInterface extends javax.swing.JFrame {
                 .addGroup(panelManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnAddFieldStation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnFieldStationDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnRemoveFieldStation, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
+                    .addComponent(btnRemoveFieldStation, javax.swing.GroupLayout.PREFERRED_SIZE, 143, Short.MAX_VALUE)
                     .addComponent(btnReport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(panelManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -759,7 +829,7 @@ public class UserInterface extends javax.swing.JFrame {
                                 .addComponent(lblFieldStationManager, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelManagerLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())))
         );
@@ -770,7 +840,7 @@ public class UserInterface extends javax.swing.JFrame {
                 .addGroup(panelManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnReport)
                     .addComponent(lblFieldStationManager, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addGroup(panelManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1))
@@ -965,7 +1035,7 @@ public class UserInterface extends javax.swing.JFrame {
                     .addGroup(panelAddSensorLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(btnClearSensor)))
-                .addGap(70, 164, Short.MAX_VALUE))
+                .addGap(70, 168, Short.MAX_VALUE))
         );
         panelAddSensorLayout.setVerticalGroup(
             panelAddSensorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1012,7 +1082,7 @@ public class UserInterface extends javax.swing.JFrame {
                     .addGroup(panelAddSensorLayout.createSequentialGroup()
                         .addComponent(checkIsUpperLimit, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(2, 2, 2)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addGroup(panelAddSensorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSaveSensor)
                     .addComponent(btnCancelSensor))
@@ -1051,6 +1121,11 @@ public class UserInterface extends javax.swing.JFrame {
         lblReportTitle1.setText("View:");
 
         sliderView.setMaximum(1);
+        sliderView.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                sliderViewStateChanged(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
         jLabel1.setText("GPS");
@@ -1085,6 +1160,8 @@ public class UserInterface extends javax.swing.JFrame {
             }
         });
 
+        panelSwitcher.setLayout(new java.awt.CardLayout());
+
         tblSensorData.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -1105,17 +1182,31 @@ public class UserInterface extends javax.swing.JFrame {
         panelReportTableLayout.setHorizontalGroup(
             panelReportTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelReportTableLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 786, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 810, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 12, Short.MAX_VALUE))
         );
         panelReportTableLayout.setVerticalGroup(
             panelReportTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelReportTableLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        panelSwitcher.add(panelReportTable, "card3");
+
+        javax.swing.GroupLayout panelHeatmapLayout = new javax.swing.GroupLayout(panelHeatmap);
+        panelHeatmap.setLayout(panelHeatmapLayout);
+        panelHeatmapLayout.setHorizontalGroup(
+            panelHeatmapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 822, Short.MAX_VALUE)
+        );
+        panelHeatmapLayout.setVerticalGroup(
+            panelHeatmapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 302, Short.MAX_VALUE)
+        );
+
+        panelSwitcher.add(panelHeatmap, "card3");
 
         javax.swing.GroupLayout panelReportLayout = new javax.swing.GroupLayout(panelReport);
         panelReport.setLayout(panelReportLayout);
@@ -1149,10 +1240,11 @@ public class UserInterface extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(comboReportFieldStations, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(123, 123, 123)
-                        .addComponent(btnDebug)
-                        .addGap(0, 76, Short.MAX_VALUE))
-                    .addComponent(panelReportTable, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addComponent(btnDebug))
+                    .addGroup(panelReportLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(panelSwitcher, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelReportLayout.setVerticalGroup(
             panelReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1179,8 +1271,8 @@ public class UserInterface extends javax.swing.JFrame {
                 .addGroup(panelReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblReportTitle3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(dpReportCalendar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(15, 15, 15)
-                .addComponent(panelReportTable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelSwitcher, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -1247,7 +1339,7 @@ public class UserInterface extends javax.swing.JFrame {
                     .addGroup(panelReportSensorDataLayout.createSequentialGroup()
                         .addGap(22, 22, 22)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 692, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(102, Short.MAX_VALUE))
+                .addContainerGap(120, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelReportSensorDataLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(panelReportSensorDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -1289,7 +1381,7 @@ public class UserInterface extends javax.swing.JFrame {
                     .addComponent(lblReportSensorDataNextInterval))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addContainerGap(61, Short.MAX_VALUE))
         );
 
         getContentPane().add(panelReportSensorData, "card6");
@@ -1605,6 +1697,22 @@ public class UserInterface extends javax.swing.JFrame {
         server.togglePower();
     }//GEN-LAST:event_sliderServerOnOffMouseReleased
 
+    private void sliderViewStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sliderViewStateChanged
+        // TODO add your handling code here:
+        JSlider source = (JSlider) evt.getSource();
+        if (!source.getValueIsAdjusting()) {
+            if (source.getValue() == 0) {
+                panelReportTable.setVisible(false);
+                panelHeatmap.setVisible(true);
+                displayHeatmap();
+            } else {
+                panelReportTable.setVisible(true);
+                panelHeatmap.setVisible(false);
+            }
+
+        }
+    }//GEN-LAST:event_sliderViewStateChanged
+
 
     
     /**
@@ -1728,11 +1836,13 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JLabel lblThreshold;
     private javax.swing.JList listUserStations;
     private javax.swing.JPanel panelAddSensor;
+    private javax.swing.JPanel panelHeatmap;
     private javax.swing.JPanel panelLogIn;
     private javax.swing.JPanel panelManager;
     private javax.swing.JPanel panelReport;
     private javax.swing.JPanel panelReportSensorData;
     private javax.swing.JPanel panelReportTable;
+    private javax.swing.JPanel panelSwitcher;
     private javax.swing.JSlider sliderServerOnOff;
     private javax.swing.JSlider sliderView;
     private javax.swing.JTable tblReportSensorData;
