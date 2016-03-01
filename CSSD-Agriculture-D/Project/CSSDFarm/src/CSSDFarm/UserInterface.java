@@ -703,6 +703,11 @@ public class UserInterface extends javax.swing.JFrame {
 
         btnFieldStationDetails.setText("Field Station Details");
         btnFieldStationDetails.setEnabled(false);
+        btnFieldStationDetails.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFieldStationDetailsActionPerformed(evt);
+            }
+        });
 
         btnAddSensor.setText("Add Sensor");
         btnAddSensor.setEnabled(false);
@@ -722,6 +727,11 @@ public class UserInterface extends javax.swing.JFrame {
 
         btnSensorDetails.setText("Sensor Details");
         btnSensorDetails.setEnabled(false);
+        btnSensorDetails.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSensorDetailsActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelManagerLayout = new javax.swing.GroupLayout(panelManager);
         panelManager.setLayout(panelManagerLayout);
@@ -732,7 +742,7 @@ public class UserInterface extends javax.swing.JFrame {
                 .addGroup(panelManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnAddFieldStation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnFieldStationDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnRemoveFieldStation, javax.swing.GroupLayout.PREFERRED_SIZE, 143, Short.MAX_VALUE)
+                    .addComponent(btnRemoveFieldStation, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
                     .addComponent(btnReport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(panelManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1563,9 +1573,38 @@ public class UserInterface extends javax.swing.JFrame {
         displayReportSensorDataScreen();
     }//GEN-LAST:event_dpReportSensorDataDateActionPerformed
 
+
+    private void btnFieldStationDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFieldStationDetailsActionPerformed
+        // TODO add your handling code here:
+        Object[] message = {
+            "ID: " + selectedStation.getId(),
+            "Name: " + selectedStation.getName()
+        };
+        JOptionPane.showMessageDialog(null, message, "Sensor Details", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_btnFieldStationDetailsActionPerformed
+
+    private void btnSensorDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSensorDetailsActionPerformed
+        // TODO add your handling code here:
+        int index = tblSensorTable.getSelectedRow();
+        Sensor sensor = (Sensor)sensorsTable.getElementAt(index);
+        
+        GPSData location = sensor.getGps();
+        
+        Object[] message = {
+            "ID: " + sensor.getId(),
+            "Type: " + sensor.getType(),
+            "Units: " + sensor.getUnits(),
+            "Location: " + location.GPStoString(),
+            (sensor.getThresholdIsUpperLimit() ? "Threshold Upper Limit: " : "Threshold Lower Limit: ") + sensor.getThreshold()
+        };
+        System.out.println(sensor.getThresholdIsUpperLimit());
+        JOptionPane.showMessageDialog(null, message, "Sensor Details", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_btnSensorDetailsActionPerformed
+
     private void sliderServerOnOffMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sliderServerOnOffMouseReleased
         server.togglePower();
     }//GEN-LAST:event_sliderServerOnOffMouseReleased
+
 
     
     /**
