@@ -455,6 +455,9 @@ public class UserInterface extends javax.swing.JFrame {
     public void updateHeatmap(Vector<SensorData> sensorData) {
         ArrayList stringData = new ArrayList();
         ArrayList stringReadingData = new ArrayList();
+        ArrayList stringSensorName = new ArrayList();
+        ArrayList stringSensorUnit = new ArrayList();
+        ArrayList stringSensorDate = new ArrayList();
         /*sensorData.stream().map((sensorDataPoint) -> {
             System.out.println(sensorDataPoint.getLocation().toString());
             return sensorDataPoint;
@@ -465,6 +468,9 @@ public class UserInterface extends javax.swing.JFrame {
         for(SensorData sensor : sensorData) {
             stringData.add(sensor.getLocation().toString());
             stringReadingData.add(sensor.getValue());
+            stringSensorName.add(sensor.getId().toString());
+            stringSensorUnit.add(sensor.getUnit().toString());
+            stringSensorDate.add(sensor.getDate().toString());
         }
 
         if (!sensorData.isEmpty()) {

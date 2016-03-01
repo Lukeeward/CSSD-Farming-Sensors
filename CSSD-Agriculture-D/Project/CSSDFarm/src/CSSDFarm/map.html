@@ -76,28 +76,25 @@ function addMyData(dataPointsArray, sensorData){
 function generatePoints(dataPointsArray, sensorData)
 {
     var heatmapdata = new Array();
-    var markerArray = new Array();
     for (var i = 0; i < dataPointsArray.length; i++) {
         //console.log(stringData[i].lat +" "+stringData[i].long);
 		var latlong = new google.maps.LatLng(dataPointsArray[i].lat, dataPointsArray[i].long);
-        heatmapdata.push({location: latlong, weight: sensorData[i]});
+        heatmapdata.push({location: latlong, weight: 5});
     
 		var marker = new google.maps.Marker({
 			position: latlong,
 			map: map,
 			title: "sensor"
 		});
-		markerArray[i].push(marker);
 		
-		/*var infowindow = new google.maps.InfoWindow({
-			content: "Sensor",
+		var infowindow = new google.maps.InfoWindow({
+			//content: "<h2>" + stringSensorName[i] + "</h2><p>Reading: "+ sensorData[i] + " " + stringSensorUnit[i] +"</p><p>Last Updated: "+ stringSensorDate[i] +"</p>",
 			maxWidth: 200
 		});
 		
-		
-		marker.addListener('click', function(){
-			infowindow.open(map, markerArray[i]);
-		});*/
+		google.maps.event.addListener(marker, 'click', function() {
+			infowindow.open(map,this);
+		});
 		
 	}
     heatmap.setData(heatmapdata);
