@@ -413,6 +413,9 @@
             <Property name="text" type="java.lang.String" value="Field Station Details"/>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnFieldStationDetailsActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnAddSensor">
           <Properties>
@@ -437,6 +440,9 @@
             <Property name="text" type="java.lang.String" value="Sensor Details"/>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSensorDetailsActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
