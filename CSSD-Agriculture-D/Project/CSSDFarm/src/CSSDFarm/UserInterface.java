@@ -468,19 +468,28 @@ public class UserInterface extends javax.swing.JFrame {
         for(SensorData sensor : sensorData) {
             stringData.add(sensor.getLocation().toString());
             stringReadingData.add(sensor.getValue());
-            stringSensorName.add(sensor.getId().toString());
+            stringSensorName.add(stringToIntConverter(sensor.getId()));
             stringSensorUnit.add(sensor.getUnit().toString());
             stringSensorDate.add(sensor.getDate().toString());
         }
 
         if (!sensorData.isEmpty()) {
             browser.executeJavaScript("addMyData("
-                    + stringData + ", " + stringReadingData
+                    + stringData + ", " + stringReadingData + ", " + stringSensorName
                     + ")");
         }
-
     }
-
+    private int stringToIntConverter(String string){
+        int total = string.length();
+        int x=0;
+        for (int i=0;i< total;i++){
+            if (i == 0)
+                x = Character.getNumericValue(string.charAt(i));
+            else
+                x += Character.getNumericValue(string.charAt(i));
+        }
+        return x;
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.

@@ -66,15 +66,21 @@ function changeOpacity() {
   heatmap.set('opacity', heatmap.get('opacity') ? null : 0.2);
 }
 
-function addMyData(dataPointsArray, sensorData){
+function addMyData(dataPointsArray, sensorData, ext){
     
 //    heatmapdata.push({location: new google.maps.LatLng(lat, lon), weight: 0.5, radius: 200});
-      generatePoints(dataPointsArray, sensorData);
+      generatePoints(dataPointsArray, sensorData, ext);
 
 }
 
-function generatePoints(dataPointsArray, sensorData)
+function generatePoints(dataPointsArray, sensorData, ext)
 {
+	var stringy = JSON.stringify(sensorData);
+	var newobject = JSON.parse(stringy);
+	
+	var stringy1 = JSON.stringify(ext);
+	var newobject1 = JSON.parse(stringy1);
+	
     var heatmapdata = new Array();
     for (var i = 0; i < dataPointsArray.length; i++) {
         //console.log(stringData[i].lat +" "+stringData[i].long);
@@ -88,7 +94,7 @@ function generatePoints(dataPointsArray, sensorData)
 		});
 		
 		var infowindow = new google.maps.InfoWindow({
-			//content: "<h2>" + stringSensorName[i] + "</h2><p>Reading: "+ sensorData[i] + " " + stringSensorUnit[i] +"</p><p>Last Updated: "+ stringSensorDate[i] +"</p>",
+			content: "<h2>" + newobject1[0] + "</h2>",
 			maxWidth: 200
 		});
 		
