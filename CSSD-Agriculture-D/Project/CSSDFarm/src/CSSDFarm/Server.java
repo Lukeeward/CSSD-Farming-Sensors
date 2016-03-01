@@ -16,7 +16,8 @@ public class Server implements Serializable {
     
     private Server(){
         this.users = new Vector<UserAccount>();
-        this.users.add(new UserAccount("John","Password"));
+        this.users.add(new UserAccount("John","Password",0));
+        this.users.add(new UserAccount("Luke","Beffer", 1));
         this.stations = new Vector<FieldStation>();
         this.data = new HashMap<>();
         this.turnedOn = true;
@@ -74,8 +75,8 @@ public class Server implements Serializable {
         return new Report(fieldStationId, sensorHashMap);
     }
     
-    public void createUserAccount(String username, String password){
-        users.add(new UserAccount(username, password));
+    public void createUserAccount(String username, String password, int userRole){
+        users.add(new UserAccount(username, password, userRole));
     }
     
     public void createFieldStation(String id, String name){
@@ -158,6 +159,10 @@ public class Server implements Serializable {
             }
         }
         return null;
+    }
+    
+    public int getUsersRole(){
+        return currentUser.getUserRole();
     }
     
     public void addSensor(String fieldStationId, String sensorId, String sensorType, String sensorUnits, int interval, int threshold, boolean upperlimit){
