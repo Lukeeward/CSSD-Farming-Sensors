@@ -276,10 +276,11 @@ public class UserInterface extends javax.swing.JFrame {
             }
 
             sensorsReportTable = new EventTableModel(eventList, new SensorDataTableFormat());
-            int indexFs = comboReportFieldStations.getSelectedIndex();
-            SetOfSensors setOfSensors = server.getUserFieldStation().get(indexFs).getSetOfSensors();
+            
            
-            SwingUtilities.invokeLater(new Runnable(){public void run(){                
+            SwingUtilities.invokeLater(new Runnable(){public void run(){ 
+                int indexFs = comboReportFieldStations.getSelectedIndex();
+                SetOfSensors setOfSensors = server.getUserFieldStation().get(indexFs).getSetOfSensors();
                 tblSensorData.setModel(sensorsReportTable);
                 
                 CustomTableRendererColour cellRenderer = null;
@@ -309,10 +310,11 @@ public class UserInterface extends javax.swing.JFrame {
                         tblSensorData.getColumnModel().getColumn(i).setCellRenderer(cellRenderer);
                     }
                 }  
-            }});
-            //pass setOfSensors until a better way to get threshold value
+                //pass setOfSensors until a better way to get threshold value
             if (panelHeatmap.isVisible())               
-                updateHeatmap(sensorData, setOfSensors);            
+                updateHeatmap(sensorData, setOfSensors);      
+            }});
+                  
         }
     }
     
