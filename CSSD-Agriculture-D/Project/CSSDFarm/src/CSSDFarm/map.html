@@ -66,46 +66,65 @@ function changeOpacity() {
   heatmap.set('opacity', heatmap.get('opacity') ? null : 0.2);
 }
 
-function addMyData(dataPointsArray, sensorData, ext){
-    
+function addMyData(dataPointsArray, sensorData, unitType, weight){
+
 //    heatmapdata.push({location: new google.maps.LatLng(lat, lon), weight: 0.5, radius: 200});
-      generatePoints(dataPointsArray, sensorData, ext);
+      generatePoints(dataPointsArray, sensorData, unitType, weight);
 
 }
 
-function generatePoints(dataPointsArray, sensorData, ext)
+function generatePoints(dataPointsArray, sensorData, unitType, weight)
 {
-	var stringy = JSON.stringify(sensorData);
-	var newobject = JSON.parse(stringy);
-	
-	var stringy1 = JSON.stringify(ext);
-	var newobject1 = JSON.parse(stringy1);
-	
     var heatmapdata = new Array();
+    var infowindow = new google.maps.InfoWindow();
+
     for (var i = 0; i < dataPointsArray.length; i++) {
-        //console.log(stringData[i].lat +" "+stringData[i].long);
-		var latlong = new google.maps.LatLng(dataPointsArray[i].lat, dataPointsArray[i].long);
-        heatmapdata.push({location: latlong, weight: 5});
-    
-		var marker = new google.maps.Marker({
-			position: latlong,
-			map: map,
-			title: "sensor"
-		});
-		
-		var infowindow = new google.maps.InfoWindow({
-			content: "<h2>" + newobject1[0] + "</h2>",
-			maxWidth: 200
-		});
-		
-		google.maps.event.addListener(marker, 'click', function() {
-			infowindow.open(map,this);
-		});
-		
+
+      var latlong = new google.maps.LatLng(dataPointsArray[i].lat, dataPointsArray[i].long);
+      var marker = new google.maps.Marker({
+        position: latlong,
+        map: map,
+        infowindow: infowindow
+      });
+
+      //had to do as a closure to get each set of data rather than just the last set of array
+      google.maps.event.addListener(marker, 'click', (function(mm, reading, unit) {
+        return function() {
+          infowindow.setContent(reading.toString() + " " + unit.toString());
+          infowindow.open(map, mm);
+        }
+      })(marker, sensorData[i], setUnitType(unitType[i])));
+
+      //here generate the weight
+      heatmapdata.push({location: latlong, weight: weight[i]});
 	}
-    heatmap.setData(heatmapdata);
-	heatmap.set('radius', 20);
-    return heatmapdata;
+  heatmap.setData(heatmapdata);
+  heatmap.set('radius', 20);
+  return heatmapdata;
+}
+
+function setUnitType(unitType){
+  switch (unitType) {
+    case 0:
+        unitType = "";
+        break;
+    case 1:
+        unitType = "LUX";
+        break;
+    case 2:
+        unitType = "PH";
+        break;
+    case 3:
+        unitType = "C";
+        break;
+    case 4:
+        unitType = "F";
+        break;
+    case 5:
+        unitType = "%";
+        break;
+  }
+  return unitType;
 }
 
 function deleteHeatmap(){
@@ -113,12 +132,12 @@ function deleteHeatmap(){
 }
 
 // Heatmap data: 500 Points
-function getPoints() {
-  return [
-  {location: new google.maps.LatLng(53.367795, -1.507216), weight: 0.5, radius: 200},
-  {location: new google.maps.LatLng(53.368140, -1.506216), weight: 2},
-  new google.maps.LatLng(53.368126, -1.506356)
-  ]};
+// function getPoints() {
+//   return [
+//   {location: new google.maps.LatLng(53.367795, -1.507216), weight: 0.5, radius: 200},
+//   {location: new google.maps.LatLng(53.368140, -1.506216), weight: 2},
+//   new google.maps.LatLng(53.368126, -1.506356)
+//   ]};
 
    </script>
 </head>

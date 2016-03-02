@@ -275,12 +275,12 @@ public class UserInterface extends javax.swing.JFrame {
             }
 
             sensorsReportTable = new EventTableModel(eventList, new SensorDataTableFormat());
-            
+            int indexFs = comboReportFieldStations.getSelectedIndex();
+            SetOfSensors setOfSensors = server.getUserFieldStation().get(indexFs).getSetOfSensors();
            
             SwingUtilities.invokeLater(new Runnable(){public void run(){                
                 tblSensorData.setModel(sensorsReportTable);
-                int indexFs = comboReportFieldStations.getSelectedIndex();
-                SetOfSensors setOfSensors = server.getUserFieldStation().get(indexFs).getSetOfSensors();
+                
                 CustomTableRendererColour cellRenderer = null;
                 try{
                     cellRenderer = new CustomTableRendererColour(indexFs, setOfSensors);
@@ -309,7 +309,8 @@ public class UserInterface extends javax.swing.JFrame {
                     }
                 }  
             }});
-            updateHeatmap(sensorData);
+            //pass setOfSensors until a better way to get threshold value
+            updateHeatmap(sensorData, setOfSensors);
         }
     }
     
@@ -456,30 +457,45 @@ public class UserInterface extends javax.swing.JFrame {
         panelHeatmap.add(internalFrame);
     }
 
-    public void updateHeatmap(Vector<SensorData> sensorData) {
+    public void updateHeatmap(Vector<SensorData> sensorData, SetOfSensors setOfSensors) {
         ArrayList stringData = new ArrayList();
         ArrayList stringReadingData = new ArrayList();
         ArrayList stringSensorName = new ArrayList();
         ArrayList stringSensorUnit = new ArrayList();
         ArrayList stringSensorDate = new ArrayList();
-        /*sensorData.stream().map((sensorDataPoint) -> {
-            System.out.println(sensorDataPoint.getLocation().toString());
-            return sensorDataPoint;
-        }).forEach((sensorDataPoint) -> {
-            stringData.add(sensorDataPoint.getLocation().toString());
-        });*/
+        ArrayList stringSensorWeight = new ArrayList();
+        
         
         for(SensorData sensor : sensorData) {
             stringData.add(sensor.getLocation().toString());
             stringReadingData.add(sensor.getValue());
             stringSensorName.add(stringToIntConverter(sensor.getId()));
-            stringSensorUnit.add(sensor.getUnit().toString());
+            int unitType = 0;
+            switch (sensor.getUnit()) {
+            case "LUX":  unitType = 1;
+                     break;
+            case "PH":  unitType = 2;
+                     break;
+            case "C":  unitType = 3;
+                     break;
+            case "F":  unitType = 4;
+                     break;
+            case "%":  unitType = 5;
+                     break;            
+            }
+            stringSensorUnit.add(unitType);
+            
+            Sensor sensor1 = setOfSensors.getSensor(sensor.getId());
+            float thresh = sensor1.getThreshold(); 
+            float val = sensor.getValue();
+            int weight = Math.round((val * 100) / thresh);  
+            stringSensorWeight.add(weight);
             stringSensorDate.add(sensor.getDate().toString());
         }
 
         if (!sensorData.isEmpty()) {
             browser.executeJavaScript("addMyData("
-                    + stringData + ", " + stringReadingData + ", " + stringSensorName
+                    + stringData + ", " + stringReadingData + ", " + stringSensorUnit + ", " + stringSensorWeight
                     + ")");
         }
     }
