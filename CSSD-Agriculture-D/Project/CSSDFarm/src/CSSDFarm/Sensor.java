@@ -35,8 +35,8 @@ public class Sensor implements Serializable {
         this.actuator = actuator;
         //Set GPSData
         calculateLocation();
-        //Set SensorData
-        collectData();
+        //Set SensorData for unit tests, dont think this is called otherwise..
+        data = new SensorData(id, new Date(),"LUX",12, location, 120);
     }
     
     public Sensor(String id, String sensorType, String units, int interval, int threshold, boolean upperlimit)

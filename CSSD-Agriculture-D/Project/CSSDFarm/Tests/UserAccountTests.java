@@ -17,7 +17,7 @@ import static org.junit.Assert.*;
  * @author lnseg
  */
 public class UserAccountTests {
-    UserAccount ua = new UserAccount("Username","Password");
+    UserAccount ua = new UserAccount("Username","Password", 0);
     
     public UserAccountTests() {
     }

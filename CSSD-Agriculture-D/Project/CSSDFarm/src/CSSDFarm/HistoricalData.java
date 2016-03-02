@@ -1,6 +1,7 @@
 package CSSDFarm;
 import java.io.Serializable;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Comparator;
@@ -22,6 +23,16 @@ class HistoricalData implements Serializable {
     
     public Vector<SensorData> getData(Date date){
         Vector<SensorData> returnData = new Vector<SensorData>();
+        
+        //format the date so it matches the .getDate() returned date format
+        DateFormat inputformatter = new SimpleDateFormat("dd/MM/yyyy");
+        String newDate = inputformatter.format(date);
+        try {
+            date = inputformatter.parse(newDate);
+        } catch(ParseException ex) {
+            
+        }
+        
         for(SensorData dt : data)
         {
             if (dt.getDate().equals(date)){
