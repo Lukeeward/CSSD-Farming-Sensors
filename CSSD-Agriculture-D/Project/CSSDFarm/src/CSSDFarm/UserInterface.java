@@ -102,6 +102,8 @@ public class UserInterface extends javax.swing.JFrame {
                 try {
                     loadedServer = (Server)instream.readObject();
                     server = Server.getInstance(loadedServer);
+                    sliderServerOnOff.setValue((server.getTurnedOn()) ? 1 : 0);
+                    
                 } catch(ClassNotFoundException ex) {
                     System.out.println(ex);
                 }
@@ -615,6 +617,11 @@ public class UserInterface extends javax.swing.JFrame {
                 sliderServerOnOffMouseReleased(evt);
             }
         });
+        sliderServerOnOff.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                sliderServerOnOffKeyReleased(evt);
+            }
+        });
 
         txtServerOff.setText("OFF");
 
@@ -765,8 +772,9 @@ public class UserInterface extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 607, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 661, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -787,11 +795,11 @@ public class UserInterface extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblSensorList))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addComponent(lblSensorList)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -865,7 +873,7 @@ public class UserInterface extends javax.swing.JFrame {
                 .addGroup(panelManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnAddFieldStation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnFieldStationDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnRemoveFieldStation, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
+                    .addComponent(btnRemoveFieldStation, javax.swing.GroupLayout.PREFERRED_SIZE, 143, Short.MAX_VALUE)
                     .addComponent(btnReport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(panelManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -882,7 +890,7 @@ public class UserInterface extends javax.swing.JFrame {
                                 .addComponent(lblFieldStationManager, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelManagerLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())))
         );
@@ -1753,7 +1761,9 @@ public class UserInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSensorDetailsActionPerformed
 
     private void sliderServerOnOffMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sliderServerOnOffMouseReleased
-        server.togglePower();
+        JSlider source = (JSlider) evt.getSource();        
+        server.togglePower(source.getValue());
+        
     }//GEN-LAST:event_sliderServerOnOffMouseReleased
 
     private void sliderViewStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sliderViewStateChanged
@@ -1775,6 +1785,12 @@ public class UserInterface extends javax.swing.JFrame {
     private void buttonRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRegisterActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_buttonRegisterActionPerformed
+
+    private void sliderServerOnOffKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_sliderServerOnOffKeyReleased
+        // TODO add your handling code here:
+        JSlider source = (JSlider) evt.getSource();        
+        server.togglePower(source.getValue());
+    }//GEN-LAST:event_sliderServerOnOffKeyReleased
 
 
     

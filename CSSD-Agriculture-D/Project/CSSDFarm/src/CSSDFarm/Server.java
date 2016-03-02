@@ -56,8 +56,12 @@ public class Server implements Serializable {
         return turnedOn;
     }
     
-    public void togglePower(){
-        this.turnedOn = !turnedOn;
+    public void togglePower(int val){
+        if (val == 0)
+            this.turnedOn = false;
+        else
+            this.turnedOn = true;
+        //this.turnedOn = !turnedOn;
     }
     
     public Vector<FieldStation> getUserFieldStation(){
