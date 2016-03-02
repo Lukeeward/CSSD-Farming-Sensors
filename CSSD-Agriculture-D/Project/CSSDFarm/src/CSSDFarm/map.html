@@ -14,24 +14,12 @@
    <script type="text/javascript">
      var map;
      var heatmap;
+     var totalMarkers = "first";
 
      google.maps.event.addDomListener(window, 'load', initialize);
      function initialize() {
-       var mapOptions = {
-         center: new google.maps.LatLng(53.430104, -1.576967),
-         zoom: 15,
-         mapTypeId: google.maps.MapTypeId.SATELLITE
-       };
-       map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+       resetMap();
 
-
-
-      heatmap = new google.maps.visualization.HeatmapLayer({
-      //data: getPoints(),
-      map: map,
-      dissipating: true
-      });
-      //heatmap.set('radius', 40)
 }
 
  function toggleHeatmap() {
@@ -67,14 +55,23 @@ function changeOpacity() {
 }
 
 function addMyData(dataPointsArray, sensorData, unitType, weight){
+    if (totalMarkers == "first")
+    totalMarkers = dataPointsArray.length
 
-//    heatmapdata.push({location: new google.maps.LatLng(lat, lon), weight: 0.5, radius: 200});
-      generatePoints(dataPointsArray, sensorData, unitType, weight);
+    if (totalMarkers != dataPointsArray.length){
+      totalMarkers = dataPointsArray.length;
+      //need to remove markers here
+      resetMap();
+    }
+
+//  heatmapdata.push({location: new google.maps.LatLng(lat, lon), weight: 0.5, radius: 200});
+    generatePoints(dataPointsArray, sensorData, unitType, weight);
 
 }
 
 function generatePoints(dataPointsArray, sensorData, unitType, weight)
 {
+
     var heatmapdata = new Array();
     var infowindow = new google.maps.InfoWindow();
 
@@ -129,6 +126,21 @@ function setUnitType(unitType){
 
 function deleteHeatmap(){
     heatmap.setData([]);
+}
+
+function resetMap(){
+  var mapOptions = {
+    center: new google.maps.LatLng(53.430104, -1.576967),
+    zoom: 15,
+    mapTypeId: google.maps.MapTypeId.SATELLITE
+  };
+  map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+  heatmap = new google.maps.visualization.HeatmapLayer({
+  //data: getPoints(),
+  map: map,
+  dissipating: true
+  });
+  //heatmap.set('radius', 40)
 }
 
 // Heatmap data: 500 Points

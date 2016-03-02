@@ -311,7 +311,8 @@ public class UserInterface extends javax.swing.JFrame {
                 }  
             }});
             //pass setOfSensors until a better way to get threshold value
-            updateHeatmap(sensorData, setOfSensors);
+            if (panelHeatmap.isVisible())               
+                updateHeatmap(sensorData, setOfSensors);            
         }
     }
     
@@ -494,7 +495,7 @@ public class UserInterface extends javax.swing.JFrame {
             stringSensorDate.add(sensor.getDate().toString());
         }
 
-        if (!sensorData.isEmpty()) {
+        if (sensorData != null) {
             browser.executeJavaScript("addMyData("
                     + stringData + ", " + stringReadingData + ", " + stringSensorUnit + ", " + stringSensorWeight
                     + ")");
@@ -1606,8 +1607,9 @@ public class UserInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_btnReportActionPerformed
 
     private void comboReportFieldStationsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboReportFieldStationsItemStateChanged
-        // TODO add your handling code here:
+        // TODO add your handling code here:        
         updateReport();
+        
     }//GEN-LAST:event_comboReportFieldStationsItemStateChanged
 
     private void comboReportSensorTypeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboReportSensorTypeItemStateChanged
