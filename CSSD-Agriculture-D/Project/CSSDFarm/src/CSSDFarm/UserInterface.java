@@ -1593,14 +1593,19 @@ public class UserInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelSensorActionPerformed
 
     private void btnRemoveFieldStationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveFieldStationActionPerformed
-        removeFieldStation(selectedStation.getId());
+        int dialogResult = JOptionPane.showConfirmDialog (null, "Are you sure you want to remove field station: " + selectedStation.getId(),"Warning",JOptionPane.YES_NO_OPTION);
+        if(dialogResult == JOptionPane.YES_OPTION){
+            removeFieldStation(selectedStation.getId());
+        }
     }//GEN-LAST:event_btnRemoveFieldStationActionPerformed
 
     private void btnRemoveSensorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveSensorActionPerformed
-        // TODO add your handling code here:
         int index = tblSensorTable.getSelectedRow();
         Sensor sensor = (Sensor)sensorsTable.getElementAt(index);
-        removeSensor(sensor.getId());
+        int dialogResult = JOptionPane.showConfirmDialog (null, "Are you sure you want to remove sensor: " + sensor.getId(),"Warning",JOptionPane.YES_NO_OPTION);
+        if(dialogResult == JOptionPane.YES_OPTION){            
+            removeSensor(sensor.getId());
+        }
     }//GEN-LAST:event_btnRemoveSensorActionPerformed
 
     private void btnReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportActionPerformed
