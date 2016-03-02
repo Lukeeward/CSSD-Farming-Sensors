@@ -169,6 +169,7 @@ public class UserInterface extends javax.swing.JFrame {
         panelReport.setVisible(true);
         dpReportCalendar.getEditor().setEditable(false);
         comboReportSensorType.setLightWeightPopupEnabled(false);
+        dpReportCalendar.setLightWeightPopupEnabled(false);
         userFieldStations = server.loadData();
         comboReportFieldStations.setRenderer(new DefaultListCellRenderer() {
             @Override
