@@ -72,10 +72,34 @@ public class ServerTests {
         server.addFieldStation("test1", "test2");
         server.addSensor("test1", "sensor", "Soil Moisture", "%", 10, 55, true);
         FieldStation result = server.getFieldStation("test1");
+        
+        if(!server.getTurnedOn())
+            server.togglePower();
         Date readingDate = new Date();
         result.update("data/buffer.ser", new SensorData("sensor", readingDate,"LUX",55, new GPSData(12345f, 12345f, 0.5f), 120));
         Report resultReport = server.compileReport("test1");
-        Vector<SensorData> hdhd = resultReport.getDataForSensorOnDate("sensor",readingDate);
         assertTrue(resultReport.getDataForSensorOnDate("sensor",readingDate).size() > 0);        
+    }
+    
+    @Test
+    public void testServerNotOn(){       
+        //When server is turned off no data will be uploaded by the fieldstation
+        //So the report generated will be empty
+        server.addFieldStation("test1", "test2");
+        server.addSensor("test1", "sensor", "Soil Moisture", "%", 10, 55, true);
+        FieldStation result = server.getFieldStation("test1");
+        Date readingDate = new Date();
+        server.togglePower();
+        result.update("data/buffer.ser", new SensorData("sensor", readingDate,"LUX",55, new GPSData(12345f, 12345f, 0.5f), 120));
+        Report resultReport = server.compileReport("test1");
+        assertTrue(resultReport.getDataForSensorOnDate("sensor",readingDate).isEmpty());       
+        
+        //When the server is turned back on, at the next upload all data is uploaded
+        server.togglePower();
+        result.update("data/buffer.ser", new SensorData("sensor", readingDate,"LUX",55, new GPSData(12345f, 12345f, 0.5f), 120));
+        Report serverOnResultReport = server.compileReport("test1");
+        assertTrue(serverOnResultReport.getDataForSensorOnDate("sensor",readingDate).size() == 2);       
+        
+        
     }
 }
