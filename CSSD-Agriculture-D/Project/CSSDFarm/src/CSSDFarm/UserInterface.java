@@ -1475,8 +1475,12 @@ public class UserInterface extends javax.swing.JFrame {
         String password = txtPassword.getText();
         boolean authenticateUser = server.authenticateUser(name, password);
         if (authenticateUser){            
-            panelLogIn.setVisible(false);
-           displayManagerScreen();
+           panelLogIn.setVisible(false);
+           if(server.getUsersRole() == 1) {
+                displayManagerScreen();
+           } else {
+                displayReportScreen();
+           }
            listUserStations.setListData(userFieldStations);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
