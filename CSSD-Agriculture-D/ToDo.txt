@@ -1,2 +1,5 @@
 ToDo:
 Unit Tests
+Acceptance tests
+Javadocs
+Comment everywhere
