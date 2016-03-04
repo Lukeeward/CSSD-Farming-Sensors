@@ -65,7 +65,10 @@ public class Server implements Serializable {
     }
     
     public Vector<FieldStation> getUserFieldStation(){
-        return currentUser.getFieldStations();
+        if(currentUser.getUserRole() == 1)
+                return stations;
+            else
+                return currentUser.getFieldStations();
     }
     //String1 = FieldStationId??
     public Report compileReport(String fieldStationId){
@@ -138,7 +141,10 @@ public class Server implements Serializable {
         if(currentUser == null) {
             return null;
         } else {
-            return currentUser.getFieldStations();
+            if(currentUser.getUserRole() == 1)
+                return stations;
+            else
+                return currentUser.getFieldStations();
         }
     }
     

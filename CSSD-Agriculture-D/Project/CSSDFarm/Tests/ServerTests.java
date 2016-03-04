@@ -74,7 +74,7 @@ public class ServerTests {
         FieldStation result = server.getFieldStation("test1");
         
         if(!server.getTurnedOn())
-            server.togglePower();
+            server.togglePower(1);
         Date readingDate = new Date();
         result.update("data/buffer.ser", new SensorData("sensor", readingDate,"LUX",55, new GPSData(12345f, 12345f, 0.5f), 120));
         Report resultReport = server.compileReport("test1");
@@ -89,13 +89,13 @@ public class ServerTests {
         server.addSensor("test1", "sensor", "Soil Moisture", "%", 10, 55, true);
         FieldStation result = server.getFieldStation("test1");
         Date readingDate = new Date();
-        server.togglePower();
+        server.togglePower(0);
         result.update("data/buffer.ser", new SensorData("sensor", readingDate,"LUX",55, new GPSData(12345f, 12345f, 0.5f), 120));
         Report resultReport = server.compileReport("test1");
         assertTrue(resultReport.getDataForSensorOnDate("sensor",readingDate).isEmpty());       
         
         //When the server is turned back on, at the next upload all data is uploaded
-        server.togglePower();
+        server.togglePower(1);
         result.update("data/buffer.ser", new SensorData("sensor", readingDate,"LUX",55, new GPSData(12345f, 12345f, 0.5f), 120));
         Report serverOnResultReport = server.compileReport("test1");
         assertTrue(serverOnResultReport.getDataForSensorOnDate("sensor",readingDate).size() == 2);       
