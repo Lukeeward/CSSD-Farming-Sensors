@@ -28,8 +28,7 @@ public class Report implements Serializable {
      * returning the SensorDatas that were generated on that date.
      *
      * @param date The date with which to filter the SensorData with
-     * @return 
-     * @see SensorData.getDate();
+     * @return null
      */
     public Vector<SensorData> getDataByDate(Date date){
         return null;
@@ -95,7 +94,7 @@ public class Report implements Serializable {
     /**
      * Dont need me??
      *
-     * @param sensorData
+     * @param sensorData wut
      */
     public void addData(SensorData sensorData){
         

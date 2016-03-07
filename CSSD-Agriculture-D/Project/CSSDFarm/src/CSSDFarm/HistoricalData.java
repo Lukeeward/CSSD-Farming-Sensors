@@ -8,12 +8,25 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.Vector;
 
+
+/**
+* HistoricalData contains the SensorData relating to a sensor within a FieldStation
+*/
+
 class HistoricalData implements Serializable {
     private String dataType;
     private String fieldStationID;
     private String sensorID;
     private Vector<SensorData> data;
     
+    /**
+     * Generates a new HistoricalData consisting of an empty SensorData vector
+     * relates to the supplied FieldStation and Sensor id.
+     * 
+     * @param SensorType The SensorType the sensor data related to
+     * @param fieldStationId The FieldStation id the historical data class related to
+     * @param sensorId The Sensor the contained data is from
+     */
     public HistoricalData(String SensorType, String fieldStationId, String sensorId){
         this.dataType = SensorType;
         this.fieldStationID = fieldStationId;
@@ -21,6 +34,12 @@ class HistoricalData implements Serializable {
         this.data = new Vector<SensorData>();
     }
     
+    /**
+     * Returns a vector of SensorDatas contained locally within the Historical Data object
+     * 
+     * @param date The date in which to filter the SensorData by
+     * @return A vector of filtered SensorData
+     */
     public Vector<SensorData> getData(Date date){
         Vector<SensorData> returnData = new Vector<SensorData>();
         
@@ -50,18 +69,38 @@ class HistoricalData implements Serializable {
         return returnData;
     }
     
+    /**
+     * Returns the most recently added SensorData
+     * 
+     * @return The most recently added SensorData Object
+     */
     public SensorData getMostRecent(){
-        return null;
+        return data.lastElement();
     }
     
+    /**
+     * Returns the HistoricalData SensorData type
+     * 
+     * @return A string consisting of a SensorData type
+     */
     public String getType(){
         return dataType;
     }
     
+    /**
+     * Adds a new SensorData to the HistoricalData data vector
+     * 
+     * @param data The SensorData object to add
+     */
     public void addData(SensorData data){
         this.data.add(data);
     }
     
+    /**
+     * Returns the HistoricalData's corresponding SensorId
+     * 
+     * @return A string consisting of a SensorData id
+     */
     public String getSensorId(){
         return this.sensorID;
     }
