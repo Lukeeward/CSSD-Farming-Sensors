@@ -62,7 +62,7 @@ public class SensorTests {
         Sensor thresholdTestSensor = new Sensor(id,station,interval,type,power,threshold,thresholdIsUpperLimit,actuator);
 
         //SensorData is 12.00f and threshold is 20.00f
-        //threshholdIsUpperLimit = true
+        //thresholdIsUpperLimit = true
         //within the threshold
         assertTrue(thresholdTestSensor.withinThreshold());
 
@@ -70,7 +70,7 @@ public class SensorTests {
         thresholdTestSensor = new Sensor(id,station,interval,type,power,threshold,thresholdIsUpperLimit,actuator);
 
         //SensorData is 12.00f and threshold is 10.00f
-        //threshholdIsUpperLimit = true
+        //thresholdIsUpperLimit = true
         //above the threshold
         assertFalse(thresholdTestSensor.withinThreshold());
 
@@ -79,16 +79,32 @@ public class SensorTests {
         thresholdTestSensor = new Sensor(id,station,interval,type,power,threshold,thresholdIsUpperLimit,actuator);
 
         //SensorData is 12.00f and threshold is 10.00f
-        //threshholdIsUpperLimit = false
+        //thresholdIsUpperLimit = false
         //within threshold
         assertTrue(thresholdTestSensor.withinThreshold());
 
         threshold = 20f;
         thresholdTestSensor = new Sensor(id,station,interval,type,power,threshold,thresholdIsUpperLimit,actuator);
 
-        //SensorData is 12.00f and threshold is 10.00f
-        //threshholdIsUpperLimit = false
+        //SensorData is 12.00f and threshold is 20.00f
+        //thresholdIsUpperLimit = false
         //below threshold
+        assertFalse(thresholdTestSensor.withinThreshold());
+        
+        threshold = -45f;
+        thresholdTestSensor = new Sensor(id,station,interval,type,power,threshold,thresholdIsUpperLimit,actuator);
+
+        //SensorData is 12.00f and threshold is -45.00f
+        //thresholdIsUpperLimit = false
+        //below threshold
+        assertTrue(thresholdTestSensor.withinThreshold());
+        
+        threshold = -45f;
+        thresholdIsUpperLimit = true;
+        thresholdTestSensor = new Sensor(id,station,interval,type,power,threshold,thresholdIsUpperLimit,actuator);
+        
+        //SensorData is 12.00f and threshold is -45.00f
+        //above the threshold
         assertFalse(thresholdTestSensor.withinThreshold());
     }
     

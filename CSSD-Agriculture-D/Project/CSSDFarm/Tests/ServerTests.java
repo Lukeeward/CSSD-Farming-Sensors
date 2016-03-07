@@ -62,6 +62,15 @@ public class ServerTests {
     }
     
     @Test
+    public void testVerifyFieldStation(){
+        
+        //is the name "ShaunsStation" valid (ie. not already taken)
+        assertTrue(server.verifyFieldStation("ShaunsStation"));
+        server.addFieldStation("ShaunsStation", "Station123");
+        assertFalse(server.verifyFieldStation("ShaunsStation"));
+    }
+    
+    @Test
     public void testAuthenticateUser(){        
         boolean result = server.authenticateUser("John", "Password");
         assertTrue(result == true);        
