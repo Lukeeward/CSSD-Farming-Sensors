@@ -89,7 +89,7 @@ public class UserInterface extends javax.swing.JFrame {
             outstream.writeObject(server);
             outstream.close();
         } catch(IOException io) {
-            System.out.println(io);
+            //System.out.println(io);
         }
     }
     
@@ -106,11 +106,11 @@ public class UserInterface extends javax.swing.JFrame {
                     sliderServerOnOff.setValue((server.getTurnedOn()) ? 1 : 0);
                     
                 } catch(ClassNotFoundException ex) {
-                    System.out.println(ex);
+                    //System.out.println(ex);
                 }
             } while (true);
         } catch(IOException io) {
-            System.out.println(io);
+            //System.out.println(io);
             if(server == null)
                 server = Server.getInstance(null);
         }
@@ -119,7 +119,7 @@ public class UserInterface extends javax.swing.JFrame {
             try {
                 instream.close();
             } catch (IOException ex) {
-                System.out.println(ex); 
+                //System.out.println(ex); 
             }
         }
     }
@@ -130,15 +130,9 @@ public class UserInterface extends javax.swing.JFrame {
             comboReportFieldStations.setModel(new DefaultComboBoxModel());
         }
         
-        
-        
         panelReport.setVisible(false);
-        
-        
         panelManager.setVisible(true);
-        
         userFieldStations = server.loadData();
-       // listUserStations.setListData(userFieldStations);
         
         listUserStations.setCellRenderer(new DefaultListCellRenderer() {
             @Override
@@ -150,8 +144,6 @@ public class UserInterface extends javax.swing.JFrame {
                 }
                 return renderer;
             }
-             
-            
         });
         
         if(server.getUsersRole() == 1){
@@ -161,12 +153,13 @@ public class UserInterface extends javax.swing.JFrame {
             btnRemoveFieldStation.setVisible(false);
         }
         
-        //System.out.println(userStationList);
-        
         panelManager.setVisible(true);
-        
         int pos = loadUserData("data/userSettings.ser");
-        listUserStations.setSelectedIndex(pos);
+        try{
+            listUserStations.setSelectedIndex(pos);
+        }catch(Exception eX){
+            
+        }
         
     }
     
@@ -201,7 +194,12 @@ public class UserInterface extends javax.swing.JFrame {
         Date date = new Date();
         dpReportCalendar.setDate(date);
         int pos = loadUserData("data/userData.ser");
-        comboReportFieldStations.setSelectedIndex(pos);
+        try{
+            comboReportFieldStations.setSelectedIndex(pos);
+        }catch(Exception eX){
+            
+        }
+        
         
     }
     
@@ -210,8 +208,6 @@ public class UserInterface extends javax.swing.JFrame {
             panelReport.setVisible(false);
         panelReportSensorData.setVisible(true);
         
-        
-        //System.out.println(dpReportSensorDataDate.getDate());
         if (dpReportSensorDataDate.getDate() == null){
             Date date = dpReportCalendar.getDate();
             dpReportSensorDataDate.setDate(date);
@@ -1582,7 +1578,6 @@ public class UserInterface extends javax.swing.JFrame {
     
     private void listUserStationsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listUserStationsValueChanged
         if (!evt.getValueIsAdjusting()) {//prevents double events Eg: from mouse down and mouse up
-            //System.out.println(listUserStations.getSelectedIndex());
             FieldStation selected = (FieldStation)listUserStations.getSelectedValue();
             if(selected != null){
                 btnAddSensor.setEnabled(true);
@@ -1592,7 +1587,6 @@ public class UserInterface extends javax.swing.JFrame {
                 changeSelectedFieldStation(selectedStation);
                 
                 saveUserData("data/userSettings.ser",listUserStations.getSelectedIndex());
-                //loadUserData("data/userSettings.ser");
             } else {
                 btnAddSensor.setEnabled(false);
                 btnRemoveFieldStation.setEnabled(false);
@@ -1608,10 +1602,9 @@ public class UserInterface extends javax.swing.JFrame {
             outstream = new ObjectOutputStream(new FileOutputStream (filePath)); 
             userSettings = item;
             outstream.writeInt(userSettings);
-            System.out.println("Saved at : " + userSettings);
             outstream.close();
         } catch(IOException io) {
-            System.out.println(io);
+            //System.out.println(io);
         }
     }
     
@@ -1626,20 +1619,19 @@ public class UserInterface extends javax.swing.JFrame {
             try {
                 loadedUserSettings = instream.readInt();
                 //set selected based on loaderUserSettings
-                System.out.println(loadedUserSettings);
                 
             } catch(Exception ex) {
-                System.out.println("EX:" + ex);
+                //System.out.println("EX:" + ex);
             }
         } catch(IOException io) {
-            System.out.println(io);
+            //System.out.println(io);
         }
 
         if(instream != null){
             try {
                 instream.close();
             } catch (IOException ex) {
-                System.out.println(ex); 
+                //System.out.println(ex); 
             }
         }
         if (loadedUserSettings == null)
@@ -1660,7 +1652,7 @@ public class UserInterface extends javax.swing.JFrame {
         int daysSeconds = Integer.parseInt(comboIntervalDays.getSelectedItem().toString()) * 60 * 60 * 24;
         int interval = secondsSeconds + minutesSeconds + hoursSeconds + daysSeconds;
         int threshold = -1;
-        if(txtThreshold.getText() != "")
+        if(!txtThreshold.getText().equals(""));
         {
             threshold = Integer.parseInt(txtThreshold.getText());   
         }
@@ -1824,7 +1816,7 @@ public class UserInterface extends javax.swing.JFrame {
             "Location: " + location.GPStoString(),
             (sensor.getThresholdIsUpperLimit() ? "Threshold Upper Limit: " : "Threshold Lower Limit: ") + sensor.getThreshold()
         };
-        System.out.println(sensor.getThresholdIsUpperLimit());
+        
         JOptionPane.showMessageDialog(null, message, "Sensor Details", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnSensorDetailsActionPerformed
 
