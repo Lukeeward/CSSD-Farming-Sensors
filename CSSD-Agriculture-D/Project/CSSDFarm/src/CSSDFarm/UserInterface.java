@@ -73,6 +73,7 @@ public class UserInterface extends javax.swing.JFrame {
     EventTableModel sensorsReportTable;
     EventTableModel sensorsReportSensorDataTable;
     Browser browser = new Browser();
+    boolean loadData = false;
     
     public UserInterface() {
         initComponents();
@@ -128,6 +129,9 @@ public class UserInterface extends javax.swing.JFrame {
         if (panelReport.isVisible()){
             comboReportFieldStations.setModel(new DefaultComboBoxModel());
         }
+        
+        
+        
         panelReport.setVisible(false);
         
         
@@ -146,6 +150,8 @@ public class UserInterface extends javax.swing.JFrame {
                 }
                 return renderer;
             }
+             
+            
         });
         
         if(server.getUsersRole() == 1){
@@ -159,6 +165,9 @@ public class UserInterface extends javax.swing.JFrame {
         
         panelManager.setVisible(true);
         
+        int pos = loadUserData("data/userSettings.ser");
+        listUserStations.setSelectedIndex(pos);
+        
     }
     
     public void displayAddSensorPanel(){
@@ -168,6 +177,7 @@ public class UserInterface extends javax.swing.JFrame {
     }
     
     public void displayReportScreen(){
+        loadData = false;
         panelManager.setVisible(false);
         panelReport.setVisible(true);
         dpReportCalendar.getEditor().setEditable(false);
@@ -190,6 +200,9 @@ public class UserInterface extends javax.swing.JFrame {
         }
         Date date = new Date();
         dpReportCalendar.setDate(date);
+        int pos = loadUserData("data/userData.ser");
+        comboReportFieldStations.setSelectedIndex(pos);
+        
     }
     
     public void displayReportSensorDataScreen(){
@@ -1568,20 +1581,73 @@ public class UserInterface extends javax.swing.JFrame {
     }
     
     private void listUserStationsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listUserStationsValueChanged
-        FieldStation selected = (FieldStation)listUserStations.getSelectedValue();
-        if(selected != null){
-            btnAddSensor.setEnabled(true);
-            btnRemoveFieldStation.setEnabled(true);
-            btnFieldStationDetails.setEnabled(true);
-            selectedStation = server.getFieldStation(selected.getId());
-            changeSelectedFieldStation(selectedStation);
-        } else {
-            btnAddSensor.setEnabled(false);
-            btnRemoveFieldStation.setEnabled(false);
-            btnFieldStationDetails.setEnabled(false);
+        if (!evt.getValueIsAdjusting()) {//prevents double events Eg: from mouse down and mouse up
+            //System.out.println(listUserStations.getSelectedIndex());
+            FieldStation selected = (FieldStation)listUserStations.getSelectedValue();
+            if(selected != null){
+                btnAddSensor.setEnabled(true);
+                btnRemoveFieldStation.setEnabled(true);
+                btnFieldStationDetails.setEnabled(true);
+                selectedStation = server.getFieldStation(selected.getId());
+                changeSelectedFieldStation(selectedStation);
+                
+                saveUserData("data/userSettings.ser",listUserStations.getSelectedIndex());
+                //loadUserData("data/userSettings.ser");
+            } else {
+                btnAddSensor.setEnabled(false);
+                btnRemoveFieldStation.setEnabled(false);
+                btnFieldStationDetails.setEnabled(false);
+            }
         }
     }//GEN-LAST:event_listUserStationsValueChanged
 
+    private void saveUserData(String filePath,int item){
+        int userSettings;
+        ObjectOutputStream outstream;
+        try {
+            outstream = new ObjectOutputStream(new FileOutputStream (filePath)); 
+            userSettings = item;
+            outstream.writeInt(userSettings);
+            System.out.println("Saved at : " + userSettings);
+            outstream.close();
+        } catch(IOException io) {
+            System.out.println(io);
+        }
+    }
+    
+    private int loadUserData(String filePath){
+        //test load
+        ObjectInputStream instream = null;
+        Integer loadedUserSettings = null;
+        try {
+            FileInputStream fileinput = new FileInputStream(filePath);
+            instream = new ObjectInputStream(fileinput);
+            boolean loop = true;
+            try {
+                loadedUserSettings = instream.readInt();
+                //set selected based on loaderUserSettings
+                System.out.println(loadedUserSettings);
+                
+            } catch(Exception ex) {
+                System.out.println("EX:" + ex);
+            }
+        } catch(IOException io) {
+            System.out.println(io);
+        }
+
+        if(instream != null){
+            try {
+                instream.close();
+            } catch (IOException ex) {
+                System.out.println(ex); 
+            }
+        }
+        if (loadedUserSettings == null)
+            return 0;
+        else
+            return loadedUserSettings;
+    }
+    
     private void btnAddSensorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddSensorActionPerformed
         displayAddSensorPanel();
     }//GEN-LAST:event_btnAddSensorActionPerformed
@@ -1633,12 +1699,6 @@ public class UserInterface extends javax.swing.JFrame {
         // TODO add your handling code here:
         displayReportScreen();
     }//GEN-LAST:event_btnReportActionPerformed
-
-    private void comboReportFieldStationsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboReportFieldStationsItemStateChanged
-        // TODO add your handling code here:        
-        updateReport();
-        
-    }//GEN-LAST:event_comboReportFieldStationsItemStateChanged
 
     private void comboReportSensorTypeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboReportSensorTypeItemStateChanged
         // TODO add your handling code here:
@@ -1819,6 +1879,17 @@ public class UserInterface extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_comboSensorTypeActionPerformed
+
+    private void comboReportFieldStationsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboReportFieldStationsItemStateChanged
+        if (evt.getStateChange() == java.awt.event.ItemEvent.SELECTED){
+            if (loadData == true){
+                updateReport();
+                saveUserData("data/userData.ser",comboReportFieldStations.getSelectedIndex());
+            }
+            loadData = true;
+            
+        }
+    }//GEN-LAST:event_comboReportFieldStationsItemStateChanged
 
 
     
