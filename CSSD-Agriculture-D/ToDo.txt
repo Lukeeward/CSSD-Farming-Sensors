@@ -4,5 +4,4 @@ Acceptance tests
 Javadocs
 Comment everywhere
 
-Serialise their last selection
 Add a register page
