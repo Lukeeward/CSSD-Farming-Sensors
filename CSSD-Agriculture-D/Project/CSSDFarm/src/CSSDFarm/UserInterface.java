@@ -964,9 +964,14 @@ public class UserInterface extends javax.swing.JFrame {
 
         comboSensorType.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
         comboSensorType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Soil Moisture", "Soil Temperature", "Air Temperature", "Soil Acidity", "Light Intensity" }));
+        comboSensorType.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboSensorTypeActionPerformed(evt);
+            }
+        });
 
         comboSensorUnits.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
-        comboSensorUnits.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "LUX", "PH", "C", "F", "%" }));
+        comboSensorUnits.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "mm", "%" }));
 
         lblIntervalMinutes.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
         lblIntervalMinutes.setText("Minutes:");
@@ -1794,6 +1799,26 @@ public class UserInterface extends javax.swing.JFrame {
         JSlider source = (JSlider) evt.getSource();        
         server.togglePower(source.getValue());
     }//GEN-LAST:event_sliderServerOnOffKeyReleased
+
+    private void comboSensorTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboSensorTypeActionPerformed
+        //When user changes the sensor type via dropdown, update the sensor units to the relevant options
+        String sensorType = comboSensorType.getSelectedItem().toString();
+        switch (sensorType) {
+            case "Soil Moisture": comboSensorUnits.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "mm", "%" }));
+                     break;
+            case "Soil Temperature": comboSensorUnits.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "°C", "°F" }));
+                     break;
+            case "Air Temperature": comboSensorUnits.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "°C", "°F" }));
+                     break;
+            case "Soil Acidity": comboSensorUnits.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "pH" }));
+                     break;
+            case "Light Intensity": comboSensorUnits.setModel(new javax.swing.DefaultComboBoxModel(new String[] {  "Lux" }));
+                     break;
+                     
+        }
+        
+        
+    }//GEN-LAST:event_comboSensorTypeActionPerformed
 
 
     
