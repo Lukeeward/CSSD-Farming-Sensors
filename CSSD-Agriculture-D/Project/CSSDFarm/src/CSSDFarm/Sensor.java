@@ -109,19 +109,45 @@ public class Sensor implements Serializable {
             Random rand = new Random();
             int randLimit;
             //calculate the randomRange based on the total threshold to make it unique for each sensor
-            randLimit = (int)Math.sqrt(threshold);
-            float randomNumber = (float)(0 + rand.nextInt((randLimit - 0) + 1));
-            if (data.getValue() < threshold){
-                newVal = (data.getValue()+randomNumber);
-            }            
-            else if (data.getValue() > threshold){
-                newVal = (data.getValue()-randomNumber);
+            if (threshold > 0){
+                randLimit = (int)Math.sqrt(threshold);
+                float randomNumber = (float)(0 + rand.nextInt((randLimit - 0) + 1));
+                
+                if (data.getValue() < threshold){
+                    newVal = (data.getValue()+randomNumber);
+                }            
+                else if (data.getValue() > threshold){
+                    newVal = (data.getValue()-randomNumber);
+                }
+                else{
+                    if (thresholdIsUpperLimit)
+                        newVal = threshold/2;
+                    else
+                        newVal = threshold*2;
+                }
             }
             else{
-                if (thresholdIsUpperLimit)
-                    newVal = threshold/2;
-                else
-                    newVal = threshold*2;
+                randLimit = (int)Math.sqrt(Math.abs(threshold));
+                float randomNumber = (float)(0 + rand.nextInt((randLimit - 0) + 1));
+                
+                float val = data.getValue();
+                if (thresholdIsUpperLimit){
+                    if (val > threshold)
+                        newVal = threshold*2;
+                    else if (val < threshold)
+                        newVal = (val+randomNumber);                    
+                    else
+                        newVal = threshold*2;
+                }else {
+                    if (val < threshold)
+                        newVal = threshold/2;
+                    
+                    else if (val > threshold)
+                        newVal = (val-randomNumber);
+                    else
+                        newVal = threshold/2;
+                    
+                }
             }
         }
                     
@@ -212,24 +238,21 @@ public class Sensor implements Serializable {
     public boolean withinThreshold()
     {        
         if(thresholdIsUpperLimit){
-            if(data.getValue() <= threshold)
-            {
+            if(data.getValue() <= threshold){
                 return true;
             }
-            else
-            {
+            else{
                 //if value is higher than threshold set the value to threshold
-                data.setValue(threshold);
+                if (threshold > 0)
+                    data.setValue(threshold);
                 return false;
             }
         }
         else{
-            if(data.getValue() >= threshold)
-            {
+            if(data.getValue() >= threshold){
                 return true;
             }
-            else
-            {
+            else{
                 return false;
             }
         }        

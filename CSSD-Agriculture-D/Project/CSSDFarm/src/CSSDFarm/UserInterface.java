@@ -361,14 +361,14 @@ public class UserInterface extends javax.swing.JFrame {
                 float val = Float.parseFloat(value.toString());
 
                 if (threshIsUpperLimit){
-                    if (val > thresh){
+                    if (val >= thresh){
                         c.setForeground(new Color(0xC91F37));
                     }
                     else
                         c.setForeground(new Color(0x10ce00));
                 }
                 else if (!threshIsUpperLimit){
-                    if (val < thresh){
+                    if (val <= thresh){
                         c.setForeground(new Color(0xC91F37));
                     }
                     else
