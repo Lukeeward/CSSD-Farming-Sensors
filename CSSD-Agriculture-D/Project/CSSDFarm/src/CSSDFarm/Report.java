@@ -24,17 +24,6 @@ public class Report implements Serializable {
     }
     
     /**
-     * Filters HistoricalDatas SensorData by a supplied date
-     * returning the SensorDatas that were generated on that date.
-     *
-     * @param date The date with which to filter the SensorData with
-     * @return null
-     */
-    public Vector<SensorData> getDataByDate(Date date){
-        return null;
-    }
-    
-    /**
      * Filters HistoricalDatas SensorData by a supplied sensorType String
      * returning the SensorDatas that are of that sensorType
      *
@@ -92,12 +81,13 @@ public class Report implements Serializable {
     }
     
     /**
-     * Dont need me??
+     * Add a SensorData value to a HistoricalData in the report
      *
-     * @param sensorData wut
+     * @param sensorData the SensorData to add to a HistoricalData
      */
     public void addData(SensorData sensorData){
-        
+        HistoricalData historicalData = data.get(sensorData.getId());
+        historicalData.addData(sensorData);
     } 
     
 }

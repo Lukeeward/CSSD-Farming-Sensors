@@ -40,7 +40,7 @@ public class SensorDataTableFormat implements TableFormat<SensorData> {
         }
             
         else if(column == 4) return sensorData.getLocation().GPStoString();
-        else if(column == 5) return sensorData.getPower();
+        else if(column == 5) return (String.valueOf(sensorData.getPower()) + "%");
         throw new IllegalStateException();
     }
 }

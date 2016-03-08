@@ -2183,11 +2183,11 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
+    public javax.swing.JPanel jPanel1;
+    public javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
+    public javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JLabel lblAddNewSensor;
@@ -2234,7 +2234,7 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JSlider sliderView;
     private javax.swing.JTable tblReportSensorData;
     private javax.swing.JTable tblSensorData;
-    private javax.swing.JTable tblSensorTable;
+    public javax.swing.JTable tblSensorTable;
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JPasswordField txtPasswordReg;
     public javax.swing.JTextField txtSensorId;

@@ -115,12 +115,22 @@ public class SensorData implements Serializable {
     }
     
     /**
-     * 
+     * Converts Celsius units to Fahrenheit
      */
     public void convertUnit()
     {
-        //if unit == mm then inches for example
-        //or if celcius convert to farenheit
+        //If Unit is celcuis
+        //Convert the value to F
+        if(unit.equals("°C"))
+        {
+            value = (((value)-32)*5)/9;
+            unit = "°F";
+        } else {
+            if (unit.equals("°F")) {
+                value = (((value)*9)/5)+32;
+                unit = "°C";
+            }
+        }
     }
     
     
