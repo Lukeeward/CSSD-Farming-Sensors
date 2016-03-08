@@ -104,11 +104,4 @@ class HistoricalData implements Serializable {
     public String getSensorId(){
         return this.sensorID;
     }
-    
-    //GET MOST RECENT TWICE!? Maybe getAllData?
-    /*
-    public SensorData getMostRecent(){
-        return null;
-    }
-    */
 }

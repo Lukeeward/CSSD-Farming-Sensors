@@ -53,7 +53,7 @@ public class Sensor implements Serializable {
         calculateLocation();
         
         //Set SensorData for unit tests, dont think this is called otherwise..
-        data = new SensorData(id, new Date(),"LUX",12, location, 120);
+        data = new SensorData(id, new Date(),"LUX",12, location, 99);
     }
     
     /**
@@ -214,7 +214,7 @@ public class Sensor implements Serializable {
             }
         }
                     
-        data = new SensorData(id, new Date(),units,newVal, location, 120);
+        data = new SensorData(id, new Date(),units,newVal, location, 99);
         lastReadingTime = new Date();
     }
     
