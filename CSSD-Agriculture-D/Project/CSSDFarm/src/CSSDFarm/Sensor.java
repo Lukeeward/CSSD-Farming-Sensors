@@ -8,6 +8,10 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ *
+ * @author lnseg
+ */
 public class Sensor implements Serializable {
     
     private String id;
@@ -23,6 +27,17 @@ public class Sensor implements Serializable {
     private Actuator actuator;
     private String units;
     
+    /**
+     * Constructor for the Sensor. 
+     * 
+     * @param id String, the id of the Sensor.
+     * @param station FieldStation, the FieldStation that the sensor is a part of. 
+     * @param intervalSeconds int, the number of seconds between each sensor reading. 
+     * @param sensorType String, the type of the sensor. 
+     * @param power float, the power of the Sensor.int, the threshold of the Sensor reading to know when to activate the Actuator. 
+     * @param thresholdIsUpperLimit boolean, whether the threshold is the upper or lower limit. 
+     * @param actuator Actuator, the mechanical component relating to the sensor that may be switched on and off for maintenence. 
+     */
     public Sensor(String id, FieldStation station, int intervalSeconds, String sensorType, 
             float power, float threshold, boolean thresholdIsUpperLimit, Actuator actuator){
         this.id = id;
@@ -33,12 +48,24 @@ public class Sensor implements Serializable {
         this.threshold = threshold;
         this.thresholdIsUpperLimit = thresholdIsUpperLimit;
         this.actuator = actuator;
+        
         //Set GPSData
         calculateLocation();
+        
         //Set SensorData for unit tests, dont think this is called otherwise..
         data = new SensorData(id, new Date(),"LUX",12, location, 120);
     }
     
+    /**
+     * Constructor for the Sensor. 
+     * 
+     * @param id String, the id of the Sensor.
+     * @param sensorType String, the type of Sensor e.g. Soil Moisture, Soil Acidity, Light Intensity.
+     * @param units String, the unit of measurement relating to the Sensor Type e.g. %, C, F.
+     * @param interval int, the number of seconds between each sensor reading. 
+     * @param threshold boolean, whether the threshold is the upper or lower limit. 
+     * @param upperlimit boolean, whether the threshold is the upper or lower limit. 
+     */
     public Sensor(String id, String sensorType, String units, int interval, int threshold, boolean upperlimit)
     {
         this.id = id;
@@ -48,40 +75,73 @@ public class Sensor implements Serializable {
         this.actuator = new Actuator();
         this.threshold = threshold;
         this.thresholdIsUpperLimit = upperlimit;
+        //Set GPSData
         calculateLocation();
+        //Collects the first lot of data.
         collectData();
     }
     
-
+    /**
+     * Gets the SensorData data. 
+     * 
+     * @return SensorData.
+     */
     public SensorData getData()
     {   
         return data;
     }
     
+    /**
+     * Gets the id of the sensor. 
+     * @return String
+     */
     public String getId(){
         return this.id;
     }
     
+    /**
+     * Gets the type of the Sensor. 
+     * @return String.
+     */
     public String getType() {
         return this.sensorType;
     }
     
+    /**
+     * Gets the units of the Sensor.
+     * @return String.
+     */
     public String getUnits(){
         return this.units;
     }
     
+    /**
+     * Gets the GPS of the sensor. 
+     * @return GPSData.
+     */
     public GPSData getGps(){
         return location;
     }
     
+    /**
+     * Gets the threshold of the Sensor. 
+     * @return float.
+     */
     public float getThreshold(){
         return threshold;
     }
     
+    /**
+     * Gets the thresholdIsUpperLimit to see if the threshold is upper of lower limit.
+     * @return boolean.
+     */
     public boolean getThresholdIsUpperLimit(){
         return thresholdIsUpperLimit;
     }
     
+    /**
+     * Toggles the Actuator one or off depending on the previous state.
+     */
     public void toggleModule()
     {
         if(actuator.isActive())
@@ -94,6 +154,9 @@ public class Sensor implements Serializable {
         }
     }
     
+    /**
+     *
+     */
     public void collectData()
     {
         //Replace 'mm' with 'unit'
@@ -155,6 +218,10 @@ public class Sensor implements Serializable {
         lastReadingTime = new Date();
     }
     
+    /**
+     *
+     * @return
+     */
     public String getNextIntervalTime(){
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Calendar cal = Calendar.getInstance();
@@ -164,6 +231,10 @@ public class Sensor implements Serializable {
         return intDate;
     }
     
+    /**
+     *
+     * @return
+     */
     public boolean onInterval()
     {
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -199,15 +270,25 @@ public class Sensor implements Serializable {
         return false;
     }
     
+    /**
+     *
+     * @param fieldStation
+     */
     public void setFieldStation(FieldStation fieldStation)
     {
         station = fieldStation;
     }
     
+    /**
+     *
+     */
     public void activate()
     {
     }
     
+    /**
+     *
+     */
     public void calculateLocation()     
     {
         //change to realistic gps data
@@ -231,10 +312,19 @@ public class Sensor implements Serializable {
         location = new GPSData(Float.parseFloat(newCoordinate), Float.parseFloat(longNewCoordinate), 0.5f);
     }
     
+    /**
+     *
+     * @param fieldStation
+     * @param sensor
+     */
     public void update(FieldStation fieldStation, Sensor sensor)
     {
     }
     
+    /**
+     *
+     * @return
+     */
     public boolean withinThreshold()
     {        
         if(thresholdIsUpperLimit){
