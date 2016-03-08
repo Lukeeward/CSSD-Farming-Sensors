@@ -181,6 +181,7 @@ public class UserInterface extends javax.swing.JFrame {
      * Switch panel to add sensor panel 
      */
     public void displayAddSensorPanel() {
+        comboIntervalMinutes.setSelectedIndex(5);
         panelManager.setVisible(false);
         panelAddSensor.setVisible(true);
         lblFieldStationName2.setText(selectedStation.getName());
