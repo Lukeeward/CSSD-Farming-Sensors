@@ -154,6 +154,7 @@ public class UserInterface extends javax.swing.JFrame {
         }
         
         panelManager.setVisible(true);
+        
         int pos = loadUserData("data/userSettings.ser");
         try{
             listUserStations.setSelectedIndex(pos);
@@ -685,6 +686,11 @@ public class UserInterface extends javax.swing.JFrame {
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+        jButton1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jButton1KeyPressed(evt);
             }
         });
 
@@ -1469,6 +1475,10 @@ public class UserInterface extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        logIn();
+    }//GEN-LAST:event_jButton1ActionPerformed
+    
+    private void logIn(){
         String name = txtUsername.getText();
         String password = txtPassword.getText();
         boolean authenticateUser = server.authenticateUser(name, password);
@@ -1481,7 +1491,7 @@ public class UserInterface extends javax.swing.JFrame {
            }
            listUserStations.setListData(userFieldStations);
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }
     
     private void btnAddFieldStationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddFieldStationActionPerformed
         JTextField id = new JTextField();
@@ -1883,6 +1893,12 @@ public class UserInterface extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_comboReportFieldStationsItemStateChanged
 
+    private void jButton1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton1KeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER)
+            System.out.println("Hello");
+        logIn();
+    }//GEN-LAST:event_jButton1KeyPressed
+
 
     
     /**
@@ -1940,20 +1956,21 @@ public class UserInterface extends javax.swing.JFrame {
                 }
             }
         },1000,1000);
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAddFieldStation;
-    private javax.swing.JButton btnAddSensor;
+    public javax.swing.JButton btnAddFieldStation;
+    public javax.swing.JButton btnAddSensor;
     private javax.swing.JButton btnBackReportSensorData;
     private javax.swing.JButton btnCancelSensor;
     private javax.swing.JButton btnClearSensor;
     private javax.swing.JButton btnFieldStationDetails;
-    private javax.swing.JButton btnManager;
-    private javax.swing.JButton btnRemoveFieldStation;
+    public javax.swing.JButton btnManager;
+    public javax.swing.JButton btnRemoveFieldStation;
     private javax.swing.JButton btnRemoveSensor;
-    private javax.swing.JButton btnReport;
-    private javax.swing.JButton btnSaveSensor;
+    public javax.swing.JButton btnReport;
+    public javax.swing.JButton btnSaveSensor;
     private javax.swing.JButton btnSensorDetails;
     private javax.swing.JButton buttonRegister;
     private javax.swing.JCheckBox checkIsUpperLimit;
@@ -1963,8 +1980,8 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JComboBox comboIntervalSeconds;
     private javax.swing.JComboBox comboReportFieldStations;
     private javax.swing.JComboBox comboReportSensorType;
-    private javax.swing.JComboBox comboSensorType;
-    private javax.swing.JComboBox comboSensorUnits;
+    public javax.swing.JComboBox comboSensorType;
+    public javax.swing.JComboBox comboSensorUnits;
     private org.jdesktop.swingx.JXDatePicker dpReportCalendar;
     private org.jdesktop.swingx.JXDatePicker dpReportSensorDataDate;
     private javax.swing.JButton jButton1;
@@ -2005,7 +2022,7 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JLabel lblSensorType;
     private javax.swing.JLabel lblSensorUnits;
     private javax.swing.JLabel lblThreshold;
-    private javax.swing.JList listUserStations;
+    public javax.swing.JList listUserStations;
     private javax.swing.JPanel panelAddSensor;
     private javax.swing.JPanel panelHeatmap;
     private javax.swing.JPanel panelLogIn;
@@ -2020,7 +2037,7 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JTable tblSensorData;
     private javax.swing.JTable tblSensorTable;
     private javax.swing.JPasswordField txtPassword;
-    private javax.swing.JTextField txtSensorId;
+    public javax.swing.JTextField txtSensorId;
     private javax.swing.JLabel txtServerOff;
     private javax.swing.JLabel txtServerOn;
     private javax.swing.JTextField txtThreshold;

@@ -63,7 +63,6 @@ public class ServerTests {
     
     @Test
     public void testVerifyFieldStation(){
-        
         //is the name "ShaunsStation" valid (ie. not already taken)
         assertTrue(server.verifyFieldStation("ShaunsStation"));
         server.addFieldStation("ShaunsStation", "Station123");
