@@ -57,14 +57,14 @@ import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.table.DefaultTableCellRenderer;
 import org.apache.commons.io.FileUtils;
+
 /**
  *
  * @author Webby
  */
 
-
 public class UserInterface extends javax.swing.JFrame {
-    
+
     //static final Server server = Server.getInstance();
     static Server server = Server.getInstance();
     FieldStation selectedStation;
@@ -74,48 +74,49 @@ public class UserInterface extends javax.swing.JFrame {
     EventTableModel sensorsReportSensorDataTable;
     Browser browser = new Browser();
     boolean loadData = false;
-    
+
     public UserInterface() {
         initComponents();
         jFrameServer.setVisible(true);
         tblSensorData.getTableHeader().setReorderingAllowed(false);
         loadData();
     }
-    
-    public void serializeData(){
+
+    public void serializeData() {
         ObjectOutputStream outstream;
         try {
-            outstream = new ObjectOutputStream(new FileOutputStream ("data/server.ser"));   
+            outstream = new ObjectOutputStream(new FileOutputStream("data/server.ser"));
             outstream.writeObject(server);
             outstream.close();
-        } catch(IOException io) {
+        } catch (IOException io) {
             //System.out.println(io);
         }
     }
-    
-    public void loadData(){
+
+    public void loadData() {
         ObjectInputStream instream = null;
         Server loadedServer = null;
         try {
-            FileInputStream fileinput = new FileInputStream ("data/server.ser");
+            FileInputStream fileinput = new FileInputStream("data/server.ser");
             instream = new ObjectInputStream(fileinput);
-            do{
+            do {
                 try {
-                    loadedServer = (Server)instream.readObject();
+                    loadedServer = (Server) instream.readObject();
                     server = Server.getInstance(loadedServer);
                     sliderServerOnOff.setValue((server.getTurnedOn()) ? 1 : 0);
-                    
-                } catch(ClassNotFoundException ex) {
+
+                } catch (ClassNotFoundException ex) {
                     //System.out.println(ex);
                 }
             } while (true);
-        } catch(IOException io) {
+        } catch (IOException io) {
             //System.out.println(io);
-            if(server == null)
+            if (server == null) {
                 server = Server.getInstance(null);
+            }
         }
-        
-        if(instream != null){
+
+        if (instream != null) {
             try {
                 instream.close();
             } catch (IOException ex) {
@@ -123,17 +124,17 @@ public class UserInterface extends javax.swing.JFrame {
             }
         }
     }
-    
-    public void displayManagerScreen(){
+
+    public void displayManagerScreen() {
         //remove old panel details
-        if (panelReport.isVisible()){
+        if (panelReport.isVisible()) {
             comboReportFieldStations.setModel(new DefaultComboBoxModel());
         }
-        
+
         panelReport.setVisible(false);
         panelManager.setVisible(true);
         userFieldStations = server.loadData();
-        
+
         listUserStations.setCellRenderer(new DefaultListCellRenderer() {
             @Override
             public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
@@ -145,32 +146,32 @@ public class UserInterface extends javax.swing.JFrame {
                 return renderer;
             }
         });
-        
-        if(server.getUsersRole() == 1){
+
+        if (server.getUsersRole() == 1) {
             btnAddSensor.setVisible(false);
             btnRemoveSensor.setVisible(false);
             btnAddFieldStation.setVisible(false);
             btnRemoveFieldStation.setVisible(false);
         }
-        
+
         panelManager.setVisible(true);
-        
+
         int pos = loadUserData("data/userSettings.ser");
-        try{
+        try {
             listUserStations.setSelectedIndex(pos);
-        }catch(Exception eX){
-            
+        } catch (Exception eX) {
+
         }
-        
+
     }
-    
-    public void displayAddSensorPanel(){
+
+    public void displayAddSensorPanel() {
         panelManager.setVisible(false);
         panelAddSensor.setVisible(true);
         lblFieldStationName2.setText(selectedStation.getName());
     }
-    
-    public void displayReportScreen(){
+
+    public void displayReportScreen() {
         loadData = false;
         panelManager.setVisible(false);
         panelReport.setVisible(true);
@@ -182,162 +183,159 @@ public class UserInterface extends javax.swing.JFrame {
             @Override
             public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
                 super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-                if(value instanceof FieldStation){
+                if (value instanceof FieldStation) {
                     FieldStation station = (FieldStation) value;
                     setText(station.getName());
                 }
                 return this;
             }
         });
-        for(FieldStation station : userFieldStations){
+        for (FieldStation station : userFieldStations) {
             comboReportFieldStations.addItem(station);
         }
         Date date = new Date();
         dpReportCalendar.setDate(date);
         int pos = loadUserData("data/userData.ser");
-        try{
+        try {
             comboReportFieldStations.setSelectedIndex(pos);
-        }catch(Exception eX){
-            
+        } catch (Exception eX) {
+
         }
-        
-        
+
     }
-    
-    public void displayReportSensorDataScreen(){
-        if (panelReport.isVisible())
+
+    public void displayReportSensorDataScreen() {
+        if (panelReport.isVisible()) {
             panelReport.setVisible(false);
+        }
         panelReportSensorData.setVisible(true);
-        
-        if (dpReportSensorDataDate.getDate() == null){
+
+        if (dpReportSensorDataDate.getDate() == null) {
             Date date = dpReportCalendar.getDate();
             dpReportSensorDataDate.setDate(date);
-        }        
-        
+        }
+
         int index = tblSensorData.getSelectedRow();
-        SensorData selectedSensorData = (SensorData)sensorsReportTable.getElementAt(index);
-        
-        FieldStation fieldStation = (FieldStation)comboReportFieldStations.getSelectedItem();
+        SensorData selectedSensorData = (SensorData) sensorsReportTable.getElementAt(index);
+
+        FieldStation fieldStation = (FieldStation) comboReportFieldStations.getSelectedItem();
         Sensor sensor = fieldStation.getSetOfSensors().getSensor(selectedSensorData.getId());
-        
+
         lblReportSensorDataFieldStationName.setText(fieldStation.getName());
         lblReportSensorDataSensorName.setText(sensor.getId());
         lblReportSensorDataSensorType.setText(sensor.getType());
         lblReportSensorDataSensorUnits.setText(sensor.getUnits());
         lblReportSensorDataNextIntervalDate.setText(sensor.getNextIntervalTime());
-        
-        
+
         updateReportSensorData();
     }
-    
-    public void addFieldStation(String id, String name){
-        if(server.verifyFieldStation(id)){
+
+    public void addFieldStation(String id, String name) {
+        if (server.verifyFieldStation(id)) {
             server.addFieldStation(id, name);
             Vector<FieldStation> userFieldStations = server.loadData();
             listUserStations.setListData(userFieldStations);
         }
     }
-    
-    public void removeFieldStation(String id){
+
+    public void removeFieldStation(String id) {
         server.removeFieldStation(id);
         Vector<FieldStation> userFieldStations = server.loadData();
         listUserStations.setListData(userFieldStations);
-        
-        if(listUserStations.getModel().getSize() > 0 ){
+
+        if (listUserStations.getModel().getSize() > 0) {
             listUserStations.setSelectedIndex(0);
         } else {
             selectedStation = null;
             lblFieldStationName.setText(" ");
         }
     }
-    
-    public void removeSensor(String id){
+
+    public void removeSensor(String id) {
         FieldStation station = server.getFieldStation(selectedStation.getId());
         station.removeSensor(id);
         server.removeSensor(station.getId(), id);
         displayManagerScreen();
         changeSelectedFieldStation(selectedStation);
     }
-    
-    public void updateReport(){
-        FieldStation fieldStation = (FieldStation)comboReportFieldStations.getSelectedItem();
-        if(fieldStation != null) 
-        {
-            String sensorType = (String)comboReportSensorType.getSelectedItem();
+
+    public void updateReport() {
+        FieldStation fieldStation = (FieldStation) comboReportFieldStations.getSelectedItem();
+        if (fieldStation != null) {
+            String sensorType = (String) comboReportSensorType.getSelectedItem();
             DateFormat inputformatter = new SimpleDateFormat("dd/MM/yyyy");
             String newDate = inputformatter.format(dpReportCalendar.getDate());
             Date date = new Date();
 
             try {
                 date = inputformatter.parse(newDate);
-            } catch(ParseException ex) {
+            } catch (ParseException ex) {
 
             }
 
             //Vector<Sensor> sensors = fieldStation.getSetOfSensors().getByType(sensorType);
-
-            EventList<SensorData> eventList = new BasicEventList<SensorData>();        
+            EventList<SensorData> eventList = new BasicEventList<SensorData>();
             Report report = server.compileReport(fieldStation.getId());
             Vector<SensorData> sensorData = report.getDataByTypeAndDate(sensorType, date);
 
-
             eventList.clear();
-            for(SensorData sensor:sensorData){
+            for (SensorData sensor : sensorData) {
                 //sensor.collectData();
                 eventList.add(sensor);
-                
+
             }
 
             sensorsReportTable = new EventTableModel(eventList, new SensorDataTableFormat());
-            
-           
-            SwingUtilities.invokeLater(new Runnable(){public void run(){ 
-                int indexFs = comboReportFieldStations.getSelectedIndex();
-                SetOfSensors setOfSensors = server.getUserFieldStation().get(indexFs).getSetOfSensors();
-                tblSensorData.setModel(sensorsReportTable);
-                
-                CustomTableRendererColour cellRenderer = null;
-                try{
-                    cellRenderer = new CustomTableRendererColour(indexFs, setOfSensors);
-                }
-                catch(Exception eX){
-                    //System.out.println(eX);
-                }                
-                                
-                int lastRowIndex = tblSensorData.getModel().getRowCount()-1;
-                if(lastRowIndex >= 0){
-                    tblSensorData.setRowSelectionInterval(lastRowIndex, lastRowIndex);
-                }
-                TableColumn column = null;
-                for (int i = 0; i < tblSensorData.getColumnModel().getColumnCount(); i++) {
-                    column = tblSensorData.getColumnModel().getColumn(i);
-                    if (i == 4) {
-                        column.setPreferredWidth(250);
-                    } else if (i == 3) {
-                        column.setPreferredWidth(200);
-                    } 
-                    else {
-                        column.setPreferredWidth(50);
+
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    int indexFs = comboReportFieldStations.getSelectedIndex();
+                    SetOfSensors setOfSensors = server.getUserFieldStation().get(indexFs).getSetOfSensors();
+                    tblSensorData.setModel(sensorsReportTable);
+
+                    CustomTableRendererColour cellRenderer = null;
+                    try {
+                        cellRenderer = new CustomTableRendererColour(indexFs, setOfSensors);
+                    } catch (Exception eX) {
+                        //System.out.println(eX);
                     }
-                    if (i == 2){
-                        tblSensorData.getColumnModel().getColumn(i).setCellRenderer(cellRenderer);
+
+                    int lastRowIndex = tblSensorData.getModel().getRowCount() - 1;
+                    if (lastRowIndex >= 0) {
+                        tblSensorData.setRowSelectionInterval(lastRowIndex, lastRowIndex);
                     }
-                }  
-                //pass setOfSensors until a better way to get threshold value
-            if (panelHeatmap.isVisible())               
-                updateHeatmap(sensorData, setOfSensors);      
-            }});
-                  
+                    TableColumn column = null;
+                    for (int i = 0; i < tblSensorData.getColumnModel().getColumnCount(); i++) {
+                        column = tblSensorData.getColumnModel().getColumn(i);
+                        if (i == 4) {
+                            column.setPreferredWidth(250);
+                        } else if (i == 3) {
+                            column.setPreferredWidth(200);
+                        } else {
+                            column.setPreferredWidth(50);
+                        }
+                        if (i == 2) {
+                            tblSensorData.getColumnModel().getColumn(i).setCellRenderer(cellRenderer);
+                        }
+                    }
+                    //pass setOfSensors until a better way to get threshold value
+                    if (panelHeatmap.isVisible()) {
+                        updateHeatmap(sensorData, setOfSensors);
+                    }
+                }
+            });
+
         }
     }
-    
-    
+
     //Custom DefaultTableCellRenderer
     public static class CustomTableRendererColour extends DefaultTableCellRenderer {
+
         //used as class is static so need a way to get the correct FieldStation
+
         int id;
-        SetOfSensors setOfSensors;        
-        
+        SetOfSensors setOfSensors;
+
         private CustomTableRendererColour(int indexFs, SetOfSensors setOfSensors) {
             id = indexFs;
             this.setOfSensors = setOfSensors;
@@ -346,14 +344,16 @@ public class UserInterface extends javax.swing.JFrame {
         private CustomTableRendererColour() {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
+
         // You should override getTableCellRendererComponent
+
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value,
                 boolean isSelected, boolean hasFocus, int row, int column) {
-            
+
             Component c = super.getTableCellRendererComponent(table, value, isSelected,
-                    hasFocus, row, column);              
-            
+                    hasFocus, row, column);
+
             try {
                 String sensorID = table.getModel().getValueAt(row, 0).toString();
                 Sensor sensor = setOfSensors.getSensor(sensorID);
@@ -361,76 +361,73 @@ public class UserInterface extends javax.swing.JFrame {
                 boolean threshIsUpperLimit = sensor.getThresholdIsUpperLimit();
                 float val = Float.parseFloat(value.toString());
 
-                if (threshIsUpperLimit){
-                    if (val >= thresh){
+                if (threshIsUpperLimit) {
+                    if (val >= thresh) {
                         c.setForeground(new Color(0xC91F37));
-                    }
-                    else
+                    } else {
                         c.setForeground(new Color(0x10ce00));
+                    }
+                } else if (!threshIsUpperLimit) {
+                    if (val <= thresh) {
+                        c.setForeground(new Color(0xC91F37));
+                    } else {
+                        c.setForeground(new Color(0x10ce00));
+                    }
                 }
-                else if (!threshIsUpperLimit){
-                    if (val <= thresh){
-                        c.setForeground(new Color(0xC91F37));
-                    }
-                    else
-                        c.setForeground(new Color(0x10ce00));
-                }                
-            }
-            catch(Exception eX){
+            } catch (Exception eX) {
                 //System.out.println(eX);
             }
             return c;
         }
     }
-    
-    public String getWebName(){
+
+    public String getWebName() {
         return comboReportFieldStations.getSelectedItem().toString();
     }
-    
-    public void updateReportSensorData(){
+
+    public void updateReportSensorData() {
         int index = tblSensorData.getSelectedRow();
-        SensorData selectedSensorData = (SensorData)sensorsReportTable.getElementAt(index);
-        
-        FieldStation fieldStation = (FieldStation)comboReportFieldStations.getSelectedItem();
+        SensorData selectedSensorData = (SensorData) sensorsReportTable.getElementAt(index);
+
+        FieldStation fieldStation = (FieldStation) comboReportFieldStations.getSelectedItem();
         Sensor sensor = fieldStation.getSetOfSensors().getSensor(selectedSensorData.getId());
-        
+
         DateFormat inputformatter = new SimpleDateFormat("dd/MM/yyyy");
         String newDate = inputformatter.format(dpReportSensorDataDate.getDate());
         Date date = new Date();
-                
+
         try {
             date = inputformatter.parse(newDate);
-        } catch(ParseException ex) {
-            
+        } catch (ParseException ex) {
+
         }
-        
+
         Report report = server.compileReport(fieldStation.getId());
         Vector<SensorData> sensorData = report.getDataForSensorOnDate(selectedSensorData.getId(), date);
-        
-        
+
         EventList<SensorData> eventList = new BasicEventList<SensorData>();
-        
+
         eventList.clear();
-        for(SensorData sensorItem:sensorData){
+        for (SensorData sensorItem : sensorData) {
             //sensor.collectData();
             eventList.add(sensorItem);
         }
-        
+
         sensorsReportSensorDataTable = new EventTableModel(eventList, new SensorDataTableFormat());
-        
+
         tblReportSensorData.setModel(sensorsReportSensorDataTable);
-        
-        int lastRowIndex = tblReportSensorData.getModel().getRowCount()-1;
-        if(lastRowIndex >= 0){
+
+        int lastRowIndex = tblReportSensorData.getModel().getRowCount() - 1;
+        if (lastRowIndex >= 0) {
             tblReportSensorData.setRowSelectionInterval(lastRowIndex, lastRowIndex);
         }
     }
-    
-    public void changeReportView(){
-        
+
+    public void changeReportView() {
+
     }
-    
-    public void clearSensorScreen(){
+
+    public void clearSensorScreen() {
         txtSensorId.setText("");
         comboIntervalSeconds.setSelectedIndex(0);
         comboIntervalMinutes.setSelectedIndex(0);
@@ -440,7 +437,7 @@ public class UserInterface extends javax.swing.JFrame {
         comboSensorUnits.setSelectedIndex(0);
         txtThreshold.setText("");
     }
-    
+
     public void displayHeatmap() {
         LoggerProvider.getChromiumProcessLogger().setLevel(Level.OFF);
         LoggerProvider.getIPCLogger().setLevel(Level.OFF);
@@ -481,31 +478,35 @@ public class UserInterface extends javax.swing.JFrame {
         ArrayList stringSensorUnit = new ArrayList();
         ArrayList stringSensorDate = new ArrayList();
         ArrayList stringSensorWeight = new ArrayList();
-        
-        
-        for(SensorData sensor : sensorData) {
+
+        for (SensorData sensor : sensorData) {
             stringData.add(sensor.getLocation().toString());
             stringReadingData.add(sensor.getValue());
             stringSensorName.add(stringToIntConverter(sensor.getId()));
             int unitType = 0;
             switch (sensor.getUnit()) {
-            case "LUX":  unitType = 1;
-                     break;
-            case "PH":  unitType = 2;
-                     break;
-            case "C":  unitType = 3;
-                     break;
-            case "F":  unitType = 4;
-                     break;
-            case "%":  unitType = 5;
-                     break;            
+                case "LUX":
+                    unitType = 1;
+                    break;
+                case "PH":
+                    unitType = 2;
+                    break;
+                case "C":
+                    unitType = 3;
+                    break;
+                case "F":
+                    unitType = 4;
+                    break;
+                case "%":
+                    unitType = 5;
+                    break;
             }
             stringSensorUnit.add(unitType);
-            
+
             Sensor sensor1 = setOfSensors.getSensor(sensor.getId());
-            float thresh = sensor1.getThreshold(); 
+            float thresh = sensor1.getThreshold();
             float val = sensor.getValue();
-            int weight = Math.round((val * 100) / thresh);  
+            int weight = Math.round((val * 100) / thresh);
             stringSensorWeight.add(weight);
             stringSensorDate.add(sensor.getDate().toString());
         }
@@ -516,18 +517,20 @@ public class UserInterface extends javax.swing.JFrame {
                     + ")");
         }
     }
-    private int stringToIntConverter(String string){
+
+    private int stringToIntConverter(String string) {
         int total = string.length();
-        int x=0;
-        for (int i=0;i< total;i++){
-            if (i == 0)
+        int x = 0;
+        for (int i = 0; i < total; i++) {
+            if (i == 0) {
                 x = Character.getNumericValue(string.charAt(i));
-            else
+            } else {
                 x += Character.getNumericValue(string.charAt(i));
+            }
         }
         return x;
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -624,11 +627,11 @@ public class UserInterface extends javax.swing.JFrame {
         btnCancel = new javax.swing.JButton();
         lblUsername = new javax.swing.JLabel();
         txtUsernameReg = new javax.swing.JTextField();
-        txtPasswordReg = new javax.swing.JTextField();
         lblUsername1 = new javax.swing.JLabel();
         comboUserRole = new javax.swing.JComboBox();
         lblUserRole = new javax.swing.JLabel();
-        lblError = new javax.swing.JLabel();
+        lblStatus = new javax.swing.JLabel();
+        txtPasswordReg = new javax.swing.JPasswordField();
 
         jFrameServer.setMinimumSize(new java.awt.Dimension(360, 200));
 
@@ -1482,14 +1485,24 @@ public class UserInterface extends javax.swing.JFrame {
         getContentPane().add(panelReportSensorData, "card6");
 
         btnRegister.setText("Register");
+        btnRegister.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegisterActionPerformed(evt);
+            }
+        });
 
-        btnCancel.setText("Cancel");
+        btnCancel.setText("< Back to Login");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
 
         lblUsername.setText("Username:");
 
         lblUsername1.setText("Password:");
 
-        comboUserRole.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboUserRole.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Farmer", "Food Processing Manager" }));
 
         lblUserRole.setText("User Role:");
 
@@ -1509,40 +1522,41 @@ public class UserInterface extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panelRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtUsernameReg)
-                            .addComponent(txtPasswordReg)
-                            .addComponent(comboUserRole, 0, 164, Short.MAX_VALUE)))
+                            .addComponent(comboUserRole, 0, 164, Short.MAX_VALUE)
+                            .addComponent(txtPasswordReg)))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelRegisterLayout.createSequentialGroup()
                         .addGap(298, 298, 298)
                         .addGroup(panelRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(panelRegisterLayout.createSequentialGroup()
-                                .addComponent(btnRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnCancel, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)))))
+                            .addComponent(lblStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnRegister, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(349, 349, 349))
+            .addGroup(panelRegisterLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         panelRegisterLayout.setVerticalGroup(
             panelRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRegisterLayout.createSequentialGroup()
-                .addGap(67, 67, 67)
+                .addContainerGap()
+                .addComponent(btnCancel)
+                .addGap(29, 29, 29)
                 .addGroup(panelRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblUsername)
                     .addComponent(txtUsernameReg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(panelRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtPasswordReg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblUsername1))
+                    .addComponent(lblUsername1)
+                    .addComponent(txtPasswordReg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(panelRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(comboUserRole)
                     .addComponent(lblUserRole, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addGroup(panelRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnRegister)
-                    .addComponent(btnCancel))
+                .addComponent(btnRegister)
                 .addGap(18, 18, 18)
-                .addComponent(lblError, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(214, Short.MAX_VALUE))
+                .addComponent(lblStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(216, Short.MAX_VALUE))
         );
 
         getContentPane().add(panelRegister, "card7");
@@ -1553,22 +1567,22 @@ public class UserInterface extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         logIn();
     }//GEN-LAST:event_jButton1ActionPerformed
-    
-    private void logIn(){
+
+    private void logIn() {
         String name = txtUsername.getText();
         String password = txtPassword.getText();
         boolean authenticateUser = server.authenticateUser(name, password);
-        if (authenticateUser){            
-           panelLogIn.setVisible(false);
-           if(server.getUsersRole() == 1) {
+        if (authenticateUser) {
+            panelLogIn.setVisible(false);
+            if (server.getUsersRole() == 1) {
                 displayManagerScreen();
-           } else {
+            } else {
                 displayReportScreen();
-           }
-           listUserStations.setListData(userFieldStations);
+            }
+            listUserStations.setListData(userFieldStations);
         }
     }
-    
+
     private void btnAddFieldStationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddFieldStationActionPerformed
         JTextField id = new JTextField();
         JTextField name = new JTextField();
@@ -1586,20 +1600,20 @@ public class UserInterface extends javax.swing.JFrame {
                 listUserStations.setSelectedValue(server.getFieldStation(idText), false);
             }
         });
-        
+
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JOptionPane.getRootFrame().dispose();
             }
         });
-        
+
         id.addKeyListener(new KeyAdapter() {
             public void keyReleased(KeyEvent key) {
                 boolean theid = id.getText().equals("");
                 boolean thename = name.getText().equals("");
-                if(server.verifyFieldStation(id.getText()) && !theid && !thename) {                    
-                    verified.setText("Verified");      
-                    verified.setForeground(new Color(0,102,0));
+                if (server.verifyFieldStation(id.getText()) && !theid && !thename) {
+                    verified.setText("Verified");
+                    verified.setForeground(new Color(0, 102, 0));
                     okButton.setEnabled(true);
                 } else {
                     verified.setText("Not Verified");
@@ -1612,9 +1626,9 @@ public class UserInterface extends javax.swing.JFrame {
             public void keyReleased(KeyEvent key) {
                 boolean theid = id.getText().equals("");
                 boolean thename = name.getText().equals("");
-                if(server.verifyFieldStation(id.getText()) && !theid && !thename) {
-                    verified.setText("Verified");      
-                    verified.setForeground(new Color(0,102,0));
+                if (server.verifyFieldStation(id.getText()) && !theid && !thename) {
+                    verified.setText("Verified");
+                    verified.setForeground(new Color(0, 102, 0));
                     okButton.setEnabled(true);
                 } else {
                     verified.setText("Not Verified");
@@ -1623,56 +1637,53 @@ public class UserInterface extends javax.swing.JFrame {
                 }
             }
         });
-        
-        
+
         Object[] message = {
             "ID:", id,
             "Name:", name,
             verified
         };
-        int inputFields = JOptionPane.showOptionDialog(null, message, "Add Field Station", JOptionPane.OK_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE,null,new Object[]{okButton, cancelButton}, null);
-        if(inputFields == JOptionPane.OK_OPTION)
-        {
+        int inputFields = JOptionPane.showOptionDialog(null, message, "Add Field Station", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{okButton, cancelButton}, null);
+        if (inputFields == JOptionPane.OK_OPTION) {
             System.out.print("Added Field Station!");
         }
-        
+
     }//GEN-LAST:event_btnAddFieldStationActionPerformed
 
-    private void changeSelectedFieldStation(FieldStation selectedStation){
+    private void changeSelectedFieldStation(FieldStation selectedStation) {
         SetOfSensors stationSensors = selectedStation.getSetOfSensors();
-        
+
         EventList<Sensor> eventList = new BasicEventList<Sensor>();
-        
+
         eventList.clear();
-        for(Sensor sensor:stationSensors.getSensors()){
+        for (Sensor sensor : stationSensors.getSensors()) {
             eventList.add(sensor);
         }
-        
+
         sensorsTable = new EventTableModel(eventList, new SensorTableFormat());
-        
+
         tblSensorTable.setModel(sensorsTable);
-        int lastRowIndex = tblSensorTable.getModel().getRowCount()-1;
-        if(lastRowIndex >= 0)
-        {
+        int lastRowIndex = tblSensorTable.getModel().getRowCount() - 1;
+        if (lastRowIndex >= 0) {
             tblSensorTable.setRowSelectionInterval(lastRowIndex, lastRowIndex);
             btnRemoveSensor.setEnabled(true);
             btnSensorDetails.setEnabled(true);
         }
-        
+
         lblFieldStationName.setText(selectedStation.getName());
     }
-    
+
     private void listUserStationsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listUserStationsValueChanged
         if (!evt.getValueIsAdjusting()) {//prevents double events Eg: from mouse down and mouse up
-            FieldStation selected = (FieldStation)listUserStations.getSelectedValue();
-            if(selected != null){
+            FieldStation selected = (FieldStation) listUserStations.getSelectedValue();
+            if (selected != null) {
                 btnAddSensor.setEnabled(true);
                 btnRemoveFieldStation.setEnabled(true);
                 btnFieldStationDetails.setEnabled(true);
                 selectedStation = server.getFieldStation(selected.getId());
                 changeSelectedFieldStation(selectedStation);
-                
-                saveUserData("data/userSettings.ser",listUserStations.getSelectedIndex());
+
+                saveUserData("data/userSettings.ser", listUserStations.getSelectedIndex());
             } else {
                 btnAddSensor.setEnabled(false);
                 btnRemoveFieldStation.setEnabled(false);
@@ -1681,20 +1692,20 @@ public class UserInterface extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_listUserStationsValueChanged
 
-    private void saveUserData(String filePath,int item){
+    private void saveUserData(String filePath, int item) {
         int userSettings;
         ObjectOutputStream outstream;
         try {
-            outstream = new ObjectOutputStream(new FileOutputStream (filePath)); 
+            outstream = new ObjectOutputStream(new FileOutputStream(filePath));
             userSettings = item;
             outstream.writeInt(userSettings);
             outstream.close();
-        } catch(IOException io) {
+        } catch (IOException io) {
             //System.out.println(io);
         }
     }
-    
-    private int loadUserData(String filePath){
+
+    private int loadUserData(String filePath) {
         //test load
         ObjectInputStream instream = null;
         Integer loadedUserSettings = null;
@@ -1705,46 +1716,47 @@ public class UserInterface extends javax.swing.JFrame {
             try {
                 loadedUserSettings = instream.readInt();
                 //set selected based on loaderUserSettings
-                
-            } catch(Exception ex) {
+
+            } catch (Exception ex) {
                 //System.out.println("EX:" + ex);
             }
-        } catch(IOException io) {
+        } catch (IOException io) {
             //System.out.println(io);
         }
 
-        if(instream != null){
+        if (instream != null) {
             try {
                 instream.close();
             } catch (IOException ex) {
                 //System.out.println(ex); 
             }
         }
-        if (loadedUserSettings == null)
+        if (loadedUserSettings == null) {
             return 0;
-        else
+        } else {
             return loadedUserSettings;
+        }
     }
-    
+
     private void btnAddSensorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddSensorActionPerformed
         displayAddSensorPanel();
     }//GEN-LAST:event_btnAddSensorActionPerformed
 
     private void btnSaveSensorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveSensorActionPerformed
-        
+
         int secondsSeconds = Integer.parseInt(comboIntervalSeconds.getSelectedItem().toString());
         int minutesSeconds = Integer.parseInt(comboIntervalMinutes.getSelectedItem().toString()) * 60;
         int hoursSeconds = Integer.parseInt(comboIntervalHours.getSelectedItem().toString()) * 60 * 60;
         int daysSeconds = Integer.parseInt(comboIntervalDays.getSelectedItem().toString()) * 60 * 60 * 24;
         int interval = secondsSeconds + minutesSeconds + hoursSeconds + daysSeconds;
         int threshold = -1;
-        if(!txtThreshold.getText().equals(""));
+        if (!txtThreshold.getText().equals(""));
         {
-            threshold = Integer.parseInt(txtThreshold.getText());   
+            threshold = Integer.parseInt(txtThreshold.getText());
         }
         boolean upperlimit = checkIsUpperLimit.isSelected();
-        server.addSensor(selectedStation.getId(), txtSensorId.getText(), (String)comboSensorType.getSelectedItem(), (String)comboSensorUnits.getSelectedItem(), interval, threshold, upperlimit);
-        
+        server.addSensor(selectedStation.getId(), txtSensorId.getText(), (String) comboSensorType.getSelectedItem(), (String) comboSensorUnits.getSelectedItem(), interval, threshold, upperlimit);
+
         panelAddSensor.setVisible(false);
         displayManagerScreen();
         changeSelectedFieldStation(selectedStation);
@@ -1758,17 +1770,17 @@ public class UserInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelSensorActionPerformed
 
     private void btnRemoveFieldStationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveFieldStationActionPerformed
-        int dialogResult = JOptionPane.showConfirmDialog (null, "Are you sure you want to remove field station: " + selectedStation.getId(),"Warning",JOptionPane.YES_NO_OPTION);
-        if(dialogResult == JOptionPane.YES_OPTION){
+        int dialogResult = JOptionPane.showConfirmDialog(null, "Are you sure you want to remove field station: " + selectedStation.getId(), "Warning", JOptionPane.YES_NO_OPTION);
+        if (dialogResult == JOptionPane.YES_OPTION) {
             removeFieldStation(selectedStation.getId());
         }
     }//GEN-LAST:event_btnRemoveFieldStationActionPerformed
 
     private void btnRemoveSensorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveSensorActionPerformed
         int index = tblSensorTable.getSelectedRow();
-        Sensor sensor = (Sensor)sensorsTable.getElementAt(index);
-        int dialogResult = JOptionPane.showConfirmDialog (null, "Are you sure you want to remove sensor: " + sensor.getId(),"Warning",JOptionPane.YES_NO_OPTION);
-        if(dialogResult == JOptionPane.YES_OPTION){            
+        Sensor sensor = (Sensor) sensorsTable.getElementAt(index);
+        int dialogResult = JOptionPane.showConfirmDialog(null, "Are you sure you want to remove sensor: " + sensor.getId(), "Warning", JOptionPane.YES_NO_OPTION);
+        if (dialogResult == JOptionPane.YES_OPTION) {
             removeSensor(sensor.getId());
         }
     }//GEN-LAST:event_btnRemoveSensorActionPerformed
@@ -1800,7 +1812,7 @@ public class UserInterface extends javax.swing.JFrame {
 
     private void tblSensorDataMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSensorDataMouseClicked
         // TODO add your handling code here:
-        if(evt.getClickCount() == 2){
+        if (evt.getClickCount() == 2) {
             displayReportSensorDataScreen();
         }
     }//GEN-LAST:event_tblSensorDataMouseClicked
@@ -1821,38 +1833,39 @@ public class UserInterface extends javax.swing.JFrame {
         clearSensorScreen();
     }//GEN-LAST:event_btnClearSensorActionPerformed
 
-    private boolean isIntervalSelected(){
+    private boolean isIntervalSelected() {
         if (comboIntervalSeconds.getSelectedIndex() == 0 && comboIntervalMinutes.getSelectedIndex() == 0
-                && comboIntervalHours.getSelectedIndex() == 0 && comboIntervalDays.getSelectedIndex() == 0){
+                && comboIntervalHours.getSelectedIndex() == 0 && comboIntervalDays.getSelectedIndex() == 0) {
             return false;
-        }
-        else
+        } else {
             return true;
+        }
     }
-    
+
     private void txtSensorIdKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSensorIdKeyReleased
         validateAndSetSensorButtons();
     }//GEN-LAST:event_txtSensorIdKeyReleased
 
-    private void validateAndSetSensorButtons(){
+    private void validateAndSetSensorButtons() {
         String sensorID = txtSensorId.getText();
         //trim() removes whitespaces and ensures that it contains text other than spaces
         boolean isEmpty = sensorID.trim().isEmpty();
-        if (!isEmpty){
+        if (!isEmpty) {
             boolean intervalSelected = false;
             intervalSelected = isIntervalSelected();
             //also check that sensor with this name doesn't already exist.
             Sensor foundSensor = selectedStation.getSetOfSensors().getSensor(sensorID);
             //if null means it doesn't already exist in the collection
-            if (foundSensor == null && intervalSelected != false) 
+            if (foundSensor == null && intervalSelected != false) {
                 btnSaveSensor.setEnabled(true);
-            else
+            } else {
                 btnSaveSensor.setEnabled(false);
-        }
-        else
+            }
+        } else {
             btnSaveSensor.setEnabled(false);
+        }
     }
-    
+
     private void comboIntervalDaysActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboIntervalDaysActionPerformed
         validateAndSetSensorButtons();
     }//GEN-LAST:event_comboIntervalDaysActionPerformed
@@ -1891,10 +1904,10 @@ public class UserInterface extends javax.swing.JFrame {
     private void btnSensorDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSensorDetailsActionPerformed
         // TODO add your handling code here:
         int index = tblSensorTable.getSelectedRow();
-        Sensor sensor = (Sensor)sensorsTable.getElementAt(index);
-        
+        Sensor sensor = (Sensor) sensorsTable.getElementAt(index);
+
         GPSData location = sensor.getGps();
-        
+
         Object[] message = {
             "ID: " + sensor.getId(),
             "Type: " + sensor.getType(),
@@ -1902,14 +1915,14 @@ public class UserInterface extends javax.swing.JFrame {
             "Location: " + location.GPStoString(),
             (sensor.getThresholdIsUpperLimit() ? "Threshold Upper Limit: " : "Threshold Lower Limit: ") + sensor.getThreshold()
         };
-        
+
         JOptionPane.showMessageDialog(null, message, "Sensor Details", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnSensorDetailsActionPerformed
 
     private void sliderServerOnOffMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sliderServerOnOffMouseReleased
-        JSlider source = (JSlider) evt.getSource();        
+        JSlider source = (JSlider) evt.getSource();
         server.togglePower(source.getValue());
-        
+
     }//GEN-LAST:event_sliderServerOnOffMouseReleased
 
     private void sliderViewStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sliderViewStateChanged
@@ -1929,12 +1942,13 @@ public class UserInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_sliderViewStateChanged
 
     private void buttonRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRegisterActionPerformed
-        // TODO add your handling code here:
+        panelRegister.setVisible(true);
+        panelLogIn.setVisible(false);
     }//GEN-LAST:event_buttonRegisterActionPerformed
 
     private void sliderServerOnOffKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_sliderServerOnOffKeyReleased
         // TODO add your handling code here:
-        JSlider source = (JSlider) evt.getSource();        
+        JSlider source = (JSlider) evt.getSource();
         server.togglePower(source.getValue());
     }//GEN-LAST:event_sliderServerOnOffKeyReleased
 
@@ -1942,41 +1956,74 @@ public class UserInterface extends javax.swing.JFrame {
         //When user changes the sensor type via dropdown, update the sensor units to the relevant options
         String sensorType = comboSensorType.getSelectedItem().toString();
         switch (sensorType) {
-            case "Soil Moisture": comboSensorUnits.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "mm", "%" }));
-                     break;
-            case "Soil Temperature": comboSensorUnits.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "°C", "°F" }));
-                     break;
-            case "Air Temperature": comboSensorUnits.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "°C", "°F" }));
-                     break;
-            case "Soil Acidity": comboSensorUnits.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "pH" }));
-                     break;
-            case "Light Intensity": comboSensorUnits.setModel(new javax.swing.DefaultComboBoxModel(new String[] {  "Lux" }));
-                     break;
-                     
+            case "Soil Moisture":
+                comboSensorUnits.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"mm", "%"}));
+                break;
+            case "Soil Temperature":
+                comboSensorUnits.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"°C", "°F"}));
+                break;
+            case "Air Temperature":
+                comboSensorUnits.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"°C", "°F"}));
+                break;
+            case "Soil Acidity":
+                comboSensorUnits.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"pH"}));
+                break;
+            case "Light Intensity":
+                comboSensorUnits.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"Lux"}));
+                break;
+
         }
-        
-        
+
+
     }//GEN-LAST:event_comboSensorTypeActionPerformed
 
     private void comboReportFieldStationsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboReportFieldStationsItemStateChanged
-        if (evt.getStateChange() == java.awt.event.ItemEvent.SELECTED){
-            if (loadData == true){
+        if (evt.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
+            if (loadData == true) {
                 updateReport();
-                saveUserData("data/userData.ser",comboReportFieldStations.getSelectedIndex());
+                saveUserData("data/userData.ser", comboReportFieldStations.getSelectedIndex());
             }
             loadData = true;
-            
+
         }
     }//GEN-LAST:event_comboReportFieldStationsItemStateChanged
 
     private void jButton1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton1KeyPressed
-        if (evt.getKeyCode()==KeyEvent.VK_ENTER)
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             System.out.println("Hello");
+        }
         logIn();
     }//GEN-LAST:event_jButton1KeyPressed
 
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        txtUsernameReg.setText("");
+        txtPasswordReg.setText("");
+        panelRegister.setVisible(false);
+        panelLogIn.setVisible(true);
+    }//GEN-LAST:event_btnCancelActionPerformed
 
-    
+    private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
+
+        int userRole = comboUserRole.getSelectedIndex();
+        String username = txtUsernameReg.getText();
+        String password = txtPasswordReg.getText();
+        lblStatus.setForeground(Color.red);
+
+        if (username.length() == 0 || password.length() == 0) {
+            lblStatus.setText("Information missing!");
+        } else {
+
+            try {
+                server.createUserAccount(username, password, userRole);
+                lblStatus.setForeground(Color.green);
+                lblStatus.setText("Success.");
+            } catch (Exception e) {
+                lblStatus.setText("An error occured" + e.getMessage());
+            }
+        }
+
+    }//GEN-LAST:event_btnRegisterActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -2011,7 +2058,7 @@ public class UserInterface extends javax.swing.JFrame {
                 userint.setVisible(true);
             }
         });
-        
+
         Timer t = new Timer();
         t.scheduleAtFixedRate(new TimerTask() {
 
@@ -2020,19 +2067,20 @@ public class UserInterface extends javax.swing.JFrame {
                 //ADD INTERVALL CALLS HERE
                 Vector<FieldStation> fieldStations = server.loadData();
                 if (fieldStations != null) {
-                    for (FieldStation aFieldStations: fieldStations){
+                    for (FieldStation aFieldStations : fieldStations) {
 
-                        for (Sensor aSensor: aFieldStations.getSetOfSensors().getSensors()){
-                            if(aSensor.onInterval()){
-                                if (server.getTurnedOn())
+                        for (Sensor aSensor : aFieldStations.getSetOfSensors().getSensors()) {
+                            if (aSensor.onInterval()) {
+                                if (server.getTurnedOn()) {
                                     userint.updateReport();
+                                }
                             }
                         }
                     }
                 }
             }
-        },1000,1000);
-        
+        }, 1000, 1000);
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -2076,7 +2124,6 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JLabel lblAddNewSensor;
-    private javax.swing.JLabel lblError;
     private javax.swing.JLabel lblFieldStationManager;
     private javax.swing.JLabel lblFieldStationName;
     private javax.swing.JLabel lblFieldStationName2;
@@ -2101,6 +2148,7 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JLabel lblSensorList;
     private javax.swing.JLabel lblSensorType;
     private javax.swing.JLabel lblSensorUnits;
+    private javax.swing.JLabel lblStatus;
     private javax.swing.JLabel lblThreshold;
     private javax.swing.JLabel lblUserRole;
     private javax.swing.JLabel lblUsername;
@@ -2121,7 +2169,7 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JTable tblSensorData;
     private javax.swing.JTable tblSensorTable;
     private javax.swing.JPasswordField txtPassword;
-    private javax.swing.JTextField txtPasswordReg;
+    private javax.swing.JPasswordField txtPasswordReg;
     public javax.swing.JTextField txtSensorId;
     private javax.swing.JLabel txtServerOff;
     private javax.swing.JLabel txtServerOn;
