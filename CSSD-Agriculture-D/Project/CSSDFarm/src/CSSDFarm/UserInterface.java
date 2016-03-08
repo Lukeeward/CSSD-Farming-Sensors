@@ -619,6 +619,16 @@ public class UserInterface extends javax.swing.JFrame {
         tblReportSensorData = new javax.swing.JTable();
         lblReportSensorDataNextIntervalDate = new javax.swing.JLabel();
         lblReportSensorDataNextInterval = new javax.swing.JLabel();
+        panelRegister = new javax.swing.JPanel();
+        btnRegister = new javax.swing.JButton();
+        btnCancel = new javax.swing.JButton();
+        lblUsername = new javax.swing.JLabel();
+        txtUsernameReg = new javax.swing.JTextField();
+        txtPasswordReg = new javax.swing.JTextField();
+        lblUsername1 = new javax.swing.JLabel();
+        comboUserRole = new javax.swing.JComboBox();
+        lblUserRole = new javax.swing.JLabel();
+        lblError = new javax.swing.JLabel();
 
         jFrameServer.setMinimumSize(new java.awt.Dimension(360, 200));
 
@@ -712,7 +722,7 @@ public class UserInterface extends javax.swing.JFrame {
         panelLogInLayout.setHorizontalGroup(
             panelLogInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLogInLayout.createSequentialGroup()
-                .addGap(0, 189, Short.MAX_VALUE)
+                .addGap(0, 196, Short.MAX_VALUE)
                 .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(70, 70, 70)
                 .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -735,7 +745,7 @@ public class UserInterface extends javax.swing.JFrame {
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(buttonRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(96, Short.MAX_VALUE))
+                .addContainerGap(112, Short.MAX_VALUE))
         );
 
         getContentPane().add(panelLogIn, "card5");
@@ -1179,7 +1189,7 @@ public class UserInterface extends javax.swing.JFrame {
                     .addGroup(panelAddSensorLayout.createSequentialGroup()
                         .addComponent(checkIsUpperLimit, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(2, 2, 2)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addGroup(panelAddSensorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSaveSensor)
                     .addComponent(btnCancelSensor))
@@ -1331,7 +1341,7 @@ public class UserInterface extends javax.swing.JFrame {
                     .addGroup(panelReportLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(panelSwitcher, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(9, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         panelReportLayout.setVerticalGroup(
             panelReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1424,7 +1434,7 @@ public class UserInterface extends javax.swing.JFrame {
                     .addGroup(panelReportSensorDataLayout.createSequentialGroup()
                         .addGap(22, 22, 22)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 692, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(164, Short.MAX_VALUE))
+                .addContainerGap(171, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelReportSensorDataLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(panelReportSensorDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -1466,10 +1476,76 @@ public class UserInterface extends javax.swing.JFrame {
                     .addComponent(lblReportSensorDataNextInterval))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(61, Short.MAX_VALUE))
+                .addContainerGap(77, Short.MAX_VALUE))
         );
 
         getContentPane().add(panelReportSensorData, "card6");
+
+        btnRegister.setText("Register");
+
+        btnCancel.setText("Cancel");
+
+        lblUsername.setText("Username:");
+
+        lblUsername1.setText("Password:");
+
+        comboUserRole.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        lblUserRole.setText("User Role:");
+
+        javax.swing.GroupLayout panelRegisterLayout = new javax.swing.GroupLayout(panelRegister);
+        panelRegister.setLayout(panelRegisterLayout);
+        panelRegisterLayout.setHorizontalGroup(
+            panelRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRegisterLayout.createSequentialGroup()
+                .addGroup(panelRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(panelRegisterLayout.createSequentialGroup()
+                        .addGap(297, 297, 297)
+                        .addGroup(panelRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblUsername)
+                            .addGroup(panelRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lblUserRole)
+                                .addComponent(lblUsername1)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(panelRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtUsernameReg)
+                            .addComponent(txtPasswordReg)
+                            .addComponent(comboUserRole, 0, 164, Short.MAX_VALUE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelRegisterLayout.createSequentialGroup()
+                        .addGap(298, 298, 298)
+                        .addGroup(panelRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(panelRegisterLayout.createSequentialGroup()
+                                .addComponent(btnRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnCancel, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)))))
+                .addGap(349, 349, 349))
+        );
+        panelRegisterLayout.setVerticalGroup(
+            panelRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRegisterLayout.createSequentialGroup()
+                .addGap(67, 67, 67)
+                .addGroup(panelRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblUsername)
+                    .addComponent(txtUsernameReg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(panelRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtPasswordReg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblUsername1))
+                .addGap(18, 18, 18)
+                .addGroup(panelRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(comboUserRole)
+                    .addComponent(lblUserRole, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(panelRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnRegister)
+                    .addComponent(btnCancel))
+                .addGap(18, 18, 18)
+                .addComponent(lblError, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(214, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(panelRegister, "card7");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -1963,10 +2039,12 @@ public class UserInterface extends javax.swing.JFrame {
     public javax.swing.JButton btnAddFieldStation;
     public javax.swing.JButton btnAddSensor;
     private javax.swing.JButton btnBackReportSensorData;
+    private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnCancelSensor;
     private javax.swing.JButton btnClearSensor;
     private javax.swing.JButton btnFieldStationDetails;
     public javax.swing.JButton btnManager;
+    private javax.swing.JButton btnRegister;
     public javax.swing.JButton btnRemoveFieldStation;
     private javax.swing.JButton btnRemoveSensor;
     public javax.swing.JButton btnReport;
@@ -1982,6 +2060,7 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JComboBox comboReportSensorType;
     public javax.swing.JComboBox comboSensorType;
     public javax.swing.JComboBox comboSensorUnits;
+    private javax.swing.JComboBox comboUserRole;
     private org.jdesktop.swingx.JXDatePicker dpReportCalendar;
     private org.jdesktop.swingx.JXDatePicker dpReportSensorDataDate;
     private javax.swing.JButton jButton1;
@@ -1997,6 +2076,7 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JLabel lblAddNewSensor;
+    private javax.swing.JLabel lblError;
     private javax.swing.JLabel lblFieldStationManager;
     private javax.swing.JLabel lblFieldStationName;
     private javax.swing.JLabel lblFieldStationName2;
@@ -2022,11 +2102,15 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JLabel lblSensorType;
     private javax.swing.JLabel lblSensorUnits;
     private javax.swing.JLabel lblThreshold;
+    private javax.swing.JLabel lblUserRole;
+    private javax.swing.JLabel lblUsername;
+    private javax.swing.JLabel lblUsername1;
     public javax.swing.JList listUserStations;
     private javax.swing.JPanel panelAddSensor;
     private javax.swing.JPanel panelHeatmap;
     private javax.swing.JPanel panelLogIn;
     private javax.swing.JPanel panelManager;
+    private javax.swing.JPanel panelRegister;
     private javax.swing.JPanel panelReport;
     private javax.swing.JPanel panelReportSensorData;
     private javax.swing.JPanel panelReportTable;
@@ -2037,10 +2121,12 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JTable tblSensorData;
     private javax.swing.JTable tblSensorTable;
     private javax.swing.JPasswordField txtPassword;
+    private javax.swing.JTextField txtPasswordReg;
     public javax.swing.JTextField txtSensorId;
     private javax.swing.JLabel txtServerOff;
     private javax.swing.JLabel txtServerOn;
     private javax.swing.JTextField txtThreshold;
     private javax.swing.JTextField txtUsername;
+    private javax.swing.JTextField txtUsernameReg;
     // End of variables declaration//GEN-END:variables
 }
