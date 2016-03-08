@@ -108,6 +108,14 @@ public class Sensor implements Serializable {
     }
     
     /**
+     * Gets the interval time in seconds for the Sensor. 
+     * @return float.
+     */
+    public float getIntervalSeconds() {
+        return this.intervalSeconds;
+    }
+    
+    /**
      * Gets the units of the Sensor.
      * @return String.
      */

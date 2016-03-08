@@ -32,6 +32,10 @@ public class Report implements Serializable {
      */
     public Vector<HistoricalData> getDataByType(String sensorType){
         Vector<HistoricalData> returnData = new Vector<HistoricalData>();
+        
+        //For each item in data.
+        //If the item type equals the type passed in.
+        //Add to the Vector of HistoricalDatas
         for(Entry<String,HistoricalData> entry : data.entrySet()){
             if (entry.getValue().getType().equals(sensorType)){
                 returnData.add(entry.getValue());
@@ -50,8 +54,11 @@ public class Report implements Serializable {
      * @return A vector of filtered SensorDatas that meet the ID and Date criteria
      */
     public Vector<SensorData> getDataForSensorOnDate(String sensorId, Date date){
+        //For each item in data.
         for(Entry<String,HistoricalData> entry : data.entrySet()){
+            //If item sensor id equals the id passed in.
             if(entry.getValue().getSensorId().equals(sensorId)){
+                //Return the Vector of SensorData for the specified date.
                 return entry.getValue().getData(date);
             }
         }
@@ -69,11 +76,15 @@ public class Report implements Serializable {
      */
     public Vector<SensorData> getDataByTypeAndDate(String sensorType, Date date){
         Vector<SensorData> returnData = new Vector<SensorData>();
+        //For each HistoricalData in the return on getDataByType(sensorType)
         for(HistoricalData dt : getDataByType(sensorType))
         {
+            //Call getData(date)
             Vector<SensorData> ret = dt.getData(date);
+            //If the ret has any elements. 
             if(ret.size() >= 1){
                 System.out.println();
+                //Add the last element (The one with the most recent date) to the return data.
                 returnData.add(ret.lastElement());
             }
         }
