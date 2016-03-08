@@ -96,11 +96,17 @@ public class UserAccount implements Serializable{
     }
     
     /**
+     * Checks a supplied FieldStation id against the users station list
      * 
-     * @param string1
-     * @return
+     * @param stationId The FieldStation Id to check against user stations
+     * @return Whether the station was found
      */
-    public boolean canAccess(String string1){
+    public boolean canAccess(String stationId){
+        for(FieldStation field : stations){
+            if(field.getId().equals(stationId)){
+                return true;
+            }
+        } 
         return false;
     }
     
