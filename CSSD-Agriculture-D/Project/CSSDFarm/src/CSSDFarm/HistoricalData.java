@@ -46,6 +46,7 @@ class HistoricalData implements Serializable {
         //format the date so it matches the .getDate() returned date format
         DateFormat inputformatter = new SimpleDateFormat("dd/MM/yyyy");
         String newDate = inputformatter.format(date);
+        
         try {
             date = inputformatter.parse(newDate);
         } catch(ParseException ex) {
@@ -104,11 +105,4 @@ class HistoricalData implements Serializable {
     public String getSensorId(){
         return this.sensorID;
     }
-    
-    //GET MOST RECENT TWICE!? Maybe getAllData?
-    /*
-    public SensorData getMostRecent(){
-        return null;
-    }
-    */
 }
