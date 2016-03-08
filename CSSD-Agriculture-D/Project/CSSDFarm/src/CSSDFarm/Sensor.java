@@ -155,13 +155,10 @@ public class Sensor implements Serializable {
     }
     
     /**
-     *
+     * Collects some new data for the Sensor. 
      */
     public void collectData()
-    {
-        //Replace 'mm' with 'unit'
-        //Replace 12.0f with 'value'
-        
+    {        
         float newVal = 0;
         //sets the value for the sensorData to increment or decrement
         //once it has reached the threshold it changes its value and slowly moves towards the threshold
@@ -219,8 +216,8 @@ public class Sensor implements Serializable {
     }
     
     /**
-     *
-     * @return
+     * Looks at the previous reading time to calculate when the next reading should be made. 
+     * @return String of the reading date. 
      */
     public String getNextIntervalTime(){
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -232,32 +229,37 @@ public class Sensor implements Serializable {
     }
     
     /**
-     *
-     * @return
+     * Decides if it is time to take a reading. 
+     * @return boolean
      */
     public boolean onInterval()
     {
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        String intDate = getNextIntervalTime();
         
-        System.out.println(intDate);
-        System.out.println(df.format(new Date()));
+        //Calls the getNextIntervalTime() to get the next interval time. 
+        String intDate = getNextIntervalTime();
         
         Date intervalDate = new Date();
                 
         try {
+            //Trys to convert the intDate from a string to a Date. 
             intervalDate = df.parse(intDate);
         } catch (ParseException ex) {
             System.out.println(ex);
         }
                 
         if(intDate.equals(df.format(new Date())) || intervalDate.before(new Date())){
+            //If the interval date is <= to current date then the sensor needs to take a reading. 
             System.out.println(lastReadingTime.getTime());
+            
+            //Collects the data for the sensor.
             collectData();
+            
             //The Sequence Diagram says it should call the fieldstation but doesnt say what the string is
-            //"data.txt"??
             station.update("data/buffer.ser", data);
             
+            //Check to see if the latest reading is within the threshold or not 
+            //and deactivates or activates the Actuator. 
             if(withinThreshold())
             {
                 this.actuator.deactivate();
@@ -271,8 +273,8 @@ public class Sensor implements Serializable {
     }
     
     /**
-     *
-     * @param fieldStation
+     * Sets the field station of the Sensor. 
+     * @param fieldStation FieldStation
      */
     public void setFieldStation(FieldStation fieldStation)
     {
@@ -287,7 +289,7 @@ public class Sensor implements Serializable {
     }
     
     /**
-     *
+     * Calculated the location of the Sensor. 
      */
     public void calculateLocation()     
     {
@@ -298,6 +300,8 @@ public class Sensor implements Serializable {
         //53.433683, -1.586280 tl
         Random rand = new Random();
         
+        //Generates a random vaule between a minimum and maximum 
+        //so that all the Sensors appear in a given area. 
         int minLatValue = 427854;
         int maxLatValue = 433837;
         int range = (maxLatValue - minLatValue);
@@ -313,7 +317,7 @@ public class Sensor implements Serializable {
     }
     
     /**
-     *
+     * 
      * @param fieldStation
      * @param sensor
      */
@@ -322,27 +326,29 @@ public class Sensor implements Serializable {
     }
     
     /**
-     *
-     * @return
+     * Check to see if the latest reading was within the threshold or not. s
+     * @return boolean
      */
     public boolean withinThreshold()
     {        
+        //If the threshold is the upper limit. 
         if(thresholdIsUpperLimit){
+            //if the value if less than the threshold return true. 
             if(data.getValue() <= threshold){
                 return true;
-            }
-            else{
+            } else {
                 //if value is higher than threshold set the value to threshold
                 if (threshold > 0)
                     data.setValue(threshold);
+                //if the value if greater than the threshold return true. 
                 return false;
             }
-        }
-        else{
-            if(data.getValue() >= threshold){
+        } else {
+            if(data.getValue() >= threshold) {
+                //if the value if greater than the threshold return true. 
                 return true;
-            }
-            else{
+            } else {
+                //if the value if less than the threshold return true. 
                 return false;
             }
         }        
