@@ -35,6 +35,9 @@ import static org.junit.Assert.*;
  *
  * @author Webby
  */
+//Automated GUI test
+//test both the class' and GUI and how they interact
+
 public class UserInterfaceTests {
     static final Server server = Server.getInstance();
     UserInterface ui = new UserInterface();
@@ -53,6 +56,7 @@ public class UserInterfaceTests {
     
     @BeforeClass
     public static void setUpClass() {
+        //set how many fieldStations and Sensors for each should the automation should add
         totalFieldStationsToAdd = 3;
         totalSensorsToAdd = 3;
     }
@@ -81,11 +85,13 @@ public class UserInterfaceTests {
         
         //login
         logIn();
-        goToReportScreen();
+        //move GUI to the manager screen
+        goToManagerScreen();
         
+        //remove all existing fieldStations and test
         removeAllFieldStations();
-        //assertTrue(server.getFieldStation("") == null);
         
+        //add the fieldstations and sensors 
         for (int i=0;i<totalFieldStationsToAdd;i++){
             addFieldStation();
             
@@ -93,20 +99,11 @@ public class UserInterfaceTests {
                 addSensor();
         }
         
-        //FieldStation result = server.getFieldStation("");
-        //assertTrue(result != null);
-        bot.mouseMove(ui.btnReport.getLocationOnScreen().x,ui.btnReport.getLocationOnScreen().y);
-        clickMouse();
-        waitForGui();
+        //navigate GUI to report screen
+        //goToReportScreen();
         
-        JOptionPane.showMessageDialog(null,"Tests Passed: " + testPassed,"Test Results",JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(null,"Tests Passed: " + testPassed,"Test Results",JOptionPane.INFORMATION_MESSAGE);
 
-        //assertTrue(ui.listUserStations.getModel().getElementAt(0).toString() != null);
-        
-        
-        //removeAllFieldStations();
-        
-        //removeFieldStation();
         
         
         try {
@@ -155,9 +152,15 @@ public class UserInterfaceTests {
         waitForGui();
     }
     
-    public void goToReportScreen(){
+    public void goToManagerScreen(){
         bot.mouseMove(ui.btnManager.getLocationOnScreen().x,ui.btnManager.getLocationOnScreen().y);
         clickMouse();
+    }
+    
+    public void goToReportScreen(){
+        bot.mouseMove(ui.btnReport.getLocationOnScreen().x,ui.btnReport.getLocationOnScreen().y);
+        clickMouse();
+        waitForGui();
     }
     
     public void addFieldStation(){
