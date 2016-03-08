@@ -56,18 +56,17 @@ public class SetOfSensors implements Serializable{
     }
     
     /**
-     *
+     * Finds a sensor by sensorid and returns its SensorData
+     * 
+     * @param sensorId The SensorId of the sensor to get the data from
+     * @return A SensorData for the found sensor
      */
-    public void checkSensors(){
-        //Check sensor threshold??
-    }
-    
-    /**
-     *
-     * @param string
-     * @return
-     */
-    public SensorData getData(String string){
+    public SensorData getData(String sensorId){
+        for(Sensor sensor : data){
+            if(sensor.getId().equals(sensorId)){
+                return sensor.getData();
+            }
+        }
         return null;
     }
     
