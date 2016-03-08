@@ -49,6 +49,10 @@ public class GPSData implements Serializable{
         return altitude;
     }
     
+    /**
+     * Override toString function to be used for the heat map.
+     * @return Formatted string of the GPS coordinates.
+     */
     @Override
     public String toString() {
         return "{lat : " + this.latitude + ", long : " + this.longitude + ",alt : " + this.altitude + "}";
