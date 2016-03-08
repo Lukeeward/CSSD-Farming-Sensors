@@ -75,6 +75,9 @@ public class UserInterface extends javax.swing.JFrame {
     Browser browser = new Browser();
     boolean loadData = false;
 
+    /**
+     *
+     */
     public UserInterface() {
         initComponents();
         jFrameServer.setVisible(true);
@@ -82,6 +85,9 @@ public class UserInterface extends javax.swing.JFrame {
         loadData();
     }
 
+    /**
+     *
+     */
     public void serializeData() {
         ObjectOutputStream outstream;
         try {
@@ -93,6 +99,9 @@ public class UserInterface extends javax.swing.JFrame {
         }
     }
 
+    /**
+     *
+     */
     public void loadData() {
         ObjectInputStream instream = null;
         Server loadedServer = null;
@@ -125,6 +134,9 @@ public class UserInterface extends javax.swing.JFrame {
         }
     }
 
+    /**
+     *
+     */
     public void displayManagerScreen() {
         //remove old panel details
         if (panelReport.isVisible()) {
@@ -165,12 +177,18 @@ public class UserInterface extends javax.swing.JFrame {
 
     }
 
+    /**
+     * Switch panel to add sensor panel 
+     */
     public void displayAddSensorPanel() {
         panelManager.setVisible(false);
         panelAddSensor.setVisible(true);
         lblFieldStationName2.setText(selectedStation.getName());
     }
 
+    /**
+     * 
+     */
     public void displayReportScreen() {
         loadData = false;
         panelManager.setVisible(false);
@@ -204,6 +222,9 @@ public class UserInterface extends javax.swing.JFrame {
 
     }
 
+    /**
+     *
+     */
     public void displayReportSensorDataScreen() {
         if (panelReport.isVisible()) {
             panelReport.setVisible(false);
@@ -230,14 +251,25 @@ public class UserInterface extends javax.swing.JFrame {
         updateReportSensorData();
     }
 
+    /**
+     * Verify field station and add it to the server. Load updated list of 
+     * field stations and refresh the jList to show new field station
+     * @param id
+     * @param name
+     */
     public void addFieldStation(String id, String name) {
         if (server.verifyFieldStation(id)) {
             server.addFieldStation(id, name);
             Vector<FieldStation> userFieldStations = server.loadData();
-            listUserStations.setListData(userFieldStations);
+            listUserStations.setListData(userFieldStations); 
         }
     }
 
+    /**
+     * Remove field station with id from the server. Update jList to reflect the change.
+     * If jList is empty set selectedStation to null, else select the first field station.
+     * @param id
+     */
     public void removeFieldStation(String id) {
         server.removeFieldStation(id);
         Vector<FieldStation> userFieldStations = server.loadData();
@@ -251,6 +283,10 @@ public class UserInterface extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Remove sensor with id from the currently selected field station
+     * @param id
+     */
     public void removeSensor(String id) {
         FieldStation station = server.getFieldStation(selectedStation.getId());
         station.removeSensor(id);
@@ -259,6 +295,9 @@ public class UserInterface extends javax.swing.JFrame {
         changeSelectedFieldStation(selectedStation);
     }
 
+    /**
+     *
+     */
     public void updateReport() {
         FieldStation fieldStation = (FieldStation) comboReportFieldStations.getSelectedItem();
         if (fieldStation != null) {
@@ -329,7 +368,11 @@ public class UserInterface extends javax.swing.JFrame {
     }
 
     //Custom DefaultTableCellRenderer
-    public static class CustomTableRendererColour extends DefaultTableCellRenderer {
+
+    /**
+     *
+     */
+        public static class CustomTableRendererColour extends DefaultTableCellRenderer {
 
         //used as class is static so need a way to get the correct FieldStation
 
@@ -381,10 +424,17 @@ public class UserInterface extends javax.swing.JFrame {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public String getWebName() {
         return comboReportFieldStations.getSelectedItem().toString();
     }
 
+    /**
+     *
+     */
     public void updateReportSensorData() {
         int index = tblSensorData.getSelectedRow();
         SensorData selectedSensorData = (SensorData) sensorsReportTable.getElementAt(index);
@@ -423,10 +473,16 @@ public class UserInterface extends javax.swing.JFrame {
         }
     }
 
+    /**
+     *
+     */
     public void changeReportView() {
 
     }
 
+    /**
+     * Clear all values from sensor screen
+     */
     public void clearSensorScreen() {
         txtSensorId.setText("");
         comboIntervalSeconds.setSelectedIndex(0);
@@ -438,6 +494,10 @@ public class UserInterface extends javax.swing.JFrame {
         txtThreshold.setText("");
     }
 
+    /**
+     * Configure JxBrowser to be displayed. Load map.html from file to string data, load
+     * this data into JxBrowser and add the browser to the panel.
+     */
     public void displayHeatmap() {
         LoggerProvider.getChromiumProcessLogger().setLevel(Level.OFF);
         LoggerProvider.getIPCLogger().setLevel(Level.OFF);
@@ -471,6 +531,13 @@ public class UserInterface extends javax.swing.JFrame {
         panelHeatmap.add(internalFrame);
     }
 
+    /**
+     * Populate ArrayLists with sensor data by looping through all the sensorData vector.
+     * Use JxBrowser's 'executeJavascript' functionality to call a javascript function, 'addMyData', that consumes 
+     * the data inside the ArrayLists and loads it into the map inside the browser.
+     * @param sensorData
+     * @param setOfSensors
+     */
     public void updateHeatmap(Vector<SensorData> sensorData, SetOfSensors setOfSensors) {
         ArrayList stringData = new ArrayList();
         ArrayList stringReadingData = new ArrayList();
