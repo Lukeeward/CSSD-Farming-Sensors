@@ -48,22 +48,25 @@ class HistoricalData implements Serializable {
         String newDate = inputformatter.format(date);
         
         try {
+            //try to convert the string back to a date. 
             date = inputformatter.parse(newDate);
         } catch(ParseException ex) {
-            
+            System.out.println(ex); 
         }
         
-        for(SensorData dt : data)
+        for(SensorData sensorData : data)
         {
-            if (dt.getDate().equals(date)){
-                returnData.add(dt);
+            //for each SensorData. 
+            if (sensorData.getDate().equals(date)){
+                //If dates are the same add to return data.
+                returnData.add(sensorData);
             }
         }
         
+        //Sort the return data by date. 
         Collections.sort(returnData, new Comparator<SensorData>() {
             public int compare(SensorData o1, SensorData o2) {
                 return o1.getFullDate().compareTo(o2.getFullDate());
-                //return Float.compare(o1.getValue(), o2.getValue());
             }
         });
         

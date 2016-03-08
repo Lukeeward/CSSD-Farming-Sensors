@@ -294,6 +294,7 @@ public class Sensor implements Serializable {
      */
     public void activate()
     {
+        actuator.activate();
     }
     
     /**
@@ -324,14 +325,6 @@ public class Sensor implements Serializable {
         location = new GPSData(Float.parseFloat(newCoordinate), Float.parseFloat(longNewCoordinate), 0.5f);
     }
     
-    /**
-     * 
-     * @param fieldStation
-     * @param sensor
-     */
-    public void update(FieldStation fieldStation, Sensor sensor)
-    {
-    }
     
     /**
      * Check to see if the latest reading was within the threshold or not. s
