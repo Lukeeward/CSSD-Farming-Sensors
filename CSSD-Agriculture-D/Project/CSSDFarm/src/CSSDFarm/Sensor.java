@@ -108,6 +108,14 @@ public class Sensor implements Serializable {
     }
     
     /**
+     * Gets the interval time in seconds for the Sensor. 
+     * @return float.
+     */
+    public float getIntervalSeconds() {
+        return this.intervalSeconds;
+    }
+    
+    /**
      * Gets the units of the Sensor.
      * @return String.
      */
@@ -286,6 +294,7 @@ public class Sensor implements Serializable {
      */
     public void activate()
     {
+        actuator.activate();
     }
     
     /**
@@ -316,14 +325,6 @@ public class Sensor implements Serializable {
         location = new GPSData(Float.parseFloat(newCoordinate), Float.parseFloat(longNewCoordinate), 0.5f);
     }
     
-    /**
-     * 
-     * @param fieldStation
-     * @param sensor
-     */
-    public void update(FieldStation fieldStation, Sensor sensor)
-    {
-    }
     
     /**
      * Check to see if the latest reading was within the threshold or not. s

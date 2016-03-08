@@ -37,14 +37,6 @@ public class FieldStation implements Serializable {
     }
     
     /**
-     *
-     * @return
-     */
-    public Report compileReport(){
-        return null;
-    }
-    
-    /**
      * Gets the id of the FieldStation
      * 
      * @return id String
@@ -111,12 +103,13 @@ public class FieldStation implements Serializable {
     }
     
     /**
-     *
-     * @param id
+     * Returns the SensorData from a found Sensor.
+     * 
+     * @param id The SensorId to get SensorData from
      * @return
      */
     public SensorData getData(String id){
-        return null;
+        return sensors.getData(id);
     }
     
     /**
