@@ -5,7 +5,11 @@
  */
 
 import CSSDFarm.FieldStation;
+import CSSDFarm.GPSData;
+import CSSDFarm.Sensor;
+import CSSDFarm.SensorData;
 import CSSDFarm.Server;
+import CSSDFarm.SetOfSensors;
 import CSSDFarm.UserInterface;
 import java.awt.Robot;
 import java.awt.Toolkit;
@@ -16,7 +20,10 @@ import java.awt.datatransfer.Transferable;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import static java.awt.event.KeyEvent.*;
+import java.util.Date;
 import java.util.Random;
+import java.util.UUID;
+import javax.swing.JOptionPane;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -29,7 +36,7 @@ import static org.junit.Assert.*;
  * @author Webby
  */
 public class UserInterfaceTests {
-    //static final Server server = Server.getInstance();
+    static final Server server = Server.getInstance();
     UserInterface ui = new UserInterface();
     Robot bot;
     ClipboardOwner owner = new ClipboardOwner() {
@@ -37,12 +44,17 @@ public class UserInterfaceTests {
     };    
     Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
     StringSelection stringSelection;
+    static int totalFieldStationsToAdd = 0;
+    static int totalSensorsToAdd = 0;
+    int testPassed = 0;
     
     public UserInterfaceTests() {
     }
     
     @BeforeClass
     public static void setUpClass() {
+        totalFieldStationsToAdd = 3;
+        totalSensorsToAdd = 3;
     }
     
     @AfterClass
@@ -74,10 +86,10 @@ public class UserInterfaceTests {
         removeAllFieldStations();
         //assertTrue(server.getFieldStation("") == null);
         
-        for (int i=0;i<2;i++){
+        for (int i=0;i<totalFieldStationsToAdd;i++){
             addFieldStation();
             
-            for (int l=0;l<2;l++)
+            for (int l=0;l<totalSensorsToAdd;l++)
                 addSensor();
         }
         
@@ -87,6 +99,8 @@ public class UserInterfaceTests {
         clickMouse();
         waitForGui();
         
+        JOptionPane.showMessageDialog(null,"Tests Passed: " + testPassed,"Test Results",JOptionPane.WARNING_MESSAGE);
+
         //assertTrue(ui.listUserStations.getModel().getElementAt(0).toString() != null);
         
         
@@ -96,7 +110,7 @@ public class UserInterfaceTests {
         
         
         try {
-            Thread.sleep(5000);                 //1000 milliseconds is one second.
+            Thread.sleep(500);                 //1000 milliseconds is one second.
         } catch(InterruptedException ex) {
             Thread.currentThread().interrupt();
         }
@@ -149,22 +163,29 @@ public class UserInterfaceTests {
     public void addFieldStation(){
         bot.mouseMove(ui.btnAddFieldStation.getLocationOnScreen().x,ui.btnAddFieldStation.getLocationOnScreen().y);
         clickMouse();
-        int n = genRanNum(50);
+        int n = genRanNum(15000);
         pasteString("FieldStationTest" + n);
         tabKey();
         pasteString("FieldStationTest" + n);
         tabKey();
         spaceKey();
         waitForGui();
-        String fname = ui.listUserStations.getSelectedValue().toString();
-        System.out.println(fname);
+        FieldStation fname = (FieldStation)ui.listUserStations.getSelectedValue();
+        assertTrue(fname.getName().equals("FieldStationTest" + n));
+        testPassed();
+        waitForGui();
+    }
+    
+    public void testPassed(){
+        testPassed = testPassed+1;
     }
     
     public void addSensor(){
+        waitForGui();
         bot.mouseMove(ui.btnAddSensor.getLocationOnScreen().x,ui.btnAddSensor.getLocationOnScreen().y);
         clickMouse();
         waitForGui();
-        int n = genRanNum(1500);
+        int n = genRanNum(15000);
         ui.txtSensorId.setText("SensorTest" + n);
         tabKey();
         selectSensorType();
@@ -172,6 +193,19 @@ public class UserInterfaceTests {
         selectSensorIntervalSecs();
         selectThreshold();
         selectIfUpperLimit();
+        waitForGui();
+        String sensorName = ui.tblSensorTable.getValueAt(ui.tblSensorTable.getSelectedRow(), 0).toString();
+        FieldStation fs = (FieldStation)ui.listUserStations.getSelectedValue();
+        Sensor sens = fs.getSetOfSensors().getSensor(sensorName) ;
+        assertTrue(sens.getId().equals("SensorTest" + n));
+        testPassed();
+        for (int x=0;x<1000;x++){
+            //collects new sensor data
+            //imitates the interval
+            sens.collectData();
+            assertTrue(sens.getData().getUnit() != null);
+            testPassed();
+        }
     }
     
     public int genRanNum(int limit){
@@ -181,9 +215,12 @@ public class UserInterfaceTests {
     
     public void removeFieldStation(){
         waitForGui();
+        FieldStation fname = (FieldStation)ui.listUserStations.getSelectedValue();
         bot.mouseMove(ui.btnRemoveFieldStation.getLocationOnScreen().x,ui.btnRemoveFieldStation.getLocationOnScreen().y);
         clickMouse();
         spaceKey();
+        assertTrue(ui.listUserStations.getSelectedValue() != fname);
+        testPassed();
     }
     
     public void selectSensorType(){
@@ -221,8 +258,8 @@ public class UserInterfaceTests {
     }
     
     private void selectSensorIntervalSecs() {
-        int totalS = genRanNum(10);
-        if (totalS == 0)
+        int totalS = genRanNum(30);
+        if (totalS <= 1)
             totalS = 2;
         for (int i=0;i<totalS;i++)
             downKey();
@@ -231,6 +268,7 @@ public class UserInterfaceTests {
     
     public void removeAllFieldStations(){
         waitForGui();
+        ui.listUserStations.setSelectedIndex(0);
         int totalFieldStations = ui.listUserStations.getModel().getSize();
         System.out.println(totalFieldStations);
         for (int i=0;i<totalFieldStations;i++)
