@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+import CSSDFarm.Actuator;
 import CSSDFarm.FieldStation;
 import CSSDFarm.GPSData;
 import CSSDFarm.Sensor;
@@ -105,15 +106,11 @@ public class UserInterfaceTests {
         JOptionPane.showMessageDialog(null,"Tests Passed: " + testPassed,"Test Results",JOptionPane.INFORMATION_MESSAGE);
 
         
-        
         try {
             Thread.sleep(500);                 //1000 milliseconds is one second.
         } catch(InterruptedException ex) {
             Thread.currentThread().interrupt();
         }
-        
-        
-        
     }
     
     public void logIn(){
@@ -202,12 +199,27 @@ public class UserInterfaceTests {
         Sensor sens = fs.getSetOfSensors().getSensor(sensorName) ;
         assertTrue(sens.getId().equals("SensorTest" + n));
         testPassed();
+        
         for (int x=0;x<1000;x++){
             //collects new sensor data
             //imitates the interval
             sens.collectData();
             assertTrue(sens.getData().getUnit() != null);
             testPassed();
+            Actuator ac = sens.getActuator();
+            if (sens.getThresholdIsUpperLimit()){
+                if (!sens.withinThreshold()){
+                        ac.activate();
+                        assertTrue(ac.isActive());
+                        testPassed();
+                }
+                else{
+                    ac.deactivate();
+                    assertFalse(ac.isActive());
+                    testPassed();
+                }
+            }
+            
         }
     }
     

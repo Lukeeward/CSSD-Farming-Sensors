@@ -148,6 +148,14 @@ public class Sensor implements Serializable {
     }
     
     /**
+     * Gets the Actuator
+     * @return Actuator.
+     */
+    public Actuator getActuator(){
+        return actuator;
+    }
+    
+    /**
      * Toggles the Actuator one or off depending on the previous state.
      */
     public void toggleModule()
