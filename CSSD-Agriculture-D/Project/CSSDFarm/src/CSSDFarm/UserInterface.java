@@ -182,6 +182,7 @@ public class UserInterface extends javax.swing.JFrame {
      * Switch panel to add sensor panel 
      */
     public void displayAddSensorPanel() {
+        clearSensorScreen();
         panelManager.setVisible(false);
         panelAddSensor.setVisible(true);
         lblFieldStationName2.setText(selectedStation.getName());
@@ -482,7 +483,7 @@ public class UserInterface extends javax.swing.JFrame {
     public void clearSensorScreen() {
         txtSensorId.setText("");
         comboIntervalSeconds.setSelectedIndex(0);
-        comboIntervalMinutes.setSelectedIndex(0);
+        comboIntervalMinutes.setSelectedIndex(5);
         comboIntervalHours.setSelectedIndex(0);
         comboIntervalDays.setSelectedIndex(0);
         comboSensorType.setSelectedIndex(0);
@@ -548,21 +549,24 @@ public class UserInterface extends javax.swing.JFrame {
             stringSensorName.add(stringToIntConverter(sensor.getId()));
             int unitType = 0;
             switch (sensor.getUnit()) {
-                case "LUX":
+                case "Lux":
                     unitType = 1;
                     break;
-                case "PH":
+                case "pH":
                     unitType = 2;
                     break;
-                case "C":
+                case "°C":
                     unitType = 3;
                     break;
-                case "F":
+                case "°F":
                     unitType = 4;
                     break;
                 case "%":
                     unitType = 5;
                     break;
+                 case "mm":
+                    unitType = 6;
+                    break;  
             }
             stringSensorUnit.add(unitType);
 
@@ -1851,16 +1855,25 @@ public class UserInterface extends javax.swing.JFrame {
         int daysSeconds = Integer.parseInt(comboIntervalDays.getSelectedItem().toString()) * 60 * 60 * 24;
         int interval = secondsSeconds + minutesSeconds + hoursSeconds + daysSeconds;
         int threshold = -1;
+        boolean safeToAdd = true;
         if (!txtThreshold.getText().equals("")){
-            threshold = Integer.parseInt(txtThreshold.getText());
+            try{
+                threshold = Integer.parseInt(txtThreshold.getText());
+            }
+            catch(Exception eX){
+                JOptionPane.showMessageDialog(null,eX,"Problem with Threshold",JOptionPane.WARNING_MESSAGE);
+                safeToAdd = false;
+            }
         }
-        boolean upperlimit = checkIsUpperLimit.isSelected();
-        server.addSensor(selectedStation.getId(), txtSensorId.getText(), (String) comboSensorType.getSelectedItem(), (String) comboSensorUnits.getSelectedItem(), interval, threshold, upperlimit);
+        if (safeToAdd){
+            boolean upperlimit = checkIsUpperLimit.isSelected();
+            server.addSensor(selectedStation.getId(), txtSensorId.getText(), (String) comboSensorType.getSelectedItem(), (String) comboSensorUnits.getSelectedItem(), interval, threshold, upperlimit);
 
-        panelAddSensor.setVisible(false);
-        displayManagerScreen();
-        changeSelectedFieldStation(selectedStation);
-        clearSensorScreen();
+            panelAddSensor.setVisible(false);
+            displayManagerScreen();
+            changeSelectedFieldStation(selectedStation);
+            clearSensorScreen();
+        }
     }//GEN-LAST:event_btnSaveSensorActionPerformed
 
     private void btnCancelSensorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelSensorActionPerformed
