@@ -107,12 +107,14 @@ public class UserInterface extends javax.swing.JFrame {
         ObjectInputStream instream = null;
         Server loadedServer = null;
         try {
+            //Read data from the saved server serialized file
             FileInputStream fileinput = new FileInputStream("data/server.ser");
             instream = new ObjectInputStream(fileinput);
             do {
                 try {
                     loadedServer = (Server) instream.readObject();
                     server = Server.getInstance(loadedServer);
+                    //Set the server slider to the loaded server value
                     sliderServerOnOff.setValue((server.getTurnedOn()) ? 1 : 0);
 
                 } catch (ClassNotFoundException ex) {
@@ -143,11 +145,13 @@ public class UserInterface extends javax.swing.JFrame {
         if (panelReport.isVisible()) {
             comboReportFieldStations.setModel(new DefaultComboBoxModel());
         }
-
+        
+        //Disable the other panels
         panelReport.setVisible(false);
         panelManager.setVisible(true);
         userFieldStations = server.loadData();
 
+        //Set the user lists renderer
         listUserStations.setCellRenderer(new DefaultListCellRenderer() {
             @Override
             public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
@@ -159,16 +163,19 @@ public class UserInterface extends javax.swing.JFrame {
                 return renderer;
             }
         });
-
+        
+        //If users is a food processing manager then disable the farmer buttons
         if (server.getUsersRole() == 1) {
             btnAddSensor.setVisible(false);
             btnRemoveSensor.setVisible(false);
             btnAddFieldStation.setVisible(false);
             btnRemoveFieldStation.setVisible(false);
         }
-
+        
+        //Set the manager panel to visible
         panelManager.setVisible(true);
 
+        //Load the users last selected values
         int pos = loadUserData("data/userSettings.ser");
         try {
             listUserStations.setSelectedIndex(pos);
@@ -192,12 +199,15 @@ public class UserInterface extends javax.swing.JFrame {
      * Displays the report screen
      */
     public void displayReportScreen() {
+        //Enable and disable the report UI components
         loadData = false;
         panelManager.setVisible(false);
         panelReport.setVisible(true);
         dpReportCalendar.getEditor().setEditable(false);
         comboReportSensorType.setLightWeightPopupEnabled(false);
         dpReportCalendar.setLightWeightPopupEnabled(false);
+        
+        //Load user data from the server
         userFieldStations = server.loadData();
         comboReportFieldStations.setRenderer(new DefaultListCellRenderer() {
             @Override
@@ -210,11 +220,13 @@ public class UserInterface extends javax.swing.JFrame {
                 return this;
             }
         });
+        //Add users fieldstations to the combobox
         for (FieldStation station : userFieldStations) {
             comboReportFieldStations.addItem(station);
         }
         Date date = new Date();
         dpReportCalendar.setDate(date);
+        //Load the users last selected values
         int pos = loadUserData("data/userData.ser");
         try {
             comboReportFieldStations.setSelectedIndex(pos);
@@ -228,11 +240,13 @@ public class UserInterface extends javax.swing.JFrame {
      * Displays the sensor data report screen.
      */
     public void displayReportSensorDataScreen() {
+        //Display relevent UI components
         if (panelReport.isVisible()) {
             panelReport.setVisible(false);
         }
         panelReportSensorData.setVisible(true);
 
+        //Set up the calandar
         if (dpReportSensorDataDate.getDate() == null) {
             Date date = dpReportCalendar.getDate();
             dpReportSensorDataDate.setDate(date);
@@ -243,7 +257,8 @@ public class UserInterface extends javax.swing.JFrame {
 
         FieldStation fieldStation = (FieldStation) comboReportFieldStations.getSelectedItem();
         Sensor sensor = fieldStation.getSetOfSensors().getSensor(selectedSensorData.getId());
-
+        
+        //Set labels to the sensor details
         lblReportSensorDataFieldStationName.setText(fieldStation.getName());
         lblReportSensorDataSensorName.setText(sensor.getId());
         lblReportSensorDataSensorType.setText(sensor.getType());
@@ -263,6 +278,7 @@ public class UserInterface extends javax.swing.JFrame {
         if (server.verifyFieldStation(id)) {
             server.addFieldStation(id, name);
             Vector<FieldStation> userFieldStations = server.loadData();
+            //Refresh UI list component
             listUserStations.setListData(userFieldStations); 
         }
     }
@@ -277,6 +293,7 @@ public class UserInterface extends javax.swing.JFrame {
         Vector<FieldStation> userFieldStations = server.loadData();
         listUserStations.setListData(userFieldStations);
 
+        //Reset the seelcted index after deletion
         if (listUserStations.getModel().getSize() > 0) {
             listUserStations.setSelectedIndex(0);
         } else {
@@ -305,6 +322,7 @@ public class UserInterface extends javax.swing.JFrame {
      */
     public void updateReport() {
         FieldStation fieldStation = (FieldStation) comboReportFieldStations.getSelectedItem();
+        //If there is no FieldStation selected dont update report
         if (fieldStation != null) {
             String sensorType = (String) comboReportSensorType.getSelectedItem();
             DateFormat inputformatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -317,7 +335,7 @@ public class UserInterface extends javax.swing.JFrame {
 
             }
 
-            //Vector<Sensor> sensors = fieldStation.getSetOfSensors().getByType(sensorType);
+            //Display the 
             EventList<SensorData> eventList = new BasicEventList<SensorData>();
             Report report = server.compileReport(fieldStation.getId());
             Vector<SensorData> sensorData = report.getDataByTypeAndDate(sensorType, date);
