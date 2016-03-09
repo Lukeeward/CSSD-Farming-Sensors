@@ -177,6 +177,32 @@ public class Server implements Serializable {
         data.remove(id);
     }
     
+        /**
+     * Adds a new sensor.
+     * @param fieldStationId String, the id of the FieldStation the sensor will be attached to. 
+     * @param sensorId String, the id of the Sensor.
+     * @param sensorType String, the type of the sensor. 
+     * @param sensorUnits String, the units of the sensor. 
+     * @param interval int, the number of seconds between each sensor reading. 
+     * @param threshold int, the threshold of the Sensor reading to know when to activate the Actuator. 
+     * @param upperlimit boolean, whether the threshold is the upper or lower limit. 
+     */
+    public void addSensor(String fieldStationId, String sensorId, String sensorType, String sensorUnits, int interval, int threshold, boolean upperlimit){
+        //Gets the field station
+        FieldStation aFieldStation = getFieldStation(fieldStationId);
+        
+        //Adds the sensor to the field station.
+        aFieldStation.addSensor(sensorId, sensorType, sensorUnits, interval, threshold, upperlimit);
+        
+        //Gets the hashmap for the field station. Otherwise initialise it. 
+        Map<String, HistoricalData> sensorHashMap = data.get(aFieldStation.getId());
+        if(sensorHashMap == null) {
+            data.put(aFieldStation.getId(), new HashMap<>());
+        }
+        sensorHashMap = data.get(aFieldStation.getId());
+        sensorHashMap.put(sensorId, new HistoricalData(sensorType, aFieldStation.getId(), sensorId));
+    }
+    
     /**
      * Removes a sensor from the field station.
      * 
@@ -303,29 +329,5 @@ public class Server implements Serializable {
         return currentUser.getUserRole();
     }
     
-    /**
-     * Adds a new sensor.
-     * @param fieldStationId String, the id of the FieldStation the sensor will be attached to. 
-     * @param sensorId String, the id of the Sensor.
-     * @param sensorType String, the type of the sensor. 
-     * @param sensorUnits String, the units of the sensor. 
-     * @param interval int, the number of seconds between each sensor reading. 
-     * @param threshold int, the threshold of the Sensor reading to know when to activate the Actuator. 
-     * @param upperlimit boolean, whether the threshold is the upper or lower limit. 
-     */
-    public void addSensor(String fieldStationId, String sensorId, String sensorType, String sensorUnits, int interval, int threshold, boolean upperlimit){
-        //Gets the field station
-        FieldStation aFieldStation = getFieldStation(fieldStationId);
-        
-        //Adds the sensor to the field station.
-        aFieldStation.addSensor(sensorId, sensorType, sensorUnits, interval, threshold, upperlimit);
-        
-        //Gets the hashmap for the field station. Otherwise initialise it. 
-        Map<String, HistoricalData> sensorHashMap = data.get(aFieldStation.getId());
-        if(sensorHashMap == null) {
-            data.put(aFieldStation.getId(), new HashMap<>());
-        }
-        sensorHashMap = data.get(aFieldStation.getId());
-        sensorHashMap.put(sensorId, new HistoricalData(sensorType, aFieldStation.getId(), sensorId));
-    }
+
 }
