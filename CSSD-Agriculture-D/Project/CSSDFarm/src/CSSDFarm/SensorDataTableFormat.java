@@ -50,16 +50,16 @@ public class SensorDataTableFormat implements TableFormat<SensorData> {
             long lastUpdated = sensorData.getFullDate().getTime();
             long diff = currentDate - lastUpdated;
             long diffSeconds = diff / 1000 % 60;
-            long diffMinuites = diff / (60 * 1000) % 60; 
+            long diffMinutes = diff / (60 * 1000) % 60; 
             long diffHours = diff / (60 * 60 * 1000); 
-            if(diffMinuites <= 0){
+            if(diffMinutes <= 0){
                     return "< 1 Minute Ago";
             }
             else
                 if(diffHours <= 0)
-                    return diffMinuites + " Minuites Ago";
+                    return diffMinutes + " minutes Ago";
                 else
-                    return diffHours + " Hours and " + diffMinuites + " Minuites Ago";
+                    return diffHours + " Hours and " + diffMinutes + " minutes Ago";
         } //Content of colum 3
             
         else if(column == 4) return sensorData.getLocation().GPStoString(); //Content of colum 4
