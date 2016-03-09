@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Vector;
 
 /**
- *
+ * The server stores and processes data relating to the whole system.
  * @author lnseg
  */
 public class Server implements Serializable {

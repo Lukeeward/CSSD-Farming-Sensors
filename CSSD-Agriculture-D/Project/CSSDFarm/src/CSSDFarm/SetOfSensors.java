@@ -3,7 +3,7 @@ import java.io.Serializable;
 import java.util.Vector;
 
 /**
- *
+ * A Set of sensors class that deals with the addition and removal of sensors from the field station.
  * @author Tom
  */
 public class SetOfSensors implements Serializable{
