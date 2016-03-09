@@ -42,7 +42,7 @@ public class SensorTableFormat implements TableFormat<Sensor> {
      * 
      * @param sensor Sensor, the object to get the column content from.
      * @param column int, the column index.
-     * @return
+     * @return Object, the value of the column.
      */
     public Object getColumnValue(Sensor sensor, int column) {
         if(column == 0)      return sensor.getId(); //Content of colum 0
