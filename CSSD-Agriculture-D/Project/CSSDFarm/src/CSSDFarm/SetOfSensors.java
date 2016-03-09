@@ -18,7 +18,7 @@ public class SetOfSensors implements Serializable{
     
     /**
      * Add a sensor to the set of sensors 
-     * @param sensor
+     * @param sensor The new sensor
      */
     public void addSensor(Sensor sensor){
         data.add(sensor);
@@ -26,7 +26,7 @@ public class SetOfSensors implements Serializable{
     
     /**
      * Remove a sensor from the set of sensors
-     * @param sensor
+     * @param sensor removes the supplies sensor
      */
     public void removeSensor(Sensor sensor){
         data.remove(sensor);
@@ -34,7 +34,7 @@ public class SetOfSensors implements Serializable{
     
     /**
      * Return the vector of sensors 
-     * @return 
+     * @return returns the sensor 
      */
     public Vector<Sensor> getSensors(){
         return data;
@@ -42,8 +42,8 @@ public class SetOfSensors implements Serializable{
     
     /**
      * Get a sensor with the ID you pass in. Return null if no such sensor exists
-     * @param id
-     * @return
+     * @param id The SensorId of the sensor to return
+     * @return The found sensor
      */
     public Sensor getSensor(String id){
         for(Sensor aSensor : data){
@@ -72,8 +72,8 @@ public class SetOfSensors implements Serializable{
     
     /**
      * Get all sensors of a specific type
-     * @param type
-     * @return
+     * @param type the Sensor type to filter by
+     * @return the found sensors
      */
     public Vector<Sensor> getByType(String type){
         Vector<Sensor> sensors = new Vector<Sensor>();

@@ -14,9 +14,9 @@ public class UserAccount implements Serializable{
     
     /**
      * Constructor that takes username, password and user role.
-     * @param username
-     * @param password
-     * @param userRole
+     * @param username The users username
+     * @param password The users password
+     * @param userRole The users User role
      */
     public UserAccount(String username, String password, int userRole){
         this.stations = new Vector<FieldStation>();
@@ -28,9 +28,9 @@ public class UserAccount implements Serializable{
     /**
      * Checks if username and password that is inputted matches the user account
      * used for logging in.
-     * @param username
-     * @param password
-     * @return
+     * @param username The supplied username
+     * @param password The supplied password
+     * @return A boolean as to whether the credentials were correct
      */
     public boolean checkCredentials(String username, String password){
         return (this.username.equals(username)) && (this.password.equals(password));
@@ -38,7 +38,7 @@ public class UserAccount implements Serializable{
     
     /**
      * Add a field station to user account
-     * @param fieldStation
+     * @param fieldStation The FieldStations to add
      */
     public void addStation(FieldStation fieldStation){
         this.stations.add(fieldStation);
@@ -46,7 +46,7 @@ public class UserAccount implements Serializable{
     
     /**
      * Remove field station from user account
-     * @param fieldStation
+     * @param fieldStation the FieldStation to remove.
      */
     public void removeStation(FieldStation fieldStation){
         stations.remove(fieldStation);
@@ -54,8 +54,8 @@ public class UserAccount implements Serializable{
     
     /**
      * Get field station with ID from user account
-     * @param id
-     * @return
+     * @param id The Id of the station to find
+     * @return The found station
      */
     public FieldStation getStation(String id){
         for(FieldStation aStation : stations){
@@ -68,8 +68,8 @@ public class UserAccount implements Serializable{
     
     /**
      * Get user role string 
-     * @param userRole
-     * @return
+     * @param userRole The userrole int
+     * @return The found userrole
      */
     public String getUserRolesString(int userRole){
         switch(userRole){
@@ -81,7 +81,7 @@ public class UserAccount implements Serializable{
     
     /**
      * get user role int
-     * @return
+     * @return The users user role
      */
     public int getUserRole(){
         return userRole;
@@ -89,7 +89,7 @@ public class UserAccount implements Serializable{
     
     /**
      * Get all field stations
-     * @return
+     * @return The users fieldstations
      */
     public Vector<FieldStation> getFieldStations(){
         return stations;

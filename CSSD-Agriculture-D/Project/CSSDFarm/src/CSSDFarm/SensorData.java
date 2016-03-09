@@ -36,7 +36,7 @@ public class SensorData implements Serializable {
     
     /**
      * Return ID of sensor data
-     * @return
+     * @return returns the sensor id
      */
     public String getId()
     {
@@ -45,7 +45,7 @@ public class SensorData implements Serializable {
     
     /**
      * Return value of sensor data
-     * @return
+     * @return returns the sensor value
      */
     public float getValue()
     {
@@ -54,7 +54,7 @@ public class SensorData implements Serializable {
     
     /**
      * Set value of sensor data
-     * @param value
+     * @param value Sets the sensor value
      */
     public void setValue(float value){
         this.value = value;
@@ -62,7 +62,7 @@ public class SensorData implements Serializable {
     
     /**
      * Get unit of sensor data e.g lux
-     * @return
+     * @return returns the sensor units
      */
     public String getUnit()
     {
@@ -71,7 +71,7 @@ public class SensorData implements Serializable {
     
     /**
      * Get date of sensor data
-     * @return
+     * @return Returns the SensorData creation date
      */
     public Date getDate()
     {
@@ -89,7 +89,7 @@ public class SensorData implements Serializable {
     
     /**
      * Get full date 
-     * @return
+     * @return returns the SensorData date
      */
     public Date getFullDate(){
         return date;
@@ -97,7 +97,7 @@ public class SensorData implements Serializable {
     
     /**
      * get GPSdata location
-     * @return
+     * @return Returns the location
      */
     public GPSData getLocation()
     {
@@ -106,7 +106,7 @@ public class SensorData implements Serializable {
     
     /**
      * Get power 
-     * @return
+     * @return returns the power
      */
     public float getPower()
     {

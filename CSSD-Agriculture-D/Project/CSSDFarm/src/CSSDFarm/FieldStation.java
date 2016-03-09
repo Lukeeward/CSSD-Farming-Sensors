@@ -102,8 +102,8 @@ public class FieldStation implements Serializable {
     /**
      * Returns the SensorData from a found Sensor.
      * 
-     * @param id The SensorId to get SensorData from
-     * @return
+     * @param sensorId The SensorId to get SensorData from
+     * @return returns the found sensor
      */
     public SensorData getData(String sensorId){
         return sensors.getData(sensorId);

@@ -50,7 +50,7 @@ public class Server implements Serializable {
     
     /**
      * Get the instance of the server with a pre loaded server. 
-     * @param loadedServer
+     * @param loadedServer The server from the server.ser serialized file
      * @return Server, the instance of the server. 
      */
     public static Server getInstance(Server loadedServer){
@@ -104,7 +104,7 @@ public class Server implements Serializable {
     
     /**
      * Gets the field stations
-     * @return Vector<FieldStations>, A vector of field stations.
+     * @return VectorFieldStations, A vector of field stations.
      */
     public Vector<FieldStation> getUserFieldStation(){
         //if the user role is 1 return all the field stations.
@@ -269,7 +269,7 @@ public class Server implements Serializable {
     /**
      * Gets the FieldStation for the logged in user.
      * 
-     * @return Vector<FieldStation>, the fieldStations
+     * @return Vector FieldStation, the fieldStations
      */
     public Vector<FieldStation> loadData(){
         //If the user is a farm station return all the FieldStations
