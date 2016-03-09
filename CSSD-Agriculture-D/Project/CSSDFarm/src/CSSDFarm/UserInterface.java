@@ -1851,16 +1851,25 @@ public class UserInterface extends javax.swing.JFrame {
         int daysSeconds = Integer.parseInt(comboIntervalDays.getSelectedItem().toString()) * 60 * 60 * 24;
         int interval = secondsSeconds + minutesSeconds + hoursSeconds + daysSeconds;
         int threshold = -1;
+        boolean safeToAdd = true;
         if (!txtThreshold.getText().equals("")){
-            threshold = Integer.parseInt(txtThreshold.getText());
+            try{
+                threshold = Integer.parseInt(txtThreshold.getText());
+            }
+            catch(Exception eX){
+                JOptionPane.showMessageDialog(null,eX,"Problem with Threshold",JOptionPane.WARNING_MESSAGE);
+                safeToAdd = false;
+            }
         }
-        boolean upperlimit = checkIsUpperLimit.isSelected();
-        server.addSensor(selectedStation.getId(), txtSensorId.getText(), (String) comboSensorType.getSelectedItem(), (String) comboSensorUnits.getSelectedItem(), interval, threshold, upperlimit);
+        if (safeToAdd){
+            boolean upperlimit = checkIsUpperLimit.isSelected();
+            server.addSensor(selectedStation.getId(), txtSensorId.getText(), (String) comboSensorType.getSelectedItem(), (String) comboSensorUnits.getSelectedItem(), interval, threshold, upperlimit);
 
-        panelAddSensor.setVisible(false);
-        displayManagerScreen();
-        changeSelectedFieldStation(selectedStation);
-        clearSensorScreen();
+            panelAddSensor.setVisible(false);
+            displayManagerScreen();
+            changeSelectedFieldStation(selectedStation);
+            clearSensorScreen();
+        }
     }//GEN-LAST:event_btnSaveSensorActionPerformed
 
     private void btnCancelSensorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelSensorActionPerformed
