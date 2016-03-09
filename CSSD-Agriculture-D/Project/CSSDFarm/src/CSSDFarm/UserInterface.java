@@ -59,7 +59,8 @@ import javax.swing.table.DefaultTableCellRenderer;
 import org.apache.commons.io.FileUtils;
 
 /**
- *
+ * The User Interface is responsible for the users access to the system.
+ * 
  * @author Webby
  */
 
@@ -76,7 +77,7 @@ public class UserInterface extends javax.swing.JFrame {
     boolean loadData = false;
 
     /**
-     *
+     * Constructor for the UserInterface class
      */
     public UserInterface() {
         initComponents();
@@ -86,7 +87,7 @@ public class UserInterface extends javax.swing.JFrame {
     }
 
     /**
-     *
+     *  Serializes the server data on closure
      */
     public void serializeData() {
         ObjectOutputStream outstream;
@@ -100,7 +101,7 @@ public class UserInterface extends javax.swing.JFrame {
     }
 
     /**
-     *
+     * Loads the server data from the saved server.ser serialization file.
      */
     public void loadData() {
         ObjectInputStream instream = null;
@@ -135,7 +136,7 @@ public class UserInterface extends javax.swing.JFrame {
     }
 
     /**
-     *
+     * Displays the Manager Screen 
      */
     public void displayManagerScreen() {
         //remove old panel details
@@ -188,7 +189,7 @@ public class UserInterface extends javax.swing.JFrame {
     }
 
     /**
-     * 
+     * Displays the report screen
      */
     public void displayReportScreen() {
         loadData = false;
@@ -224,7 +225,7 @@ public class UserInterface extends javax.swing.JFrame {
     }
 
     /**
-     *
+     * Displays the sensor data report screen.
      */
     public void displayReportSensorDataScreen() {
         if (panelReport.isVisible()) {
@@ -255,8 +256,8 @@ public class UserInterface extends javax.swing.JFrame {
     /**
      * Verify field station and add it to the server. Load updated list of 
      * field stations and refresh the jList to show new field station
-     * @param id
-     * @param name
+     * @param id The id new FieldStation id
+     * @param name The new FieldStation name
      */
     public void addFieldStation(String id, String name) {
         if (server.verifyFieldStation(id)) {
@@ -269,7 +270,7 @@ public class UserInterface extends javax.swing.JFrame {
     /**
      * Remove field station with id from the server. Update jList to reflect the change.
      * If jList is empty set selectedStation to null, else select the first field station.
-     * @param id
+     * @param id The FieldStation Id to remove
      */
     public void removeFieldStation(String id) {
         server.removeFieldStation(id);
@@ -286,7 +287,7 @@ public class UserInterface extends javax.swing.JFrame {
 
     /**
      * Remove sensor with id from the currently selected field station
-     * @param id
+     * @param id The Sensor id of the sensor to remove
      */
     public void removeSensor(String id) {
         FieldStation station = server.getFieldStation(selectedStation.getId());
@@ -297,7 +298,7 @@ public class UserInterface extends javax.swing.JFrame {
     }
 
     /**
-     *
+     * Updates the remove screen, gets the new selected FieldStation
      */
     public void updateReport() {
         FieldStation fieldStation = (FieldStation) comboReportFieldStations.getSelectedItem();
@@ -371,7 +372,7 @@ public class UserInterface extends javax.swing.JFrame {
     //Custom DefaultTableCellRenderer
 
     /**
-     *
+     * Renders a new color on the JTable to indicate rise or fall of the data
      */
         public static class CustomTableRendererColour extends DefaultTableCellRenderer {
 
@@ -426,15 +427,7 @@ public class UserInterface extends javax.swing.JFrame {
     }
 
     /**
-     *
-     * @return
-     */
-    public String getWebName() {
-        return comboReportFieldStations.getSelectedItem().toString();
-    }
-
-    /**
-     *
+     * Updates the report sensor data screen with new SensorData
      */
     public void updateReportSensorData() {
         int index = tblSensorData.getSelectedRow();
@@ -536,8 +529,8 @@ public class UserInterface extends javax.swing.JFrame {
      * Populate ArrayLists with sensor data by looping through all the sensorData vector.
      * Use JxBrowser's 'executeJavascript' functionality to call a javascript function, 'addMyData', that consumes 
      * the data inside the ArrayLists and loads it into the map inside the browser.
-     * @param sensorData
-     * @param setOfSensors
+     * @param sensorData The new SensorData to add
+     * @param setOfSensors The set of sensors to draw data from
      */
     public void updateHeatmap(Vector<SensorData> sensorData, SetOfSensors setOfSensors) {
         ArrayList stringData = new ArrayList();
