@@ -2145,11 +2145,11 @@ public class UserInterface extends javax.swing.JFrame {
                 boolean theid = id.getText().equals("");
                 boolean thename = name.getText().equals("");
                 if (server.verifyFieldStation(id.getText()) && !theid && !thename) {
-                    verified.setText("Verified");
+                    verified.setText("✔ Verified");
                     verified.setForeground(new Color(0, 102, 0));
                     okButton.setEnabled(true);
                 } else {
-                    verified.setText("Not Verified");
+                    verified.setText("✖ Not Verified");
                     verified.setForeground(Color.RED);
                     okButton.setEnabled(false);
                 }
@@ -2160,11 +2160,11 @@ public class UserInterface extends javax.swing.JFrame {
                 boolean theid = id.getText().equals("");
                 boolean thename = name.getText().equals("");
                 if (server.verifyFieldStation(id.getText()) && !theid && !thename) {
-                    verified.setText("Verified");
+                    verified.setText("✔ Verified");
                     verified.setForeground(new Color(0, 102, 0));
                     okButton.setEnabled(true);
                 } else {
-                    verified.setText("Not Verified");
+                    verified.setText("✖ Not Verified");
                     verified.setForeground(Color.RED);
                     okButton.setEnabled(false);
                 }
