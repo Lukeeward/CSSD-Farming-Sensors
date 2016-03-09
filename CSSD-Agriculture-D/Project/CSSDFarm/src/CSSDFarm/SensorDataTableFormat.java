@@ -31,7 +31,7 @@ public class SensorDataTableFormat implements TableFormat<SensorData> {
             long diffMinuites = diff / (60 * 1000) % 60; 
             long diffHours = diff / (60 * 60 * 1000); 
             if(diffMinuites <= 0)
-                return "< 1 Minuite Ago";
+                return diffSeconds + " Seconds Ago";
             else
                 if(diffHours <= 0)
                     return diffMinuites + " Minuites Ago";

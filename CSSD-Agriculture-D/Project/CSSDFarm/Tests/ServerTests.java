@@ -81,7 +81,7 @@ public class ServerTests {
         server.addSensor("test1", "sensor", "Soil Moisture", "%", 10, 55, true);
         FieldStation result = server.getFieldStation("test1");
         
-        if(!server.getTurnedOn())
+        if(!server.getServerIsOn())
             server.togglePower(1);
         Date readingDate = new Date();
         result.update("data/buffer.ser", new SensorData("sensor", readingDate,"LUX",55, new GPSData(12345f, 12345f, 0.5f), 120));

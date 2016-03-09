@@ -115,7 +115,7 @@ public class UserInterface extends javax.swing.JFrame {
                     loadedServer = (Server) instream.readObject();
                     server = Server.getInstance(loadedServer);
                     //Set the server slider to the loaded server value
-                    sliderServerOnOff.setValue((server.getTurnedOn()) ? 1 : 0);
+                    sliderServerOnOff.setValue((server.getServerIsOn()) ? 1 : 0);
 
                 } catch (ClassNotFoundException ex) {
                     //System.out.println(ex);
@@ -2203,7 +2203,7 @@ public class UserInterface extends javax.swing.JFrame {
                     for (FieldStation aFieldStations : fieldStations) {
                         for (Sensor aSensor : aFieldStations.getSetOfSensors().getSensors()) {
                             if (aSensor.onInterval()) {
-                                if (server.getTurnedOn()) {
+                                if (server.getServerIsOn()) {
                                     userint.updateReport();
                                 }
                             }

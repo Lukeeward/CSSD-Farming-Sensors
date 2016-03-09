@@ -19,7 +19,6 @@ public class FieldStation implements Serializable {
     private String name;
     private String id;
     private SetOfSensors sensors;
-    private Vector<SensorData> buffer;
     
     /**
      * Constructor for FieldStation class.
@@ -27,8 +26,7 @@ public class FieldStation implements Serializable {
      * @param id String that sets the id of the FieldStation
      * @param name String that sets the name of the FieldStation
      */
-    public FieldStation(String id, String name)
-    {
+    public FieldStation(String id, String name){
         this.id = id;
         this.name = name;
         
@@ -94,9 +92,8 @@ public class FieldStation implements Serializable {
         addToBuffer(filename, sensorData);
         
         //Uploads the data to the server if it's turned on. 
-        if (Server.getInstance().getTurnedOn())
-            if(uploadData())
-            {
+        if (Server.getInstance().getServerIsOn())
+            if(uploadData()){
                 //If the upload was successful, clear the buffer.
                 clearBuffer();
             }

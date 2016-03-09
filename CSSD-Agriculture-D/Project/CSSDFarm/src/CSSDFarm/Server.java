@@ -86,7 +86,7 @@ public class Server implements Serializable {
      * Gets the state of the Server. 
      * @return boolean, the state of the server.
      */
-    public Boolean getTurnedOn(){
+    public Boolean getServerIsOn(){
         return serverIsOn;
     }
     

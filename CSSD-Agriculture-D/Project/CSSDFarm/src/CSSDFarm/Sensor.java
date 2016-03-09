@@ -9,8 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * @author lnseg
+ * The Sensor class collects sensor data based on its type and units
  */
 public class Sensor implements Serializable {
     

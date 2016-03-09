@@ -6,8 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- *
- * @author Tom
+ * The sensor data contains the data relating to a specific sensor
  */
 public class SensorData implements Serializable {
     private String sensorID;
@@ -18,7 +17,7 @@ public class SensorData implements Serializable {
     private float power;
     
     /**
-     *
+     * Sensor Data Constructor
      * @param sensorID, ID of the sensor
      * @param time, time
      * @param unit, unit of measurement e.g mm
