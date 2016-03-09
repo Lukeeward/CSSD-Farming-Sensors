@@ -1364,7 +1364,7 @@ public class UserInterface extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Id", "Unit", "Reading", "Last Updated", "GPS", "Power"
             }
         ));
         tblSensorData.addMouseListener(new java.awt.event.MouseAdapter() {
