@@ -4,7 +4,8 @@ import ca.odell.glazedlists.gui.TableFormat;
 import java.util.Date;
 
 /**
- *
+ * The Table Format class for the SensorData Table. 
+ * @author lnseg
  */
 public class SensorDataTableFormat implements TableFormat<SensorData> {
 

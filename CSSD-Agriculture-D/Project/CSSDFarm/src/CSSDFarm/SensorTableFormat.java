@@ -8,7 +8,7 @@ package CSSDFarm;
 import ca.odell.glazedlists.gui.TableFormat;
 
 /**
- *
+ * The Table Format class for the Sensor Table. 
  * @author lnseg
  */
 public class SensorTableFormat implements TableFormat<Sensor> {

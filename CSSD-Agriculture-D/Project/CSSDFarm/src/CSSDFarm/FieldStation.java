@@ -12,8 +12,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * @author lnseg
+ * The field station has a set of sensors attached to it and deals with the 
+ * collection of data from each sensor.
  */
 public class FieldStation implements Serializable {
     private String name;
