@@ -34,8 +34,9 @@ public class Sensor implements Serializable {
      * @param station FieldStation, the FieldStation that the sensor is a part of. 
      * @param intervalSeconds int, the number of seconds between each sensor reading. 
      * @param sensorType String, the type of the sensor. 
-     * @param power float, the power of the Sensor.int, the threshold of the Sensor reading to know when to activate the Actuator. 
+     * @param power float, the power of the Sensor
      * @param thresholdIsUpperLimit boolean, whether the threshold is the upper or lower limit. 
+     * @param threshold int, the threshold of the Sensor reading to know when to activate the Actuator. 
      * @param actuator Actuator, the mechanical component relating to the sensor that may be switched on and off for maintenence. 
      */
     public Sensor(String id, FieldStation station, int intervalSeconds, String sensorType, 
@@ -63,7 +64,7 @@ public class Sensor implements Serializable {
      * @param sensorType String, the type of Sensor e.g. Soil Moisture, Soil Acidity, Light Intensity.
      * @param units String, the unit of measurement relating to the Sensor Type e.g. %, C, F.
      * @param interval int, the number of seconds between each sensor reading. 
-     * @param threshold boolean, whether the threshold is the upper or lower limit. 
+     * @param threshold int, the threshold of the Sensor reading to know when to activate the Actuator. 
      * @param upperlimit boolean, whether the threshold is the upper or lower limit. 
      */
     public Sensor(String id, String sensorType, String units, int interval, int threshold, boolean upperlimit)
