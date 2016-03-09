@@ -58,8 +58,8 @@ public class UserInterfaceTests {
     @BeforeClass
     public static void setUpClass() {
         //set how many fieldStations and Sensors for each should the automation should add
-        totalFieldStationsToAdd = 3;
-        totalSensorsToAdd = 3;
+        totalFieldStationsToAdd = 2;
+        totalSensorsToAdd = 2;
     }
     
     @AfterClass
@@ -155,6 +155,7 @@ public class UserInterfaceTests {
     }
     
     public void goToReportScreen(){
+        
         bot.mouseMove(ui.btnReport.getLocationOnScreen().x,ui.btnReport.getLocationOnScreen().y);
         clickMouse();
         waitForGui();

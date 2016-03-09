@@ -4,8 +4,8 @@ import java.util.*;
 
 /**
  * UserAccount class holds user account information and field stations linked to their account
- * @author Tom
  */
+
 public class UserAccount implements Serializable{
     private Vector<FieldStation> stations;
     private String username;

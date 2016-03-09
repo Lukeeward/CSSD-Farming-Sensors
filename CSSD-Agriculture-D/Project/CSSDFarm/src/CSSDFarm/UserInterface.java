@@ -635,6 +635,9 @@ public class UserInterface extends javax.swing.JFrame {
         txtUsername = new javax.swing.JTextField();
         txtPassword = new javax.swing.JPasswordField();
         buttonRegister = new javax.swing.JButton();
+        lblUsernameLogin = new javax.swing.JLabel();
+        lblPasswordLogin = new javax.swing.JLabel();
+        lblLoginTitle = new javax.swing.JLabel();
         panelManager = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         listUserStations = new javax.swing.JList();
@@ -656,6 +659,7 @@ public class UserInterface extends javax.swing.JFrame {
         btnRemoveSensor = new javax.swing.JButton();
         btnSensorDetails = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
+        jSeparator3 = new javax.swing.JSeparator();
         panelAddSensor = new javax.swing.JPanel();
         lblAddNewSensor = new javax.swing.JLabel();
         lblFieldStationName2 = new javax.swing.JLabel();
@@ -697,6 +701,7 @@ public class UserInterface extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         tblSensorData = new javax.swing.JTable();
         panelHeatmap = new javax.swing.JPanel();
+        jSeparator1 = new javax.swing.JSeparator();
         panelReportSensorData = new javax.swing.JPanel();
         btnBackReportSensorData = new javax.swing.JButton();
         lblReportTitle4 = new javax.swing.JLabel();
@@ -808,35 +813,60 @@ public class UserInterface extends javax.swing.JFrame {
             }
         });
 
+        lblUsernameLogin.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        lblUsernameLogin.setText("Username :");
+
+        lblPasswordLogin.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        lblPasswordLogin.setText("Password :");
+
+        lblLoginTitle.setFont(new java.awt.Font("Cambria", 0, 24)); // NOI18N
+        lblLoginTitle.setText("Log In");
+
         javax.swing.GroupLayout panelLogInLayout = new javax.swing.GroupLayout(panelLogIn);
         panelLogIn.setLayout(panelLogInLayout);
         panelLogInLayout.setHorizontalGroup(
             panelLogInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLogInLayout.createSequentialGroup()
-                .addGap(0, 196, Short.MAX_VALUE)
-                .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(70, 70, 70)
-                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(247, 247, 247))
             .addGroup(panelLogInLayout.createSequentialGroup()
-                .addGap(281, 281, 281)
-                .addGroup(panelLogInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(buttonRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(panelLogInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelLogInLayout.createSequentialGroup()
+                        .addGap(281, 281, 281)
+                        .addGroup(panelLogInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(buttonRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(panelLogInLayout.createSequentialGroup()
+                        .addGap(239, 239, 239)
+                        .addGroup(panelLogInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(panelLogInLayout.createSequentialGroup()
+                                .addComponent(lblPasswordLogin)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(panelLogInLayout.createSequentialGroup()
+                                .addComponent(lblUsernameLogin)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(panelLogInLayout.createSequentialGroup()
+                        .addGap(349, 349, 349)
+                        .addComponent(lblLoginTitle)))
+                .addContainerGap(381, Short.MAX_VALUE))
         );
         panelLogInLayout.setVerticalGroup(
             panelLogInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelLogInLayout.createSequentialGroup()
-                .addGap(124, 124, 124)
+                .addGap(46, 46, 46)
+                .addComponent(lblLoginTitle)
+                .addGap(76, 76, 76)
                 .addGroup(panelLogInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(89, 89, 89)
+                    .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblUsernameLogin))
+                .addGap(18, 18, 18)
+                .addGroup(panelLogInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblPasswordLogin))
+                .addGap(29, 29, 29)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(buttonRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(112, Short.MAX_VALUE))
+                .addContainerGap(101, Short.MAX_VALUE))
         );
 
         getContentPane().add(panelLogIn, "card5");
@@ -934,14 +964,14 @@ public class UserInterface extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(lblSensorList)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 169, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 191, Short.MAX_VALUE)
                 .addComponent(lblFieldStationName, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(217, 217, 217))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addGap(0, 11, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                    .addGap(0, 11, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -953,9 +983,9 @@ public class UserInterface extends javax.swing.JFrame {
                 .addGap(277, 277, 277))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addGap(0, 33, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                    .addGap(0, 34, Short.MAX_VALUE)))
         );
 
         btnReport.setText("Report");
@@ -965,7 +995,7 @@ public class UserInterface extends javax.swing.JFrame {
             }
         });
 
-        lblFieldStationManager.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
+        lblFieldStationManager.setFont(new java.awt.Font("Calibri Light", 1, 18)); // NOI18N
         lblFieldStationManager.setText("Field Station Manager");
 
         btnRemoveFieldStation.setText("Remove Field Station");
@@ -1027,28 +1057,34 @@ public class UserInterface extends javax.swing.JFrame {
             panelManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelManagerLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnAddFieldStation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnFieldStationDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnRemoveFieldStation, javax.swing.GroupLayout.PREFERRED_SIZE, 143, Short.MAX_VALUE)
-                    .addComponent(btnReport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(panelManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelManagerLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panelManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnAddSensor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnRemoveSensor, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
-                            .addComponent(btnSensorDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(panelManagerLayout.createSequentialGroup()
-                        .addGap(228, 228, 228)
-                        .addComponent(lblFieldStationManager, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnFieldStationDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnRemoveFieldStation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnAddFieldStation, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(panelManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelManagerLayout.createSequentialGroup()
+                                .addGap(146, 146, 146)
+                                .addGroup(panelManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btnAddSensor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnRemoveSensor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnSensorDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(panelManagerLayout.createSequentialGroup()
+                                .addGap(217, 217, 217)
+                                .addComponent(lblFieldStationManager, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelManagerLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(24, 24, 24))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelManagerLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(24, 24, 24))))
+                        .addComponent(jSeparator3)
+                        .addContainerGap())))
         );
         panelManagerLayout.setVerticalGroup(
             panelManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1057,25 +1093,27 @@ public class UserInterface extends javax.swing.JFrame {
                 .addGroup(panelManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnReport)
                     .addComponent(lblFieldStationManager, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addGroup(panelManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
+                    .addComponent(jScrollPane1)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(panelManagerLayout.createSequentialGroup()
-                        .addGroup(panelManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnAddFieldStation)
-                            .addComponent(btnAddSensor))
+                        .addComponent(btnAddFieldStation)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(panelManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnRemoveFieldStation)
-                            .addComponent(btnRemoveSensor))
+                        .addComponent(btnRemoveFieldStation)
                         .addGap(7, 7, 7)
-                        .addGroup(panelManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnFieldStationDetails)
-                            .addComponent(btnSensorDetails)))
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(btnFieldStationDetails))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(panelManagerLayout.createSequentialGroup()
+                        .addComponent(btnAddSensor)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnRemoveSensor)
+                        .addGap(7, 7, 7)
+                        .addComponent(btnSensorDetails))))
         );
 
         getContentPane().add(panelManager, "card5");
@@ -1261,7 +1299,7 @@ public class UserInterface extends javax.swing.JFrame {
                     .addGroup(panelAddSensorLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(btnClearSensor)))
-                .addGap(70, 212, Short.MAX_VALUE))
+                .addGap(70, 221, Short.MAX_VALUE))
         );
         panelAddSensorLayout.setVerticalGroup(
             panelAddSensorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1308,7 +1346,7 @@ public class UserInterface extends javax.swing.JFrame {
                     .addGroup(panelAddSensorLayout.createSequentialGroup()
                         .addComponent(checkIsUpperLimit, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(2, 2, 2)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                 .addGroup(panelAddSensorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSaveSensor)
                     .addComponent(btnCancelSensor))
@@ -1327,7 +1365,7 @@ public class UserInterface extends javax.swing.JFrame {
             }
         });
 
-        lblReportTitle.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
+        lblReportTitle.setFont(new java.awt.Font("Calibri Light", 1, 18)); // NOI18N
         lblReportTitle.setText("Report");
 
         btnManager.setText("Manager");
@@ -1433,34 +1471,39 @@ public class UserInterface extends javax.swing.JFrame {
             panelReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelReportLayout.createSequentialGroup()
                 .addGroup(panelReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(panelReportLayout.createSequentialGroup()
-                            .addGap(187, 187, 187)
-                            .addGroup(panelReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(lblReportTitle2)
-                                .addComponent(lblReportTitle1)
-                                .addComponent(lblReportTitle3))
-                            .addGap(37, 37, 37)
-                            .addGroup(panelReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(panelReportLayout.createSequentialGroup()
-                                    .addComponent(jLabel1)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(sliderView, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jLabel2))
-                                .addComponent(comboReportSensorType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(dpReportCalendar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelReportLayout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(btnManager, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblReportTitle)
-                            .addGap(18, 18, 18)
-                            .addComponent(comboReportFieldStations, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(panelReportLayout.createSequentialGroup()
+                        .addGap(187, 187, 187)
+                        .addGroup(panelReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblReportTitle2)
+                            .addComponent(lblReportTitle1)
+                            .addComponent(lblReportTitle3))
+                        .addGap(37, 37, 37)
+                        .addGroup(panelReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(panelReportLayout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(sliderView, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel2))
+                            .addComponent(comboReportSensorType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(dpReportCalendar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(panelReportLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(panelSwitcher, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelReportLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelReportLayout.createSequentialGroup()
+                        .addComponent(btnManager, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblReportTitle)
+                        .addGap(76, 76, 76)
+                        .addComponent(comboReportFieldStations, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(347, 347, 347))
+                    .addGroup(panelReportLayout.createSequentialGroup()
+                        .addComponent(jSeparator1)
+                        .addContainerGap())))
         );
         panelReportLayout.setVerticalGroup(
             panelReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1470,7 +1513,9 @@ public class UserInterface extends javax.swing.JFrame {
                     .addComponent(lblReportTitle)
                     .addComponent(btnManager)
                     .addComponent(comboReportFieldStations, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
                 .addGroup(panelReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblReportTitle1)
@@ -1553,7 +1598,7 @@ public class UserInterface extends javax.swing.JFrame {
                     .addGroup(panelReportSensorDataLayout.createSequentialGroup()
                         .addGap(22, 22, 22)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 692, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(171, Short.MAX_VALUE))
+                .addContainerGap(173, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelReportSensorDataLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(panelReportSensorDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -1595,7 +1640,7 @@ public class UserInterface extends javax.swing.JFrame {
                     .addComponent(lblReportSensorDataNextInterval))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(77, Short.MAX_VALUE))
+                .addContainerGap(79, Short.MAX_VALUE))
         );
 
         getContentPane().add(panelReportSensorData, "card6");
@@ -1699,73 +1744,6 @@ public class UserInterface extends javax.swing.JFrame {
         }
     }
 
-    private void btnAddFieldStationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddFieldStationActionPerformed
-        JTextField id = new JTextField();
-        JTextField name = new JTextField();
-        //Space is needed to expand dialog 
-        JLabel verified = new JLabel(" ");
-        JButton okButton = new JButton("Ok");
-        JButton cancelButton = new JButton("Cancel");
-        okButton.setEnabled(false);
-        okButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                String idText = id.getText();
-                String nameText = name.getText();
-                addFieldStation(id.getText(), name.getText());
-                JOptionPane.getRootFrame().dispose();
-                listUserStations.setSelectedValue(server.getFieldStation(idText), false);
-            }
-        });
-
-        cancelButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JOptionPane.getRootFrame().dispose();
-            }
-        });
-
-        id.addKeyListener(new KeyAdapter() {
-            public void keyReleased(KeyEvent key) {
-                boolean theid = id.getText().equals("");
-                boolean thename = name.getText().equals("");
-                if (server.verifyFieldStation(id.getText()) && !theid && !thename) {
-                    verified.setText("Verified");
-                    verified.setForeground(new Color(0, 102, 0));
-                    okButton.setEnabled(true);
-                } else {
-                    verified.setText("Not Verified");
-                    verified.setForeground(Color.RED);
-                    okButton.setEnabled(false);
-                }
-            }
-        });
-        name.addKeyListener(new KeyAdapter() {
-            public void keyReleased(KeyEvent key) {
-                boolean theid = id.getText().equals("");
-                boolean thename = name.getText().equals("");
-                if (server.verifyFieldStation(id.getText()) && !theid && !thename) {
-                    verified.setText("Verified");
-                    verified.setForeground(new Color(0, 102, 0));
-                    okButton.setEnabled(true);
-                } else {
-                    verified.setText("Not Verified");
-                    verified.setForeground(Color.RED);
-                    okButton.setEnabled(false);
-                }
-            }
-        });
-
-        Object[] message = {
-            "ID:", id,
-            "Name:", name,
-            verified
-        };
-        int inputFields = JOptionPane.showOptionDialog(null, message, "Add Field Station", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{okButton, cancelButton}, null);
-        if (inputFields == JOptionPane.OK_OPTION) {
-            System.out.print("Added Field Station!");
-        }
-
-    }//GEN-LAST:event_btnAddFieldStationActionPerformed
-
     private void changeSelectedFieldStation(FieldStation selectedStation) {
         SetOfSensors stationSensors = selectedStation.getSetOfSensors();
 
@@ -1796,24 +1774,6 @@ public class UserInterface extends javax.swing.JFrame {
 
         lblFieldStationName.setText(selectedStation.getName());
     }
-
-    private void listUserStationsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listUserStationsValueChanged
-        if (!evt.getValueIsAdjusting()) {//prevents double events Eg: from mouse down and mouse up
-            FieldStation selected = (FieldStation) listUserStations.getSelectedValue();
-            if (selected != null) {
-                btnAddSensor.setEnabled(true);
-                btnRemoveFieldStation.setEnabled(true);
-                btnFieldStationDetails.setEnabled(true);
-                selectedStation = server.getFieldStation(selected.getId());
-                changeSelectedFieldStation(selectedStation);
-                saveUserData("data/userSettings.ser", listUserStations.getSelectedIndex());
-            } else {
-                btnAddSensor.setEnabled(false);
-                btnRemoveFieldStation.setEnabled(false);
-                btnFieldStationDetails.setEnabled(false);
-            }
-        }
-    }//GEN-LAST:event_listUserStationsValueChanged
 
     private void addSensor(){
         int secondsSeconds = Integer.parseInt(comboIntervalSeconds.getSelectedItem().toString());
@@ -1888,10 +1848,6 @@ public class UserInterface extends javax.swing.JFrame {
         }
     }
 
-    private void btnAddSensorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddSensorActionPerformed
-        displayAddSensorPanel();
-    }//GEN-LAST:event_btnAddSensorActionPerformed
-
     private void btnSaveSensorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveSensorActionPerformed
         addSensor();        
     }//GEN-LAST:event_btnSaveSensorActionPerformed
@@ -1901,28 +1857,6 @@ public class UserInterface extends javax.swing.JFrame {
         clearSensorScreen();
         selectManagerView();
     }//GEN-LAST:event_btnCancelSensorActionPerformed
-
-    private void btnRemoveFieldStationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveFieldStationActionPerformed
-        int dialogResult = JOptionPane.showConfirmDialog(null, "Are you sure you want to remove field station: " + selectedStation.getId(), "Warning", JOptionPane.YES_NO_OPTION);
-        if (dialogResult == JOptionPane.YES_OPTION) {
-            removeFieldStation(selectedStation.getId());
-        }
-    }//GEN-LAST:event_btnRemoveFieldStationActionPerformed
-
-    private void btnRemoveSensorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveSensorActionPerformed
-        int index = tblSensorTable.getSelectedRow();
-        Sensor sensor = (Sensor) sensorsTable.getElementAt(index);
-        int dialogResult = JOptionPane.showConfirmDialog(null, "Are you sure you want to remove sensor: " + sensor.getId(), "Warning", JOptionPane.YES_NO_OPTION);
-        if (dialogResult == JOptionPane.YES_OPTION) {
-            removeSensor(sensor.getId());
-        }
-    }//GEN-LAST:event_btnRemoveSensorActionPerformed
-
-    private void btnReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportActionPerformed
-        // TODO add your handling code here:
-        displayReportScreen();
-        
-    }//GEN-LAST:event_btnReportActionPerformed
 
     private void comboReportSensorTypeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboReportSensorTypeItemStateChanged
         // TODO add your handling code here:
@@ -2024,33 +1958,6 @@ public class UserInterface extends javax.swing.JFrame {
         displayReportSensorDataScreen();
     }//GEN-LAST:event_dpReportSensorDataDateActionPerformed
 
-
-    private void btnFieldStationDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFieldStationDetailsActionPerformed
-        // TODO add your handling code here:
-        Object[] message = {
-            "ID: " + selectedStation.getId(),
-            "Name: " + selectedStation.getName()
-        };
-        JOptionPane.showMessageDialog(null, message, "Sensor Details", JOptionPane.INFORMATION_MESSAGE);
-    }//GEN-LAST:event_btnFieldStationDetailsActionPerformed
-
-    private void btnSensorDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSensorDetailsActionPerformed
-        // TODO add your handling code here:
-        int index = tblSensorTable.getSelectedRow();
-        Sensor sensor = (Sensor) sensorsTable.getElementAt(index);
-
-        GPSData location = sensor.getGps();
-
-        Object[] message = {
-            "ID: " + sensor.getId(),
-            "Type: " + sensor.getType(),
-            "Units: " + sensor.getUnits(),
-            "Location: " + location.GPStoString(),
-            (sensor.getThresholdIsUpperLimit() ? "Threshold Upper Limit: " : "Threshold Lower Limit: ") + sensor.getThreshold()
-        };
-
-        JOptionPane.showMessageDialog(null, message, "Sensor Details", JOptionPane.INFORMATION_MESSAGE);
-    }//GEN-LAST:event_btnSensorDetailsActionPerformed
 
     private void sliderServerOnOffMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sliderServerOnOffMouseReleased
         JSlider source = (JSlider) evt.getSource();
@@ -2157,6 +2064,142 @@ public class UserInterface extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnRegisterActionPerformed
 
+    private void btnSensorDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSensorDetailsActionPerformed
+        // TODO add your handling code here:
+        int index = tblSensorTable.getSelectedRow();
+        Sensor sensor = (Sensor) sensorsTable.getElementAt(index);
+
+        GPSData location = sensor.getGps();
+
+        Object[] message = {
+            "ID: " + sensor.getId(),
+            "Type: " + sensor.getType(),
+            "Units: " + sensor.getUnits(),
+            "Location: " + location.GPStoString(),
+            (sensor.getThresholdIsUpperLimit() ? "Threshold Upper Limit: " : "Threshold Lower Limit: ") + sensor.getThreshold()
+        };
+
+        JOptionPane.showMessageDialog(null, message, "Sensor Details", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_btnSensorDetailsActionPerformed
+
+    private void btnRemoveSensorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveSensorActionPerformed
+        int index = tblSensorTable.getSelectedRow();
+        Sensor sensor = (Sensor) sensorsTable.getElementAt(index);
+        int dialogResult = JOptionPane.showConfirmDialog(null, "Are you sure you want to remove sensor: " + sensor.getId(), "Warning", JOptionPane.YES_NO_OPTION);
+        if (dialogResult == JOptionPane.YES_OPTION) {
+            removeSensor(sensor.getId());
+        }
+    }//GEN-LAST:event_btnRemoveSensorActionPerformed
+
+    private void btnAddSensorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddSensorActionPerformed
+        displayAddSensorPanel();
+    }//GEN-LAST:event_btnAddSensorActionPerformed
+
+    private void btnFieldStationDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFieldStationDetailsActionPerformed
+        // TODO add your handling code here:
+        Object[] message = {
+            "ID: " + selectedStation.getId(),
+            "Name: " + selectedStation.getName()
+        };
+        JOptionPane.showMessageDialog(null, message, "Sensor Details", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_btnFieldStationDetailsActionPerformed
+
+    private void btnRemoveFieldStationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveFieldStationActionPerformed
+        int dialogResult = JOptionPane.showConfirmDialog(null, "Are you sure you want to remove field station: " + selectedStation.getId(), "Warning", JOptionPane.YES_NO_OPTION);
+        if (dialogResult == JOptionPane.YES_OPTION) {
+            removeFieldStation(selectedStation.getId());
+        }
+    }//GEN-LAST:event_btnRemoveFieldStationActionPerformed
+
+    private void btnReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportActionPerformed
+        // TODO add your handling code here:
+        displayReportScreen();
+    }//GEN-LAST:event_btnReportActionPerformed
+
+    private void btnAddFieldStationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddFieldStationActionPerformed
+        JTextField id = new JTextField();
+        JTextField name = new JTextField();
+        //Space is needed to expand dialog
+        JLabel verified = new JLabel(" ");
+        JButton okButton = new JButton("Ok");
+        JButton cancelButton = new JButton("Cancel");
+        okButton.setEnabled(false);
+        okButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                String idText = id.getText();
+                String nameText = name.getText();
+                addFieldStation(id.getText(), name.getText());
+                JOptionPane.getRootFrame().dispose();
+                listUserStations.setSelectedValue(server.getFieldStation(idText), false);
+            }
+        });
+
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JOptionPane.getRootFrame().dispose();
+            }
+        });
+
+        id.addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent key) {
+                boolean theid = id.getText().equals("");
+                boolean thename = name.getText().equals("");
+                if (server.verifyFieldStation(id.getText()) && !theid && !thename) {
+                    verified.setText("Verified");
+                    verified.setForeground(new Color(0, 102, 0));
+                    okButton.setEnabled(true);
+                } else {
+                    verified.setText("Not Verified");
+                    verified.setForeground(Color.RED);
+                    okButton.setEnabled(false);
+                }
+            }
+        });
+        name.addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent key) {
+                boolean theid = id.getText().equals("");
+                boolean thename = name.getText().equals("");
+                if (server.verifyFieldStation(id.getText()) && !theid && !thename) {
+                    verified.setText("Verified");
+                    verified.setForeground(new Color(0, 102, 0));
+                    okButton.setEnabled(true);
+                } else {
+                    verified.setText("Not Verified");
+                    verified.setForeground(Color.RED);
+                    okButton.setEnabled(false);
+                }
+            }
+        });
+
+        Object[] message = {
+            "Field Station ID:", id,
+            "Field Station Name:", name,
+            verified
+        };
+        int inputFields = JOptionPane.showOptionDialog(null, message, "Add Field Station", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{okButton, cancelButton}, null);
+        if (inputFields == JOptionPane.OK_OPTION) {
+            System.out.print("Added Field Station!");
+        }
+    }//GEN-LAST:event_btnAddFieldStationActionPerformed
+
+    private void listUserStationsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listUserStationsValueChanged
+        if (!evt.getValueIsAdjusting()) {//prevents double events Eg: from mouse down and mouse up
+            FieldStation selected = (FieldStation) listUserStations.getSelectedValue();
+            if (selected != null) {
+                btnAddSensor.setEnabled(true);
+                btnRemoveFieldStation.setEnabled(true);
+                btnFieldStationDetails.setEnabled(true);
+                selectedStation = server.getFieldStation(selected.getId());
+                changeSelectedFieldStation(selectedStation);
+                saveUserData("data/userSettings.ser", listUserStations.getSelectedIndex());
+            } else {
+                btnAddSensor.setEnabled(false);
+                btnRemoveFieldStation.setEnabled(false);
+                btnFieldStationDetails.setEnabled(false);
+            }
+        }
+    }//GEN-LAST:event_listUserStationsValueChanged
+
     /**
      * @param args the command line arguments
      */
@@ -2256,6 +2299,8 @@ public class UserInterface extends javax.swing.JFrame {
     public javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator3;
     private javax.swing.JLabel lblAddNewSensor;
     private javax.swing.JLabel lblFieldStationManager;
     private javax.swing.JLabel lblFieldStationName;
@@ -2264,6 +2309,8 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JLabel lblIntervalHours;
     private javax.swing.JLabel lblIntervalMinutes;
     private javax.swing.JLabel lblIntervalSeconds;
+    private javax.swing.JLabel lblLoginTitle;
+    private javax.swing.JLabel lblPasswordLogin;
     private javax.swing.JLabel lblReportSensorDataDate;
     private javax.swing.JLabel lblReportSensorDataFieldStationName;
     private javax.swing.JLabel lblReportSensorDataNextInterval;
@@ -2286,6 +2333,7 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JLabel lblUserRole;
     private javax.swing.JLabel lblUsername;
     private javax.swing.JLabel lblUsername1;
+    private javax.swing.JLabel lblUsernameLogin;
     public javax.swing.JList listUserStations;
     private javax.swing.JPanel panelAddSensor;
     private javax.swing.JPanel panelHeatmap;
