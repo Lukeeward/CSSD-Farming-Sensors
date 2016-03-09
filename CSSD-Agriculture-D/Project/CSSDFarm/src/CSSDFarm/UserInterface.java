@@ -182,6 +182,7 @@ public class UserInterface extends javax.swing.JFrame {
      * Switch panel to add sensor panel 
      */
     public void displayAddSensorPanel() {
+        clearSensorScreen();
         panelManager.setVisible(false);
         panelAddSensor.setVisible(true);
         lblFieldStationName2.setText(selectedStation.getName());
@@ -482,7 +483,7 @@ public class UserInterface extends javax.swing.JFrame {
     public void clearSensorScreen() {
         txtSensorId.setText("");
         comboIntervalSeconds.setSelectedIndex(0);
-        comboIntervalMinutes.setSelectedIndex(0);
+        comboIntervalMinutes.setSelectedIndex(5);
         comboIntervalHours.setSelectedIndex(0);
         comboIntervalDays.setSelectedIndex(0);
         comboSensorType.setSelectedIndex(0);
@@ -548,21 +549,24 @@ public class UserInterface extends javax.swing.JFrame {
             stringSensorName.add(stringToIntConverter(sensor.getId()));
             int unitType = 0;
             switch (sensor.getUnit()) {
-                case "LUX":
+                case "Lux":
                     unitType = 1;
                     break;
-                case "PH":
+                case "pH":
                     unitType = 2;
                     break;
-                case "C":
+                case "°C":
                     unitType = 3;
                     break;
-                case "F":
+                case "°F":
                     unitType = 4;
                     break;
                 case "%":
                     unitType = 5;
                     break;
+                 case "mm":
+                    unitType = 6;
+                    break;  
             }
             stringSensorUnit.add(unitType);
 
