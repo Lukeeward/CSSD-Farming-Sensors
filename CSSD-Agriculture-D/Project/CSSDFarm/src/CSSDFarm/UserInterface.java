@@ -182,7 +182,6 @@ public class UserInterface extends javax.swing.JFrame {
      * Switch panel to add sensor panel 
      */
     public void displayAddSensorPanel() {
-        comboIntervalMinutes.setSelectedIndex(5);
         panelManager.setVisible(false);
         panelAddSensor.setVisible(true);
         lblFieldStationName2.setText(selectedStation.getName());
@@ -913,7 +912,7 @@ public class UserInterface extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(lblSensorList)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 167, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 169, Short.MAX_VALUE)
                 .addComponent(lblFieldStationName, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(217, 217, 217))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1125,6 +1124,7 @@ public class UserInterface extends javax.swing.JFrame {
 
         comboIntervalMinutes.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
         comboIntervalMinutes.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60" }));
+        comboIntervalMinutes.setSelectedIndex(5);
         comboIntervalMinutes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboIntervalMinutesActionPerformed(evt);
@@ -1754,8 +1754,7 @@ public class UserInterface extends javax.swing.JFrame {
             eventList.add(sensor);
         }
         
-        if (eventList.size() < 1) 
-        {
+        if (eventList.size() < 1){
             panelNoSensorData.setVisible(true);
             panelWithTable.setVisible(false);
         } else {
@@ -1785,7 +1784,6 @@ public class UserInterface extends javax.swing.JFrame {
                 btnFieldStationDetails.setEnabled(true);
                 selectedStation = server.getFieldStation(selected.getId());
                 changeSelectedFieldStation(selectedStation);
-
                 saveUserData("data/userSettings.ser", listUserStations.getSelectedIndex());
             } else {
                 btnAddSensor.setEnabled(false);
@@ -1853,8 +1851,7 @@ public class UserInterface extends javax.swing.JFrame {
         int daysSeconds = Integer.parseInt(comboIntervalDays.getSelectedItem().toString()) * 60 * 60 * 24;
         int interval = secondsSeconds + minutesSeconds + hoursSeconds + daysSeconds;
         int threshold = -1;
-        if (!txtThreshold.getText().equals(""));
-        {
+        if (!txtThreshold.getText().equals("")){
             threshold = Integer.parseInt(txtThreshold.getText());
         }
         boolean upperlimit = checkIsUpperLimit.isSelected();
@@ -1959,7 +1956,7 @@ public class UserInterface extends javax.swing.JFrame {
             //also check that sensor with this name doesn't already exist.
             Sensor foundSensor = selectedStation.getSetOfSensors().getSensor(sensorID);
             //if null means it doesn't already exist in the collection
-            if (foundSensor == null && intervalSelected != false) {
+            if (foundSensor == null && intervalSelected != false && txtThreshold.getText().length() > 0) {
                 btnSaveSensor.setEnabled(true);
             } else {
                 btnSaveSensor.setEnabled(false);
@@ -1986,7 +1983,7 @@ public class UserInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_comboIntervalSecondsActionPerformed
 
     private void txtThresholdKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtThresholdKeyReleased
-        // TODO add your handling code here:
+        validateAndSetSensorButtons();
     }//GEN-LAST:event_txtThresholdKeyReleased
 
     private void dpReportSensorDataDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dpReportSensorDataDateActionPerformed
