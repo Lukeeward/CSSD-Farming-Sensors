@@ -280,7 +280,10 @@ public class UserInterface extends javax.swing.JFrame {
             listUserStations.setSelectedIndex(0);
         } else {
             selectedStation = null;
-            lblFieldStationName.setText(" ");
+            lblFieldStationName.setText("Field Station Manager");
+            panelWithTable.setVisible(false);
+            panelNoSensorData.setVisible(true);
+            
         }
     }
 
@@ -625,7 +628,10 @@ public class UserInterface extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         lblFieldStationName = new javax.swing.JLabel();
         lblSensorList = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        panelNoSensorData = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        panelWithTable = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblSensorTable = new javax.swing.JTable();
         btnReport = new javax.swing.JButton();
@@ -847,6 +853,29 @@ public class UserInterface extends javax.swing.JFrame {
 
         lblSensorList.setText("Sensor List");
 
+        jPanel3.setLayout(new java.awt.CardLayout());
+
+        jLabel4.setText("No Sensor Data Available");
+
+        javax.swing.GroupLayout panelNoSensorDataLayout = new javax.swing.GroupLayout(panelNoSensorData);
+        panelNoSensorData.setLayout(panelNoSensorDataLayout);
+        panelNoSensorDataLayout.setHorizontalGroup(
+            panelNoSensorDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelNoSensorDataLayout.createSequentialGroup()
+                .addContainerGap(246, Short.MAX_VALUE)
+                .addComponent(jLabel4)
+                .addGap(285, 285, 285))
+        );
+        panelNoSensorDataLayout.setVerticalGroup(
+            panelNoSensorDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelNoSensorDataLayout.createSequentialGroup()
+                .addGap(102, 102, 102)
+                .addComponent(jLabel4)
+                .addContainerGap(125, Short.MAX_VALUE))
+        );
+
+        jPanel3.add(panelNoSensorData, "card3");
+
         tblSensorTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -865,50 +894,54 @@ public class UserInterface extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(tblSensorTable);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        javax.swing.GroupLayout panelWithTableLayout = new javax.swing.GroupLayout(panelWithTable);
+        panelWithTable.setLayout(panelWithTableLayout);
+        panelWithTableLayout.setHorizontalGroup(
+            panelWithTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelWithTableLayout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 661, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        panelWithTableLayout.setVerticalGroup(
+            panelWithTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelWithTableLayout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jPanel3.add(panelWithTable, "card3");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(lblSensorList)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 167, Short.MAX_VALUE)
                 .addComponent(lblFieldStationName, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(217, 217, 217))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(lblSensorList)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblFieldStationName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblSensorList)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblFieldStationName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblSensorList))
+                .addGap(277, 277, 277))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         btnReport.setText("Report");
@@ -1010,7 +1043,7 @@ public class UserInterface extends javax.swing.JFrame {
                 .addGroup(panelManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnReport)
                     .addComponent(lblFieldStationManager, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                 .addGroup(panelManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1))
@@ -1727,6 +1760,15 @@ public class UserInterface extends javax.swing.JFrame {
         for (Sensor sensor : stationSensors.getSensors()) {
             eventList.add(sensor);
         }
+        
+        if (eventList.size() < 1) 
+        {
+            panelNoSensorData.setVisible(true);
+            panelWithTable.setVisible(false);
+        } else {
+            panelNoSensorData.setVisible(false);
+            panelWithTable.setVisible(true);
+        }
 
         sensorsTable = new EventTableModel(eventList, new SensorTableFormat());
 
@@ -2184,8 +2226,9 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     public javax.swing.JPanel jPanel1;
-    public javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JScrollPane jScrollPane2;
@@ -2226,11 +2269,13 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JPanel panelHeatmap;
     private javax.swing.JPanel panelLogIn;
     private javax.swing.JPanel panelManager;
+    private javax.swing.JPanel panelNoSensorData;
     private javax.swing.JPanel panelRegister;
     private javax.swing.JPanel panelReport;
     private javax.swing.JPanel panelReportSensorData;
     private javax.swing.JPanel panelReportTable;
     private javax.swing.JPanel panelSwitcher;
+    public javax.swing.JPanel panelWithTable;
     private javax.swing.JSlider sliderServerOnOff;
     private javax.swing.JSlider sliderView;
     private javax.swing.JTable tblReportSensorData;
