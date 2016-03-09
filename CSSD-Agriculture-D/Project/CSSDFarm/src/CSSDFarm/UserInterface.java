@@ -140,7 +140,7 @@ public class UserInterface extends javax.swing.JFrame {
     /**
      * Displays the Manager Screen 
      */
-    public void displayManagerScreen() {
+    public void selectManagerView() {
         //remove old panel details
         if (panelReport.isVisible()) {
             comboReportFieldStations.setModel(new DefaultComboBoxModel());
@@ -233,6 +233,7 @@ public class UserInterface extends javax.swing.JFrame {
         } catch (Exception eX) {
 
         }
+        updateReport();
 
     }
 
@@ -313,7 +314,7 @@ public class UserInterface extends javax.swing.JFrame {
         FieldStation station = server.getFieldStation(selectedStation.getId());
         station.removeSensor(id);
         server.removeSensor(station.getId(), id);
-        displayManagerScreen();
+        selectManagerView();
         changeSelectedFieldStation(selectedStation);
     }
 
@@ -344,7 +345,6 @@ public class UserInterface extends javax.swing.JFrame {
             for (SensorData sensor : sensorData) {
                 //sensor.collectData();
                 eventList.add(sensor);
-
             }
 
             sensorsReportTable = new EventTableModel(eventList, new SensorDataTableFormat());
@@ -1691,7 +1691,7 @@ public class UserInterface extends javax.swing.JFrame {
         if (authenticateUser) {
             panelLogIn.setVisible(false);
             if (server.getUsersRole() == 1) {
-                displayManagerScreen();
+                selectManagerView();
             } else {
                 displayReportScreen();
             }
@@ -1815,6 +1815,33 @@ public class UserInterface extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_listUserStationsValueChanged
 
+    private void addSensor(){
+        int secondsSeconds = Integer.parseInt(comboIntervalSeconds.getSelectedItem().toString());
+        int minutesSeconds = Integer.parseInt(comboIntervalMinutes.getSelectedItem().toString()) * 60;
+        int hoursSeconds = Integer.parseInt(comboIntervalHours.getSelectedItem().toString()) * 60 * 60;
+        int daysSeconds = Integer.parseInt(comboIntervalDays.getSelectedItem().toString()) * 60 * 60 * 24;
+        int interval = secondsSeconds + minutesSeconds + hoursSeconds + daysSeconds;
+        int threshold = -1;
+        boolean safeToAdd = true;
+        if (!txtThreshold.getText().equals("")){
+            try{
+                threshold = Integer.parseInt(txtThreshold.getText());
+            }
+            catch(Exception eX){
+                JOptionPane.showMessageDialog(null,eX,"Problem with Threshold",JOptionPane.WARNING_MESSAGE);
+                safeToAdd = false;
+            }
+        }
+        if (safeToAdd){
+            boolean upperlimit = checkIsUpperLimit.isSelected();
+            server.addSensor(selectedStation.getId(), txtSensorId.getText(), (String) comboSensorType.getSelectedItem(), (String) comboSensorUnits.getSelectedItem(), interval, threshold, upperlimit);
+
+            panelAddSensor.setVisible(false);
+            selectManagerView();
+            changeSelectedFieldStation(selectedStation);
+            clearSensorScreen();
+        }
+    }
     private void saveUserData(String filePath, int item) {
         int userSettings;
         ObjectOutputStream outstream;
@@ -1866,38 +1893,13 @@ public class UserInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddSensorActionPerformed
 
     private void btnSaveSensorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveSensorActionPerformed
-
-        int secondsSeconds = Integer.parseInt(comboIntervalSeconds.getSelectedItem().toString());
-        int minutesSeconds = Integer.parseInt(comboIntervalMinutes.getSelectedItem().toString()) * 60;
-        int hoursSeconds = Integer.parseInt(comboIntervalHours.getSelectedItem().toString()) * 60 * 60;
-        int daysSeconds = Integer.parseInt(comboIntervalDays.getSelectedItem().toString()) * 60 * 60 * 24;
-        int interval = secondsSeconds + minutesSeconds + hoursSeconds + daysSeconds;
-        int threshold = -1;
-        boolean safeToAdd = true;
-        if (!txtThreshold.getText().equals("")){
-            try{
-                threshold = Integer.parseInt(txtThreshold.getText());
-            }
-            catch(Exception eX){
-                JOptionPane.showMessageDialog(null,eX,"Problem with Threshold",JOptionPane.WARNING_MESSAGE);
-                safeToAdd = false;
-            }
-        }
-        if (safeToAdd){
-            boolean upperlimit = checkIsUpperLimit.isSelected();
-            server.addSensor(selectedStation.getId(), txtSensorId.getText(), (String) comboSensorType.getSelectedItem(), (String) comboSensorUnits.getSelectedItem(), interval, threshold, upperlimit);
-
-            panelAddSensor.setVisible(false);
-            displayManagerScreen();
-            changeSelectedFieldStation(selectedStation);
-            clearSensorScreen();
-        }
+        addSensor();        
     }//GEN-LAST:event_btnSaveSensorActionPerformed
 
     private void btnCancelSensorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelSensorActionPerformed
         panelAddSensor.setVisible(false);
         clearSensorScreen();
-        displayManagerScreen();
+        selectManagerView();
     }//GEN-LAST:event_btnCancelSensorActionPerformed
 
     private void btnRemoveFieldStationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveFieldStationActionPerformed
@@ -1919,6 +1921,7 @@ public class UserInterface extends javax.swing.JFrame {
     private void btnReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportActionPerformed
         // TODO add your handling code here:
         displayReportScreen();
+        
     }//GEN-LAST:event_btnReportActionPerformed
 
     private void comboReportSensorTypeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboReportSensorTypeItemStateChanged
@@ -1927,7 +1930,6 @@ public class UserInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_comboReportSensorTypeItemStateChanged
 
     private void dpReportCalendarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dpReportCalendarActionPerformed
-        // TODO add your handling code here:
         updateReport();
     }//GEN-LAST:event_dpReportCalendarActionPerformed
 
@@ -1938,7 +1940,7 @@ public class UserInterface extends javax.swing.JFrame {
 
     private void btnManagerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManagerActionPerformed
         // TODO add your handling code here:
-        displayManagerScreen();
+        selectManagerView();
     }//GEN-LAST:event_btnManagerActionPerformed
 
     private void tblSensorDataMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSensorDataMouseClicked
@@ -2199,7 +2201,6 @@ public class UserInterface extends javax.swing.JFrame {
                 Vector<FieldStation> fieldStations = server.loadData();
                 if (fieldStations != null) {
                     for (FieldStation aFieldStations : fieldStations) {
-
                         for (Sensor aSensor : aFieldStations.getSetOfSensors().getSensors()) {
                             if (aSensor.onInterval()) {
                                 if (server.getTurnedOn()) {

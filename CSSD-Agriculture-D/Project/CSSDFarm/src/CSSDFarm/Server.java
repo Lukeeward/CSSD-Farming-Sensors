@@ -11,11 +11,9 @@ import java.util.Vector;
 public class Server implements Serializable {
     private Map<String, Map<String, HistoricalData>> data;
     private UserAccount currentUser;
-    private Interface currentClient;
     private Vector<UserAccount> users;
     private Vector<FieldStation> stations;
-    private Boolean turnedOn;
-    
+    private Boolean serverIsOn;
     private static Server server;
     
     
@@ -35,7 +33,7 @@ public class Server implements Serializable {
         
         //Initialises the HashMap<> data
         this.data = new HashMap<>(); 
-        this.turnedOn = true; 
+        this.serverIsOn = true; 
     }
     
     /**
@@ -89,7 +87,7 @@ public class Server implements Serializable {
      * @return boolean, the state of the server.
      */
     public Boolean getTurnedOn(){
-        return turnedOn;
+        return serverIsOn;
     }
     
     /**
@@ -98,10 +96,10 @@ public class Server implements Serializable {
      */
     public void togglePower(int val){
         if (val == 0)
-            this.turnedOn = false;
+            this.serverIsOn = false;
         else
-            this.turnedOn = true;
-        //this.turnedOn = !turnedOn;
+            this.serverIsOn = true;
+        //this.serverIsOn = !serverIsOn;
     }
     
     /**
